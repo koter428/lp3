@@ -64,8 +64,8 @@
 
     }
     .skin-yellow .main-header .navbar {
-        /*background-color: #f39c12;*/
-        /*background-color: #FFCF6E;*/
+        /*background-color: #f39c12;*/ 
+       /*background-color: #FFCF6E;*/
         background-color: #AEABFF;
     }
 

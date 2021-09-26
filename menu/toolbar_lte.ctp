@@ -7,7 +7,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php if(!empty($_SESSION['usu_foto'])){ echo $_SESSION['usu_foto'];}else{ echo "img/no_disponible.jpg";}?>" class="img-circle" alt="User Image">
+                <img src="<?php if(!empty($_SESSION['usu_foto'])){ echo $_SESSION['usu_foto'];}else{ echo "img/avatar_1.jpg";}?>" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p><?php echo $_SESSION['nombres'];?></p>
@@ -34,8 +34,7 @@
     /*$modulos=consultas::get_datos("select distinct on(mod_nombre)* from modulos a
             join paginas b on a.mod_cod=b.mod_cod
             order by mod_nombre");*/
-    $modulos=consultas::get_datos("select * from modulos 
-        order by mod_cod");    
+    $modulos=consultas::get_datos("select * from modulos order by mod_cod");    
    
      foreach ($modulos as $modulo) { ?>                        
             <li class="treeview">
