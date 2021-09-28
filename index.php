@@ -49,7 +49,7 @@ if ($_SESSION) {
         <div class="container well" id="sha">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <img src="img/avatar_1.jpg" class="img-responsive" id="avatar"/>
+                    <img src="img/yo.jpg" class="img-responsive" id="avatar"/>
                 </div>               
             </div>
             <form class="login" action="acceso.php" method="post">                
@@ -57,8 +57,7 @@ if ($_SESSION) {
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                   <input type="text" class="form-control" name="usuario" placeholder="Ingrese su usuario" autofocus="">
                 </div>                
-
-                <div class="form-group has-feedback">
+                    <div class="form-group has-feedback">
                     <input type="password" class="form-control" name="clave" 
                            placeholder="Ingrese su clave" required=""/>
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
