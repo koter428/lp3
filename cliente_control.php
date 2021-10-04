@@ -12,8 +12,22 @@ switch ($_REQUEST['accion']) {
         break;
 
     case 2: //editar
+$Sql="update clientes set cli_ci = '".$_REQUEST['vcli_ci']
+      ."',cli_nombre='".$REQUEST['vcli_nombre']
+      ."',cli_apellido='".$REQUEST['vcli_apellido']
+      ."',cli_telefono='".$REQUEST['vcli_telefono']
+      ."',cli_direcc='".$REQUEST['vcli_direcc']
+      ."',where cli_cod='".$REQUEST['vcli_cod'];
+     $mensaje='se actualizo correctamente';
         break;
     case 3: //borrar
+        $Sql="delete from  clientes set cli_ci = '".$_REQUEST['vcli_ci']
+      ."',cli_nombre='".$REQUEST['vcli_nombre']
+      ."',cli_apellido='".$REQUEST['vcli_apellido']
+      ."',cli_telefono='".$REQUEST['vcli_telefono']
+      ."',cli_direcc='".$REQUEST['vcli_direcc']
+      ."',where cli_cod='".$REQUEST['vcli_cod'];
+     $mensaje='se borro correctamente';
         break;
 }
 

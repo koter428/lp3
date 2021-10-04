@@ -18,35 +18,37 @@
             <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
             <?php require 'menu/toolbar_lte.ctp';?><!--MENU PRINCIPAL-->
             <div class="content-wrapper">
-                  <div class="content">
+                <div class="content">
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                            <div class="box box-primary">
+                            <div class="box box-danger">
                                 <div class="box-header">
-                                    <i class="fa fa-plus"></i>
-                                    <h3 class="box-title">Agregar Sucursales</h3>
-                                    
-                                        <a href="sucursal_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
+                                    <i class="fa fa-trash"></i>
+                                    <h3 class="box-title">Borrar tipo de impuestos</h3>
+                                    <div class="box-tools">
+                                        <a href="impuesto_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
-                                    
+                                    </div>
                                 </div> 
-                                <form action="sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="impuesto_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
+                                        <?php $resultado = consultas::get_datos("select * from marca where tipo_cod=".$_GET['vtipo_cod']);?>
                                         <div class="form-group">
-                                            <input type="hidden" name="accion" value="1"/>
-                                            <input type="hidden" name="vid_sucursal" value="0"/>                                            
+                                            <input type="hidden" name="accion" value="3"/>
+                                            <input type="hidden" name="vtipo_cod" value="<?php echo $resultado[0]['tipo_cod']?>"/>
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vsuc_descri" class="form-control" required="" autofocus=""/>
+                                                <input type="text" name="vtipo_descri" class="form-control" required="" disabled=""
+                                                       value="<?php echo $resultado[0]['tipo_descri']?>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                        <button type="reset" class="btn btn-primary" data-title="Cancelar" rel="tooltip"> 
+                                        <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip"> 
                                             <i class="fa fa-remove"></i> Cancelar</button>                                        
-                                        <button type="submit" class="btn btn-primary pull-right" data-title="Guardar" rel="tooltip"> 
-                                            <i class="fa fa-floppy-o"></i> Registrar</button>
+                                        <button type="submit" class="btn btn-danger pull-right" data-title="Guardar" rel="tooltip"> 
+                                            <i class="fa fa-trash"></i> Borrar</button>
                                     </div>
                                 </form>
                             </div>
@@ -54,10 +56,8 @@
                     </div>
                 </div>
             </div>
-             
-            </div>
                   <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
-                            
+            </div>                  
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>

@@ -3,15 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/lp3/menu.php</file>
-            <file>file:/C:/wamp64/www/lp3/proveedor_index.php</file>
-            <file>file:/C:/wamp64/www/lp3/sucursal_index.php</file>
-            <file>file:/C:/wamp64/www/lp3/cliente_index.php</file>
-            <file>file:/C:/wamp64/www/lp3/menu/navbar_lte.ctp</file>
-            <file>file:/C:/wamp64/www/lp3/cargo_index.php</file>
-            <file>file:/C:/wamp64/www/lp3/marca_index.php</file>
-            <file>file:/C:/wamp64/www/lp3/index.php</file>
-            <file>file:/C:/wamp64/www/lp3/menu/toolbar_lte.ctp</file>
+            <file>file:/C:/wamp64/www/lp3/impuesto_index.php</file>
+            <file>file:/C:/wamp64/www/lp3/impuesto_control.php</file>
+            <file>file:/C:/wamp64/www/lp3/impuesto_add.php</file>
         </group>
     </open-files>
 </project-private>

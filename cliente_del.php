@@ -24,23 +24,23 @@
                             <div class="box box-danger">
                                 <div class="box-header">
                                     <i class="fa fa-trash"></i>
-                                    <h3 class="box-title">Borrar cliente</h3>
+                                    <h3 class="box-title">Borrar Cliente</h3>
                                     <div class="box-tools">
                                         <a href="cliente_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="cli_cod" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="cliente_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from marca where mar_cod=".$_GET['cli_cod']);?>
+                                        <?php $resultado = consultas::get_datos("select * from clientes where cli_cod=".$_GET['vcli_cod']);?>
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="3"/>
-                                            <input type="hidden" name="vmar_cod" value="<?php echo $resultado[0]['cli_cod']?>"/>
+                                            <input type="hidden" name="vcli_cod" value="<?php echo $resultado[0]['cli_cod']?>"/>
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="cli_nombre" class="form-control" required="" disabled=""
-                                                       value="<?php echo $resultado[0]['cli_nombre']?>"/>
+                                                <input type="text" name="vcli_ci" class="form-control" required="" disabled="" 
+                                                       value="<?php echo $resultado[0]['cli_ci']?>"/>
                                             </div>
                                         </div>
                                     </div>
@@ -61,6 +61,3 @@
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>
-
-
-

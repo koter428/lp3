@@ -15,7 +15,8 @@ switch ($_REQUEST['accion']) {
         break;
     case 3://borrar
         $sql="delete from sucursal where  id_sucursal =".$_REQUEST['vid_sucursal'];
-        $mensaje = "Se borro correctamente";
+        $mensaje = "Se borro correctamente"; 
+        $consulta= consultas::get_datos("select * from usuario order by suc_descri");
         break;    
 }
 session_start(); /* reanudar la sesión */
