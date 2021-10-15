@@ -11,13 +11,17 @@ switch ($_REQUEST['accion']) {
 
     case 2://actualizar
         $sql="update tipo_impuesto set tipo_descri = '".$_REQUEST['vtipo_descri']
-       ."',tipo_porcen='".$REQUEST['vtipo_porcen']
+       ."',tipo_porcen='".$_REQUEST['vtipo_porcen']
        ."' where tipo_cod =".$_REQUEST['vtipo_cod'];
         $mensaje = "Se actualizo correctamente";
         break;
     case 3://borrar
-        $sql="delete from tipo_impuesto where tipo_descri =".$_REQUEST['vtipo_cod']
-        ."'where tipo_porcen='".$REQUEST['vtipo_porcen'];
+        echo $_REQUEST['tipo_cod'];
+       $sql="delete from tipo_impuesto where tipo_cod='"
+        . $_REQUEST['vtipo_cod'] 
+        . "' and tipo_descri='"
+        . $_REQUEST['vtipo_descri']
+        . "'";
         $mensaje = "Se borro correctamente";
         break;    
 }

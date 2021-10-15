@@ -36,11 +36,11 @@
                                         <?php $resultado = consultas::get_datos("select * from tipo_impuesto where tipo_cod=".$_GET['vtipo_cod']);?>
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="2"/>
-                                            <input type="hidden" name="vtipo_cod" value="<?php echo $resultado[0]['mar_cod']?>"/>
+                                            <input type="hidden" name="vtipo_cod" value="<?php echo $resultado[0]['tipo_cod']?>"/>
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
                                                 <input type="text" name="vtipo_descri" class="form-control" required="" autofocus="" 
-                                                       value="<?php echo $resultado[0]['mar_descri']?>"/>
+                                                       value="<?php echo $resultado[0]['tipo_descri']?>"/>
                                             </div>
                                         </div>
                                     </div>
