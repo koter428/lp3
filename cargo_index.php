@@ -23,29 +23,54 @@
                         <!-- FILA 1 --> 
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <?php if (!empty($_SESSION['mensaje'])) { ?>
-                                <div class="alert alert-danger" id="mensaje">
-                                    <span class="glyphicon glyphicon-info-sign"></span> 
-                                    <?php echo $_SESSION['mensaje'];
+                                   <?php if (!empty($_SESSION['mensaje'])) { ?>
+                            <div class="alert alert-danger" id="mensaje">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                <?php echo $_SESSION['mensaje'];
                                     $_SESSION['mensaje'] = '';
                                 ?>
-                                </div>
-                                 <?php } ?>
+                            </div>
+                            <?php } ?>
                                 <div class="box box-primary">
                                     <div class="box-header">
                                         <i class="ion ion-clipboard"></i>
                                         <h3 class="box-title">Cargos</h3>
                                         <div class="box-tools">
-                                            <a href="cargo_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' 
-                                               rel='tooltip' data-placement='left'><i class="fa fa-plus"></i></a>  
+                                            <a class="btn btn-primary btn-sm" data-title="Agregar" 
+                                                rel="tooltip"  data-toggle="modal" data-target="#registrar">
+                                                <i class="fa fa-plus"></i>
+                                                </a> 
+                                            <a href="" class="btn btn-default btn-sm" data-title="Agregar" rel="tooltip" target="print">
+                                                <i class="fa fa-print"></i>
+                                                </a>
                                         </div>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                 <form action="cargo_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                                  <div class="box-body">
+                                                    <div class="form-group">
+                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                      <div class="input-group custom-search-form">
+                                                        <input type="search" class="form-control" name="buscar" 
+                                                           placeholder="Ingrese el valor a buscar..." autofocus=""/>
+                                                            <span class="input-group-btn">
+                                                          <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar"
+                                                           rel="tooltip"><i class="fa fa-search"></i></button>
+                                                        </span>
+                                                      </div>
+                                                    </div>
+                                                   </div>
+                                                 </div> 
+                                               </form>
                                                  <?php 
-                                            //consulta a la tabla marca
-                                            $cargos = consultas::get_datos("select * from cargo order by car_cod");
+                                           /* $valor = '';   
+                                            if (isset($_REQUEST['buscar'])){
+                                                $valor = $_REQUEST['buscar'];
+                                            }*/
+                                             //consulta a la tabla marca
+                                            $cargos = consultas::get_datos("select * from cargo where car_descri ilike '%"./*$valor*/(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by car_cod");
                                             //var_dump($cargos);
                                             if (!empty($cargos)) { ?>
                                                 <div class="table-responsive">
@@ -57,16 +82,16 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php foreach ($cargos as $car) { ?>
+                                                            <?php foreach ($cargos as $cargo) { ?>
                                                             <tr>
-                                                                <td data-title='Descripción'><?php echo $car['car_descri'];?></td>
-                                                                <td data-title='Acciones' class="text-center"><a href="cargo_edit.php?vcar_cod=<?php echo $car['car_cod'];?>" 
-                                                                 class="btn btn-warning btn-sm"
-                                                                   role='button' data-title='Editar' rel='tooltip' data-placement='left'>
-                                                            <span class="glyphicon glyphicon-edit"></span></a>
-                                                        <a href="cargo_del.php?vcar_cod=<?php echo $car['car_cod'];?>" class="btn btn-danger btn-sm" role='button'
-                                                                   data-title='Borrar' rel='tooltip' data-placement='left'>
-                                                            <span class="glyphicon glyphicon-trash"></span></a></td>
+                                                                <td data-title='Descripción'><?php echo $cargo['car_descri'];?></td>
+                                                                <td data-title='Acciones' class="text-center">
+                                                                    <a onclick="editar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)"  class="btn btn-warning btn-sm" role='button'
+                                                                    data-title='Editar' rel='tooltip' data-toggle="modal" data-target="#editar">
+                                                                    <span class="glyphicon glyphicon-edit"></span></a>
+                                                         <a onclick="borrar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
+                                                                   data-title='Borrar' rel='tooltip' data-toggle="modal" data-target="#borrar">
+                                                             <span class="glyphicon glyphicon-trash"></span></a></td>
                                                             </tr>
                                                              <?php } ?>
                                                         </tbody>
@@ -80,9 +105,7 @@
                                                  <?php }
                                             ?>
                                             </div>
-                                            
-                                        </div>
-                                        
+                                         </div>
                                     </div>
                                 </div>
                             </div>
@@ -90,12 +113,131 @@
                     </div>
                 </div>
                 <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS--> 
-            </div>                    
-        <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
-        <script>
-        $("#mensaje").delay(4000).slideUp(200,function(){
+           <!-- MODAL REGISTRAR -->
+           <div class="modal fade" id="registrar" role="dialog">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">X</button>
+                           <h4 class="modal-title"><i class="fa fa-plus"></i><strong>Registrar Cargos</strong></h4>
+                       </div>
+                       <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                           <input type="hidden" name="accion" value="1">
+                           <input type="hidden" name="vcar_cod" value="0">
+                           <div class="modal-body">
+                               <div class="form-group">
+                                   <label class="control-label col-sm-2">descripcion:</label>
+                                   <div class="col-sm-10">
+                                       <input type="text" name="vcar_descri"  class="form-control" />  
+                                   </div>
+                           </div>
+                       
+                       </div>
+                           <div class="modal-footer">
+                               <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                   <i class=" fa fa-remove"></i> Cerrar</button>   
+                                   <button type="submit"  class="btn btn-primary pull-right">
+                                   <i class="fa fa-floppy-o"></i> Registrar</button>   
+                           </div> 
+                        </form>
+                     </div>
+                    </div>
+                    </div> 
+                   </div> 
+                  </div>
+                 </div> 
+                </div>
+               </div>
+           </div>
+      <!-- FIN MODAL REGISTRAR -->
+      <!-- MODAL EDITAR -->
+           <div class="modal fade" id="editar" role="dialog">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">X</button>
+                           <h4 class="modal-title"><i class="fa fa-edit"></i><strong>Editar cargos</strong></h4>
+                       </div>
+                       <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                           <input type="hidden" name="accion" value="2">
+                           <input type="hidden" name="vcar_cod" id="cod" value="0">
+                           <div class="modal-body">
+                               <div class="form-group">
+                                   <label class="control-label col-sm-2">descripcion:</label>
+                                   <div class="col-sm-10">
+                                       <input type="text" name="vcar_descri" id="descri" class="form-control" />  
+                                   </div>
+                           </div>
+                       
+                       </div>
+                           <div class="modal-footer">
+                               <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                   <i class=" fa fa-remove"></i> Cerrar</button>   
+                                   <button type="submit"  class="btn btn-warning pull-right">
+                                   <i class="fa fa-edit"></i> Actualizar</button>   
+                           </div> 
+                        </form>
+                     </div>
+                    </div>
+                    </div> 
+                   </div> 
+                  </div>
+                 </div> 
+                </div>
+               </div>
+           </div>
+      <!-- FIN MODAL EDITAR -->
+      <!-- MODAL BORRAR -->
+           <div class="modal fade" id="borrar" role="dialog">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">X</button>
+                           <h4 class="modal-title custom-align">Atenci&oacute;n!!!</h4>
+                       </div>
+               
+                           <div class="modal-body">
+                               <div class="alert alert-danger" id="confirmacion"></div>  
+                       </div>
+                           <div class="modal-footer">
+                               <a id="si"  class="btn btn-primary ">
+                                   <i class=" fa fa-check"></i> Si</a>   
+                                   <button type="button"  class="btn btn-default" data-dismiss="modal">
+                                   <i class="fa fa-edit"></i> No</button>   
+                           </div> 
+                     </div>
+                    </div>
+                    </div> 
+                   </div> 
+                  </div>
+                 </div> 
+                </div>
+               </div>
+           </div>
+      <!-- FIN MODAL BORRAR -->
+        </div>                    
+         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
+           <script>
+            $("#mensaje").delay(4000).slideUp(200,function(){
                 $(this).alert('close');
+            });
+            $(".modal").on('shown.bs.modal',function(){
+                $(this).find('input:text:visible:first').focus();
             })
+            
+        </script>
+}       <script>
+        function editar(datos){
+           var dat = datos.split("_");
+          $("#cod").val(dat[0]); 
+          $("#descri").val(dat[1]);
+        }
+        function borrar(datos){
+            var dat = datos.split("_");
+            $('#si').attr('href','cargo_control.php?vcar_cod='+dat[0]+'&vcar_descri='+dat[1]+'&accion=3');
+            $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span>\n\
+             Desea borrar  el cargo <strong>'+dat[1]+'</strong>?');
+        }
         </script>
     </body>
 </html>

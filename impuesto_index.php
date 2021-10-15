@@ -58,13 +58,16 @@
                                                     <tbody>
                                                         <?php foreach ($impuesto as $tipo) { ?>
                                                         <tr>
-                                                            <td data-title='Descripción'><?php echo $mar['tipo_descri'];?></td>
+                                                            <td data-title='Descripción'><?php echo $tipo['tipo_descri'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                                 <a href="impuesto_edit.php"?vtipo_cod=<?php echo $tipo['tipo_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
-                                                                                                                                      
+                                                                <a href="impuesto_del.php.?vtipo_cod=<?php echo $tipo['tipo_cod'];?>" class="btn btn-danger btn-sm" role='button'
+                                                                   data-title='Borrar' rel='tooltip' data-placement='top'>
+                                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                                </a>                                                                                                                                               
                                                             </td>
                                                         </tr>
                                                         <?php } ?>
@@ -74,7 +77,7 @@
                                             <?php }else { ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span> 
-                                                No se han registrado marcas...
+                                                No se han registrado tipo de impuestos...
                                             </div>
                                             <?php }
                                             ?>

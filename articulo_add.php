@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="utf-8">
@@ -26,34 +21,32 @@ and open the template in the editor.
                 <div class="content">
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                            <div class="box box-danger">
+                            <div class="box box-primary">
                                 <div class="box-header">
-                                    <i class="fa fa-trash"></i>
-                                    <h3 class="box-title">Borrar Cliente</h3>
+                                    <i class="fa fa-plus"></i>
+                                    <h3 class="box-title">Agregar Articulo</h3>
                                     <div class="box-tools">
-                                        <a href="cliente_index.php" class="btn btn-primary btn-sm" data-title="Volver" >
+                                        <a href="articulo_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="cliente_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="marca_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from clientes where cli_cod=".$_GET['vcli_cod']);?>
                                         <div class="form-group">
-                                            <input type="hidden" name="accion" value="3"/>
-                                            <input type="hidden" name="vcli_cod" value="<?php echo $resultado[0]['cli_cod']?>"/>
-                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Nombres:</label>
+                                            <input type="hidden" name="accion" value="1"/>
+                                            <input type="hidden" name="vmar_cod" value="0"/>                                            
+                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vcli_nombre" class="form-control" required="" disabled="" 
-                                                       value="<?php echo $resultado[0]['cli_nombre']?>"/>
+                                                <input type="text" name="vmar_descri" class="form-control" required="" autofocus=""/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                        <button type="reset" class="btn btn-default" data-title="Cancelar" > 
+                                        <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip"> 
                                             <i class="fa fa-remove"></i> Cancelar</button>                                        
-                                        <button type="submit" class="btn btn-danger pull-right" data-title="Guardar" > 
-                                            <i class="fa fa-trash"></i> Borrar</button>
+                                        <button type="submit" class="btn btn-primary pull-right" data-title="Guardar" rel="tooltip"> 
+                                            <i class="fa fa-floppy-o"></i> Registrar</button>
                                     </div>
                                 </form>
                             </div>
@@ -66,3 +59,5 @@ and open the template in the editor.
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>
+
+

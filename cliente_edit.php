@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
- <head>
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="shortcut icon" type="image/x-icon" href="/lp3/favicon.ico">
@@ -31,7 +31,7 @@ and open the template in the editor.
                                     <i class="fa fa-edit"></i>
                                     <h3 class="box-title">Editar Cliente</h3>
                                     <div class="box-tools">
-                                        <a href="cliente_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
+                                        <a href="cliente_index.php" class="btn btn-primary btn-sm" data-title="Volver">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
@@ -80,9 +80,9 @@ and open the template in the editor.
                                         
                                     </div>
                                     <div class="box-footer">
-                                        <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip"> 
+                                        <button type="reset" class="btn btn-default" data-title="Cancelar" > 
                                             <i class="fa fa-remove"></i> Cancelar</button>                                        
-                                        <button type="submit" class="btn btn-warning pull-right" data-title="Guardar" rel="tooltip"> 
+                                        <button type="submit" class="btn btn-warning pull-right" data-title="Guardar" > 
                                             <i class="fa fa-edit"></i> Actualizar</button>
                                     </div>
                                 </form>

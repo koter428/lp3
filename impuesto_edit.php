@@ -33,7 +33,7 @@
                                 </div> 
                                 <form action="impuesto_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from marca where tipo_cod=".$_GET['vtipo_cod']);?>
+                                        <?php $resultado = consultas::get_datos("select * from tipo_impuesto where tipo_cod=".$_GET['vtipo_cod']);?>
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="2"/>
                                             <input type="hidden" name="vtipo_cod" value="<?php echo $resultado[0]['mar_cod']?>"/>
