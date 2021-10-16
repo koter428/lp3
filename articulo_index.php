@@ -45,7 +45,7 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <form action="articulo_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                            <form action="articulo_edit.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                                   <div class="box-body">
                                                     <div class="form-group">
                                                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -63,8 +63,8 @@
                                                </form>
                                             <?php 
                                             //consulta a la tabla marca
-                                            $articulos = consultas::get_datos("select * from v_articulo where art_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by mar_cod");
-                                            //var_dump($marcas);
+                                            $articulos = consultas::get_datos("select * from v_articulo where art_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by art_cod");
+                                            //var_dump($articulos);
                                             if (!empty($articulos)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
@@ -80,16 +80,16 @@
                                                     <tbody>
                                                         <?php foreach ($articulos as $art) { ?>
                                                         <tr>
-                                                            <td data-title='Descripción'><?php echo $art['art_descri']." ".$art['mar_descri'];?></td>
+                                                            <td data-title='Descripción'><?php echo $art['art_cod']." ".$art['art_cod'];?></td>
                                                             <td data-title='Precio Costo'><?php echo number_format($art['art_precioc'],0,",",".");?></td>
                                                             <td data-title='Precio Venta'><?php echo number_format($art['art_preciov'],0,",",".");?></td>
                                                               <td data-title='Impuesto'><?php echo $art['tipo_descri'];?></td>
                                                             <td data-title='Acciones' class="text-center">
-                                                                <a href="marca_edit.php?vmar_cod=<?php echo $art['art_cod'];?>" class="btn btn-warning btn-sm" role='button'
+                                                                <a href="articulo_edit.php?art_cod=<?php echo $art['art_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
-                                                                <a href="marca_del.php?vmar_cod=<?php echo $art['art_cod'];?>" class="btn btn-danger btn-sm" role='button'
+                                                                <a href="articulo_del.php?vart_cod=<?php echo $art['art_cod'];?>" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Borrar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-trash"></span>
                                                                 </a>                                                                        

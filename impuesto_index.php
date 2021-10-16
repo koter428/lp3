@@ -44,7 +44,7 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <?php 
                                             //consulta a la tabla impuesto
-                                            $impuesto = consultas::get_datos("select * from tipo_impuesto order by tipo_cod");
+                                            $impuesto = consultas::get_datos("select * from tipo_impuesto where tipo_cod != '0' order by tipo_cod");
                                             //var_dump($impuesto);
                                             if (!empty($impuesto)) { ?>
                                             <div class="table-responsive">
