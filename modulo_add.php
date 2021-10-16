@@ -24,21 +24,20 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="fa fa-plus"></i>
-                                    <h3 class="box-title">Agregar Marca</h3>
+                                    <h3 class="box-title">Agregar Modulo</h3>
                                     <div class="box-tools">
-                                        <a href="impuesto_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
+                                        <a href="modulo_Index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="impuesto_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="modulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="1"/>
-                                            <input type="hidden" name="vtipo_cod" value="0"/>                                            
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vtipo_porcen" class="form-control" required="" autofocus=""/>
+                                                <input type="text" name="vmod_nombre" class="form-control" required="" autofocus=""/>
                                             </div>
                                         </div>
                                     </div>
