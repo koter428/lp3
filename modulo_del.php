@@ -24,23 +24,23 @@
                             <div class="box box-danger">
                                 <div class="box-header">
                                     <i class="fa fa-trash"></i>
-                                    <h3 class="box-title">Borrar Marca</h3>
+                                    <h3 class="box-title">Borrar Modulo</h3>
                                     <div class="box-tools">
-                                        <a href="marca_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
+                                        <a href="modulo_Index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="marca_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="modulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from marca where mar_cod=".$_GET['vmar_cod']);?>
+                                        <?php $resultado = consultas::get_datos("select * from modulos where mod_cod=".$_GET['vmod_cod']);?>
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="3"/>
-                                            <input type="hidden" name="vmar_cod" value="<?php echo $resultado[0]['mar_cod']?>"/>
+                                            <input type="hidden" name="vmod_cod" value="<?php echo $resultado[0]['mod_cod']?>"/>
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vmar_descri" class="form-control" required="" disabled=""
-                                                       value="<?php echo $resultado[0]['mar_descri']?>"/>
+                                                <input type="text" name="vmod_nombre" class="form-control" required="" disabled=""
+                                                       value="<?php echo $resultado[0]['mod_nombre']?>"/>
                                             </div>
                                         </div>
                                     </div>
