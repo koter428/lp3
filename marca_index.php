@@ -60,7 +60,7 @@
                                                </form>
                                             <?php 
                                             //consulta a la tabla marca
-                                            $marcas = consultas::get_datos("select * from marca where mar_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by mar_cod");
+                                            $marcas = consultas::get_datos("select * from marca where mar_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' and mar_cod!='0' order by mar_cod");
                                             //var_dump($marcas);
                                             if (!empty($marcas)) { ?>
                                             <div class="table-responsive">
