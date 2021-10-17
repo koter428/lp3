@@ -99,8 +99,8 @@
                         <div class="box-footer">
                             <button type="reset" class="btn btn-default" data-title="Cancelar">
                                 <i class="fa fa-remove"></i> Cancelar</button>
-                            <button type="submit" class="btn btn-warning pull-right" data-title="Guardar">
-                                <i class="fa fa-edit"></i> Actualizar</button>
+                            <button type="submit" class="btn btn-primary pull-right" data-title="Guardar">
+                                <i class="fa fa-floppy-o"></i>Registrar</button>
                         </div>
                         </form>
                     </div>
