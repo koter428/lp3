@@ -43,10 +43,50 @@ and open the template in the editor.
                             </div>
                             <form action="articulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                 <div class="box-body">
-                                    <?php $resultado = consultas::get_datos("select * from articulo where art_cod='" . $_GET['vart_cod'] . "'"); ?>
+                                    <?php
+                                    $resultado = consultas::get_datos("select * from articulo where art_cod='" . $_GET['vart_cod'] . "'");
+                                    $marcas = consultas::get_datos("SELECT * FROM marca ORDER BY CASE WHEN mar_cod='" . $resultado[0]["mar_cod"] . "' THEN 1 ELSE 2 END, mar_cod;");
+                                    $impuestos = consultas::get_datos("SELECT * FROM tipo_impuesto ORDER BY CASE WHEN tipo_cod='" . $resultado[0]["tipo_cod"] . "' THEN 1 ELSE 2 END, tipo_cod;");
+                                    ?>
                                     <div class="form-group">
                                         <input type="hidden" name="accion" value="2" />
                                         <input type="hidden" name="vart_cod" value="<?php echo $resultado[0]['art_cod'] ?>" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Descripcion:</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" name="vart_descri" class="form-control" required="" value="<?php echo $resultado[0]['art_descri'] ?>" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Marca:</label>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <select name="vmar_cod" class="custom-select" id="inputGroupSelect04">
+                                                    <?php foreach ($marcas as $marca) { ?>
+                                                        <option value="<?php echo $marca["mar_cod"] ?>"><?php echo $marca["mar_descri"] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Impuesto:</label>
+                                        <div class="col-lg-6">
+                                            <div class="input-group">
+                                                <select name="vtipo_cod" class="custom-select" id="inputGroupSelect04">
+                                                    <?php foreach ($impuestos as $impuesto) { ?>
+                                                        <option value="<?php echo $impuesto["tipo_cod"] ?>"><?php echo $impuesto["tipo_descri"] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Codigo Barras:</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" name="vart_codbarra" class="form-control" required="" value="<?php echo $resultado[0]['art_codbarra'] ?>" />
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Precio Compra:</label>
@@ -58,18 +98,6 @@ and open the template in the editor.
                                         <label class="col-lg-2 control-label">Precio Venta:</label>
                                         <div class="col-lg-6">
                                             <input type="text" name="vart_preciov" class="form-control" required="" value="<?php echo $resultado[0]['art_preciov'] ?>" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Codigo Barras:</label>
-                                        <div class="col-lg-6">
-                                            <input type="text" name="vart_codbarra" class="form-control" required="" value="<?php echo $resultado[0]['art_codbarra'] ?>" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label">Descripcion:</label>
-                                        <div class="col-lg-6">
-                                            <input type="text" name="vart_descri" class="form-control" required="" value="<?php echo $resultado[0]['art_descri'] ?>" />
                                         </div>
                                     </div>
                                 </div>
