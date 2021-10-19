@@ -8,15 +8,16 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-        <?php 
-        session_start();/*Reanudar sesion*/
-        require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
+        <?php
+        session_start(); /* Reanudar sesion */
+        require 'menu/css_lte.ctp';
+        ?><!--ARCHIVOS CSS-->
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
-            <?php require 'menu/toolbar_lte.ctp';?><!--MENU PRINCIPAL-->
+            <?php require 'menu/toolbar_lte.ctp'; ?><!--MENU PRINCIPAL-->
             <div class="content-wrapper">
                 <div class="content">
                     <div class="row">
@@ -33,14 +34,39 @@
                                 </div> 
                                 <form action="proveedor_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from proveedor where prv_cod=".$_GET['vprv_cod']);?>
+                                        <?php $resultado = consultas::get_datos("select * from proveedor where prv_cod=" . $_GET['vprv_cod']);
+                                        ?>
+                                        <input type="hidden" name="accion" value="2"/>
+                                        <input type="hidden" name="vprv_cod" value="<?php echo $resultado[0]['prv_cod'] ?>"/>
                                         <div class="form-group">
-                                            <input type="hidden" name="accion" value="2"/>
-                                            <input type="hidden" name="vprv_cod" value="<?php echo $resultado[0]['prv_cod']?>"/>
-                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
+
+                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Ruc:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
                                                 <input type="text" name="vprv_ruc" class="form-control" required="" autofocus="" 
-                                                       value="<?php echo $resultado[0]['prv_ruc']?>"/>
+                                                       value="<?php echo $resultado[0]['prv_ruc'] ?>"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Razon Social:</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <input type="text" name="vprv_razonsocial" class="form-control" required="" autofocus="" 
+                                                       value="<?php echo $resultado[0]['prv_razonsocial'] ?>"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Direccion:</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <input type="text" name="vprv_direccion" class="form-control" required="" autofocus="" 
+                                                       value="<?php echo $resultado[0]['prv_direccion'] ?>"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Telefono:</label>
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <input type="text" name="vprv_telefono" class="form-control" required="" autofocus="" 
+                                                       value="<?php echo $resultado[0]['prv_telefono'] ?>"/>
                                             </div>
                                         </div>
                                     </div>
@@ -56,8 +82,8 @@
                     </div>
                 </div>
             </div>
-                  <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
-            </div>                  
+            <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
+        </div>                  
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>

@@ -10,7 +10,7 @@
                 <img src="<?php if (!empty($_SESSION['usu_foto'])) {
                                 echo $_SESSION['usu_foto'];
                             } else {
-                                echo "img/yo.jpg";
+                                echo "img/login.png";
                             } ?>" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">

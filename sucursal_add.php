@@ -25,11 +25,11 @@
                                 <div class="box-header">
                                     <i class="fa fa-plus"></i>
                                     <h3 class="box-title">Agregar Sucursales</h3>
-                                    
+                                     <div class="box-tools">
                                         <a href="sucursal_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
-                                    
+                                       </div>  
                                 </div> 
                                 <form action="sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">

@@ -49,19 +49,25 @@ if ($_SESSION) {
         <div class="container well" id="sha">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <img src="img/yo.jpg" class="img-responsive" id="avatar"/>
+                    <img src="img/login.png" class="img-responsive" id="avatar"/>
                 </div>               
             </div>
+            <!-- comienzo login usuario -->
             <form class="login" action="acceso.php" method="post">                
                 <div class="form-group input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                  <input type="text" class="form-control" name="usuario" placeholder="Ingrese su usuario" autofocus="">
-                </div>                
-                    <div class="form-group has-feedback">
+                  <input type="text" class="form-control" name="usuario" 
+                         placeholder="Ingrese su usuario" autofocus="">
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-user "></span></span>
+                </div>
+             
+                 <!-- final login usuario -->
+                         <!-- comienzo contraseña -->                
+                    <div class="form-group input-group">
                     <input type="password" class="form-control" name="clave" 
                            placeholder="Ingrese su clave" required=""/>
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                 </div>
+                             <!-- final contraseña -->   
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Iniciar Sesión</button>
                 <div class="checkbox">
