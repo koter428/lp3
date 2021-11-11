@@ -1,3 +1,4 @@
+<!-- index -->
 <?php
 session_start();
 if ($_SESSION) {
@@ -52,22 +53,15 @@ if ($_SESSION) {
                     <img src="img/login.png" class="img-responsive" id="avatar"/>
                 </div>               
             </div>
-            <!-- comienzo login usuario -->
             <form class="login" action="acceso.php" method="post">                
                 <div class="form-group input-group">
-                  <input type="text" class="form-control" name="usuario" 
-                         placeholder="Ingrese su usuario" autofocus="">
-                   <span class="input-group-addon"><span class="glyphicon glyphicon-user "></span></span>
-                </div>
-             
-                 <!-- final login usuario -->
-                         <!-- comienzo contraseña -->                
-                    <div class="form-group input-group">
-                    <input type="password" class="form-control" name="clave" 
-                           placeholder="Ingrese su clave" required=""/>
-                      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                </div>
-                             <!-- final contraseña -->   
+                  <input type="text" class="form-control" name="usuario" placeholder="Ingrese su usuario" autofocus="">
+                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                </div> 
+                <div class="form-group input-group">                    
+                    <input type="password" class="form-control" name="clave" placeholder="Ingrese su clave">
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                </div>                 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Iniciar Sesión</button>
                 <div class="checkbox">

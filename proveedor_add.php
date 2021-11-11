@@ -44,7 +44,6 @@
                                             </div>               
                                         </div>
                                         <div class="form-group">
-
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Razon Social:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
                                                 <input type="text" name="vprv_razonsocial" class="form-control" required="" autofocus=""/>
@@ -63,9 +62,8 @@
                                                 <input type="text" name="vprv_telefono" class="form-control" required="" autofocus=""/>
                                             </div>               
                                         </div>
-                                        <!-- comienzo formulario -->
+                                        <!-- fin formulario -->
                                     </div>
-
                                     <div class="box-footer">
                                         <button type="reset" class="btn btn-primary" data-title="Cancelar" rel="tooltip"> 
                                             <i class="fa fa-remove"></i> Cancelar</button>                                        

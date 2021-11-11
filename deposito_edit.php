@@ -18,37 +18,41 @@
             <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
             <?php require 'menu/toolbar_lte.ctp';?><!--MENU PRINCIPAL-->
             <div class="content-wrapper">
-                <div class="content">
-                    <div class="row">
+                <div class="content">                                           
+                    <div class="row">                                           
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                            <div class="box box-danger">
+                            <div class="box box-warning">
                                 <div class="box-header">
-                                    <i class="fa fa-trash"></i>
-                                    <h3 class="box-title">Borrar Modulo</h3>
+                                    <i class="fa fa-edit"></i>
+                                    <h3 class="box-title">Editar Deposito</h3>
                                     <div class="box-tools">
-                                        <a href="modulo_Index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
+                                        <a href="deposito_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="modulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="deposito_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from modulos where mod_cod=".$_GET['vmod_cod']);?>
+                                        <?php $resultado = consultas::get_datos("select * from deposito where dep_descri=".$_GET['vdep_descri']);?>
                                         <div class="form-group">
-                                            <input type="hidden" name="accion" value="3"/>
-                                            <input type="hidden" name="vmod_cod" value="<?php echo $resultado[0]['mod_cod']?>"/>
+                                            <input type="hidden" name="accion" value="2"/>
+                                            <input type="hidden" name="vdep_cod" value="<?php echo $resultado[0]['vdep_cod']?>"/>
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vmod_nombre" class="form-control" required="" disabled=""
-                                                       value="<?php echo $resultado[0]['mod_nombre']?>"/>
+                                                <input type="text" name="vdep_descri" class="form-control" required="" autofocus="" 
+                                                       value="<?php echo $resultado[0]['vdep_descri']?>"/>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <input type="text" name="vid_sucursal" class="form-control" required="" autofocus="" 
+                                                       value="<?php echo $resultado[0]['vid_sucursal']?>"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="box-footer">
-                                        <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip"> 
+                                        <button type="reset" class="btn btn-warning" data-title="Cancelar" rel="tooltip"> 
                                             <i class="fa fa-remove"></i> Cancelar</button>                                        
-                                        <button type="submit" class="btn btn-danger pull-right" data-title="Guardar" rel="tooltip"> 
-                                            <i class="fa fa-trash"></i> Borrar</button>
+                                        <button type="submit" class="btn btn-warning pull-right" data-title="Guardar" rel="tooltip"> 
+                                            <i class="fa fa-edit"></i> Actualizar</button>
                                     </div>
                                 </form>
                             </div>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="shortcut icon" type="image/x-icon" href="/lp3/img/user.png">
+        <link rel="shortcut icon" type="image/x-icon" href="/lp3/favicon.ico">
         <title>LP3</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -18,225 +18,202 @@
             <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
             <?php require 'menu/toolbar_lte.ctp';?><!--MENU PRINCIPAL-->
             <div class="content-wrapper">
-                    <!-- CONTENEDOR PRINCIPAL -->
-                    <div class="content">
-                        <!-- FILA 1 --> 
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                   <?php if (!empty($_SESSION['mensaje'])) { ?>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <?php if (!empty($_SESSION['mensaje'])) { ?>
                             <div class="alert alert-danger" id="mensaje">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php echo $_SESSION['mensaje'];
                                     $_SESSION['mensaje'] = '';
                                 ?>
                             </div>
-                            <?php } ?>
-                                <div class="box box-primary">
-                                    <div class="box-header">
-                                        <i class="ion ion-clipboard"></i>
-                                        <h3 class="box-title">Cargos</h3>
-                                        <div class="box-tools">
-                                            <a class="btn btn-primary btn-sm" data-title="Agregar" 
-                                                rel="tooltip"  data-toggle="modal" data-target="#registrar">
-                                                <i class="fa fa-plus"></i>
-                                                </a> 
-                                            <a href="" class="btn btn-default btn-sm" data-title="Agregar" rel="tooltip" target="print">
-                                                <i class="fa fa-print"></i>
-                                                </a>
-                                        </div>
+                            <?php } ?>                            
+                            <div class="box box-primary">
+                                <div class="box-header">
+                                    <i class="ion ion-clipboard"></i>
+                                    <h3 class="box-title">Cargos</h3>                                    
+                                    <div class="box-tools">
+                                        <a class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip" 
+                                           data-toggle="modal" data-target="#registrar">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="cargo_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
+                                            <i class="fa fa-print"></i>
+                                        </a>                                        
                                     </div>
-                                    <div class="box-body">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                 <form action="cargo_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                                  <div class="box-body">
+                                </div>
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <form action="cargo_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                                <div class="box-body">
                                                     <div class="form-group">
-                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                      <div class="input-group custom-search-form">
-                                                        <input type="search" class="form-control" name="buscar" 
-                                                           placeholder="Ingrese el valor a buscar..." autofocus=""/>
-                                                            <span class="input-group-btn">
-                                                          <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar"
-                                                           rel="tooltip"><i class="fa fa-search"></i></button>
-                                                        </span>
-                                                      </div>
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group custom-search-form">
+                                                                <input type="search" class="form-control" name="buscar"
+                                                                       placeholder="Ingrese valor a buscar..." autofocus=""/>
+                                                                <span class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar" 
+                                                                            rel="tooltip"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                   </div>
-                                                 </div> 
-                                               </form>
-                                                 <?php 
-                                           /* $valor = '';   
-                                            if (isset($_REQUEST['buscar'])){
+                                                </div>
+                                            </form>
+                                            <?php 
+                                            /*$valor = '';
+                                            if (isset($_REQUEST['buscar'])) {
                                                 $valor = $_REQUEST['buscar'];
                                             }*/
-                                             //consulta a la tabla marca
-                                            $cargos = consultas::get_datos("select * from cargo where car_descri ilike '%"./*$valor*/(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by car_cod");
-                                            //var_dump($cargos);
-                                            if (!empty($cargos)) { ?>
-                                                <div class="table-responsive">
-                                                    <table class="table table-condensed table-striped table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Cargo </th>
-                                                                <th class="text-center">Acciones </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php foreach ($cargos as $cargo) { ?>
-                                                            <tr>
-                                                                <td data-title='Descripción'><?php echo $cargo['car_descri'];?></td>
-                                                                <td data-title='Acciones' class="text-center">
-                                                                    <a onclick="editar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)"  class="btn btn-warning btn-sm" role='button'
-                                                                    data-title='Editar' rel='tooltip' data-toggle="modal" data-target="#editar">
-                                                                    <span class="glyphicon glyphicon-edit"></span></a>
-                                                         <a onclick="borrar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
-                                                                   data-title='Borrar' rel='tooltip' data-toggle="modal" data-target="#borrar">
-                                                             <span class="glyphicon glyphicon-trash"></span></a></td>
-                                                            </tr>
-                                                             <?php } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <?php }else { ?>
-                                                <div class="alert alert-info flat">
-                                                    <span class="glyphicon glyphicon-info-sign"></span>
-                                                    No se han registrado cargos...
-                                                </div>
-                                                 <?php }
-                                            ?>
+                                            
+                                            $cargos = consultas::get_datos("select * from cargo where car_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%'order by car_cod"); 
+                                                 if (!empty($cargos)) { ?>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-condensed table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Descripción</th>
+                                                            <th class="text-center">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($cargos as $cargo) { ?>
+                                                        <tr>
+                                                            <td data-title="Descripción"><?php echo $cargo['car_descri'];?></td>
+                                                            <td data-title="Acciones" class="text-center">
+                                                                <a onclick="editar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
+                                                                   data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
+                                                                    <i class="fa fa-edit"></i>
+                                                                </a>
+                                                                <a onclick="borrar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)" class="btn btn-danger btn-sm" role="buttom" 
+                                                                   data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>                                                                
+                                                            </td>
+                                                        </tr>
+                                                        <?php }?>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                         </div>
+                                            <?php }else{ ?>
+                                            <div class="alert alert-info flat">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                                No se han registrado cargos...
+                                            </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS--> 
-           <!-- MODAL REGISTRAR -->
-           <div class="modal fade" id="registrar" role="dialog">
-               <div class="modal-dialog">
-                   <div class="modal-content">
-                       <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">X</button>
-                           <h4 class="modal-title"><i class="fa fa-plus"></i><strong>Registrar Cargos</strong></h4>
-                       </div>
-                       <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                           <input type="hidden" name="accion" value="1">
-                           <input type="hidden" name="vcar_cod" value="0">
-                           <div class="modal-body">
-                               <div class="form-group">
-                                   <label class="control-label col-sm-2">descripcion:</label>
-                                   <div class="col-sm-10">
-                                       <input type="text" name="vcar_descri"  class="form-control" />  
-                                   </div>
-                           </div>
-                       
-                       </div>
-                           <div class="modal-footer">
-                               <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
-                                   <i class=" fa fa-remove"></i> Cerrar</button>   
-                                   <button type="submit"  class="btn btn-primary pull-right">
-                                   <i class="fa fa-floppy-o"></i> Registrar</button>   
-                           </div> 
-                        </form>
-                     </div>
-                    </div>
-                    </div> 
-                   </div> 
+            </div>
+                  <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
+                  <!-- MODAL REGISTRAR -->
+                  <div class="modal fade" id="registrar" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Cargos</strong></h4>
+                              </div>
+                              <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                  <input type="hidden" name="accion" value="1">
+                                  <input type="hidden" name="vcar_cod" value="0">
+                                  <div class="modal-body">
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-2">Descripción:</label>
+                                          <div class="col-sm-10">
+                                              <input type="text" name="vcar_descri" class="form-control" required="" autofocus=""/>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                          <i class="fa fa-remove"></i> Cerrar</button>
+                                          <button type="submit" class="btn btn-primary pull-right">
+                                          <i class="fa fa-floppy-o"></i> Registrar</button>                                          
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
                   </div>
-                 </div> 
-                </div>
-               </div>
-           </div>
-      <!-- FIN MODAL REGISTRAR -->
-      <!-- MODAL EDITAR -->
-           <div class="modal fade" id="editar" role="dialog">
-               <div class="modal-dialog">
-                   <div class="modal-content">
-                       <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">X</button>
-                           <h4 class="modal-title"><i class="fa fa-edit"></i><strong>Editar cargos</strong></h4>
-                       </div>
-                       <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                           <input type="hidden" name="accion" value="2">
-                           <input type="hidden" name="vcar_cod" id="cod" value="0">
-                           <div class="modal-body">
-                               <div class="form-group">
-                                   <label class="control-label col-sm-2">descripcion:</label>
-                                   <div class="col-sm-10">
-                                       <input type="text" name="vcar_descri" id="descri" class="form-control" />  
-                                   </div>
-                           </div>
-                       
-                       </div>
-                           <div class="modal-footer">
-                               <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
-                                   <i class=" fa fa-remove"></i> Cerrar</button>   
-                                   <button type="submit"  class="btn btn-warning pull-right">
-                                   <i class="fa fa-edit"></i> Actualizar</button>   
-                           </div> 
-                        </form>
-                     </div>
-                    </div>
-                    </div> 
-                   </div> 
+                  <!-- FIN MODAL REGISTRAR -->
+                  <!-- MODAL EDITAR -->
+                  <div class="modal fade" id="editar" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                  <h4 class="modal-title"><i class="fa fa-edit"></i> <strong>Editar Cargos</strong></h4>
+                              </div>
+                              <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                  <input type="hidden" name="accion" value="2">
+                                  <input type="hidden" name="vcar_cod" id="cod" value="0">
+                                  <div class="modal-body">
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-2">Descripción:</label>
+                                          <div class="col-sm-10">
+                                              <input type="text" name="vcar_descri" id="descri" class="form-control" required="" autofocus=""/>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                          <i class="fa fa-remove"></i> Cerrar</button>
+                                          <button type="submit" class="btn btn-warning pull-right">
+                                          <i class="fa fa-edit"></i> Actualizar</button>                                          
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
                   </div>
-                 </div> 
-                </div>
-               </div>
-           </div>
-      <!-- FIN MODAL EDITAR -->
-      <!-- MODAL BORRAR -->
-           <div class="modal fade" id="borrar" role="dialog">
-               <div class="modal-dialog">
-                   <div class="modal-content">
-                       <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" arial-label="Close">X</button>
-                           <h4 class="modal-title custom-align">Atenci&oacute;n!!!</h4>
-                       </div>
-               
-                           <div class="modal-body">
-                               <div class="alert alert-danger" id="confirmacion"></div>  
-                       </div>
-                           <div class="modal-footer">
-                               <a id="si"  class="btn btn-primary ">
-                                   <i class=" fa fa-check"></i> Si</a>   
-                                   <button type="button"  class="btn btn-default" data-dismiss="modal">
-                                   <i class="fa fa-edit"></i> No</button>   
-                           </div> 
-                     </div>
-                    </div>
-                    </div> 
-                   </div> 
+                  <!-- FIN MODAL EDITAR --> 
+                  <!-- MODAL BORRAR -->
+                  <div class="modal fade" id="borrar" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                  <h4 class="modal-title custom_align">Atenci&oacute;n!!!</h4>
+                              </div>
+                                  <div class="modal-body">
+                                      <div class="alert alert-danger" id="confirmacion"></div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <a  id="si" class="btn btn-primary">
+                                          <i class="fa fa-check"></i> Si</a>
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">
+                                      <i class="fa fa-remove"></i> No</button>                                          
+                                  </div>
+                          </div>
+                      </div>
                   </div>
-                 </div> 
-                </div>
-               </div>
-           </div>
-      <!-- FIN MODAL BORRAR -->
-        </div>                    
-         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
-           <script>
+                  <!-- FIN MODAL BORRAR -->                   
+            </div>                  
+        <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
+        <script>
             $("#mensaje").delay(4000).slideUp(200,function(){
                 $(this).alert('close');
             });
             $(".modal").on('shown.bs.modal',function(){
                 $(this).find('input:text:visible:first').focus();
-            })
-            
-        </script>
-}       <script>
+            });
+        </script>          
+        <script>
         function editar(datos){
-           var dat = datos.split("_");
-          $("#cod").val(dat[0]); 
-          $("#descri").val(dat[1]);
-        }
+            var dat = datos.split("_");
+            $("#cod").val(dat[0]);
+            $("#descri").val(dat[1]);
+        };
         function borrar(datos){
             var dat = datos.split("_");
             $('#si').attr('href','cargo_control.php?vcar_cod='+dat[0]+'&vcar_descri='+dat[1]+'&accion=3');
-            $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span>\n\
-             Desea borrar  el cargo <strong>'+dat[1]+'</strong>?');
+            $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
+            Desea borrrar el cargo <strong>'+dat[1]+'</strong>?');
         }
         </script>
     </body>

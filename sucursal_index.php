@@ -42,14 +42,33 @@
                                 <h3 class="box-title">Sucursales</h3>
                                 <div class="box-tools">
                                     <a href="sucursal_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='left'><i class="fa fa-plus"></i></a>
+                                    <a href="sucursal_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
+                                            <i class="fa fa-print"></i>                                            
+                                        </a>
                                 </div>
                             </div>
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <form action="sucursal_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group custom-search-form">
+                                                                <input type="search" class="form-control" name="buscar"
+                                                                       placeholder="Ingrese valor a buscar..." autofocus=""/>
+                                                                <span class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar" 
+                                                                            rel="tooltip"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </form>
                                         <?php
                                         //consulta a la tabla sucursal
-                                        $sucursales = consultas::get_datos("select * from sucursal order by id_sucursal");
+                                        $sucursales = consultas::get_datos("select * from sucursal where suc_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%'order by id_sucursal");
                                         //var_dump($sucursales);
                                         if (!empty($sucursales)) { ?>
                                             <div class="table-responsive">

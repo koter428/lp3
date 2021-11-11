@@ -44,9 +44,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> porcentaje:</label>
+                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Porcentaje:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="number" name="vtipo_porcen" class="form-control" required=""/>
+                                                <input type="number" name="vtipo_porcen" value="0" class="form-control" required=""/>
                                             </div>
                                         </div>
                                     </div>

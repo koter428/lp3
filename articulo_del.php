@@ -38,7 +38,7 @@ and open the template in the editor.
                                 <div class="box-tools">
                                     <a href="articulo_index.php" class="btn btn-primary btn-sm" data-title="Volver">
                                         <i class="fa fa-arrow-left"></i>
-                                    </a>
+                                     </a>
                                 </div>
                             </div>
                             <form action="articulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">

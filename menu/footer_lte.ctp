@@ -1,3 +1,4 @@
+<!-- footer_lte -->
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
         <b>Sucursal:</b> <?php echo $_SESSION['sucursal'];?>

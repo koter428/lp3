@@ -40,21 +40,41 @@
                                     $_SESSION['mensaje'] = '';
                                     ?>
                                 </div>
-<?php } ?>
+                              <?php } ?>
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">tipos de impuestos</h3>
                                     <div class="box-tools">
-                                        <a href="impuesto_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                        <a href="impuesto_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
+                                            <i class="fa fa-print"></i></a>
+                                        <a href="impuesto_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'
+                                        ><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <form action="impuesto_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group custom-search-form">
+                                                                <input type="search" class="form-control" name="buscar"
+                                                                       placeholder="Ingrese valor a buscar..." autofocus=""/>
+                                                                <span class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar" 
+                                                                            rel="tooltip"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                             <?php
                                             //consulta a la tabla impuesto
                                             $impuesto = consultas::get_datos("select * from tipo_impuesto where tipo_cod != '0' order by tipo_cod");
+                                            $impuesto = consultas::get_datos("select * from tipo_impuesto where tipo_descri  ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%'order by tipo_cod");
                                             //var_dump($impuesto);
                                             if (!empty($impuesto)) {
                                                 ?>

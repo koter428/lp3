@@ -10,8 +10,9 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <?php
-    session_start();/*Reanudar sesion*/
-    require 'menu/css_lte.ctp'; ?>
+        session_start();/*Reanudar sesion*/
+        require 'menu/css_lte.ctp'; 
+    ?>
     <!--ARCHIVOS CSS-->
 
 </head>
@@ -22,12 +23,13 @@
         <!--CABECERA PRINCIPAL-->
         <?php require 'menu/toolbar_lte.ctp'; ?>
         <!--MENU PRINCIPAL-->
+        
         <div class="content-wrapper">
             <div class="content">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                         <div class="box box-warning">
-                            <div class="box-header">
+                            <div class="box-header"> 
                                 <i class="fa fa-edit"></i>
                                 <h3 class="box-title">Editar impuestos</h3>
                                 <div class="box-tools">
@@ -36,6 +38,7 @@
                                     </a>
                                 </div>
                             </div>
+                           
                             <form action="impuesto_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                 <div class="box-body">
                                     <?php $resultado = consultas::get_datos("select * from tipo_impuesto where tipo_cod=" . $_GET['vtipo_cod']); ?>
@@ -46,6 +49,12 @@
                                         <input type="hidden" name="vtipo_porcen" value="<?php echo $resultado[0]['tipo_porcen'] ?>" />
                                         <div class="col-lg-8 col-md-8 col-sm-8">
                                             <input type="text" name="vtipo_descri" class="form-control" required="" autofocus="" value="<?php echo $resultado[0]['tipo_descri'] ?>" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2 col-md-2 col-sm-2"> Porcentaje:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="number" name="vtipo_porcen" class="form-control" required="" value="<?php echo $resultado[0]['tipo_porcen'] ?>" /> 
                                         </div>
                                     </div>
                                 </div>

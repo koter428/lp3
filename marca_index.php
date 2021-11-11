@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="shortcut icon" type="image/x-icon" href="/lp3/img/user.png">
+        <link rel="shortcut icon" type="image/x-icon" href="/lp3/favicon.ico">
         <title>LP3</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -37,30 +37,31 @@
                                     <h3 class="box-title">Marcas</h3>
                                     <div class="box-tools">
                                         <a href="marca_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                        <a href="marca_print.php" class="btn btn-default btn-sm pull-right" data-title='Imprimir' rel='tooltip' data-placement='top' target="_blank"><i class="fa fa-print"></i></a>
                                     </div>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <form action="marca_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                                  <div class="box-body">
+                                            <form  method="post" accept-charset="utf-8" class="form-horizontal">
+                                                <div class="box-body">
                                                     <div class="form-group">
-                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                      <div class="input-group custom-search-form">
-                                                        <input type="search" class="form-control" name="buscar" 
-                                                           placeholder="Ingrese el valor a buscar..." autofocus=""/>
-                                                            <span class="input-group-btn">
-                                                          <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar"
-                                                           rel="tooltip"><i class="fa fa-search"></i></button>
-                                                        </span>
-                                                      </div>
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group custom-search-form">
+                                                                <input type="search" class="form-control" name="buscar"
+                                                                       placeholder="Ingrese valor a buscar..." autofocus=""/>
+                                                                <span class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar" 
+                                                                            rel="tooltip"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                   </div>
-                                                 </div> 
-                                               </form>
+                                                </div>
+                                            </form>                                            
                                             <?php 
                                             //consulta a la tabla marca
-                                            $marcas = consultas::get_datos("select * from marca where mar_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' and mar_cod!='0' order by mar_cod");
+                                            $marcas = consultas::get_datos("select * from marca where mar_descri ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by mar_descri");
                                             //var_dump($marcas);
                                             if (!empty($marcas)) { ?>
                                             <div class="table-responsive">

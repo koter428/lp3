@@ -1,6 +1,8 @@
 <?php
+
 include_once './tcpdf/tcpdf.php';
 include_once 'clases/conexion.php';
+
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
 
@@ -11,10 +13,11 @@ class MYPDF extends TCPDF {
         // Set font
         $this->SetFont('helvetica', 'I', 8);
         // Page number
-        $this->Cell(0,0, 'Pag. '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, 
-                false, 'R', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 0, 'Pag. ' . $this->getAliasNumPage() . '/' . $this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
+
 }
+
 // create new PDF document // CODIFICACION POR DEFECTO ES UTF-8
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -47,39 +50,50 @@ $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
 
 // ---------------------------------------------------------
-
 // TIPO DE LETRA
-$pdf->SetFont('times', 'B', 14);
+$pdf->SetFont('times', 'B', 18);
 
 // AGREGAR PAGINA
-$pdf->AddPage('P','LEGAL');
-$pdf->Cell(0,0,"REPORTE DE MARCA",0,1,'C');
+$pdf->AddPage('P', 'LEGAL');
+$pdf->Cell(0, 0, "REPORTE DE MARCA", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
 //COLOR DE TABLA
-        $pdf->SetFillColor(255, 255, 255);
-        $pdf->SetTextColor(0);
-        $pdf->SetDrawColor(0, 0, 0);
-        $pdf->SetLineWidth(0.2);
-        
-        $pdf->SetFont('', 'B',12);
-        // Header        
-        $pdf->SetFillColor(180, 180, 180);
-        $pdf->Cell(50,5,'CODIGO', 1, 0, 'C', 1);
-        $pdf->Cell(0,5,'DESCRIPCION', 1, 0, 'C', 1);
-        
+$pdf->SetFillColor(255, 255, 255);
+$pdf->SetTextColor(0);
+$pdf->SetDrawColor(0, 0, 0);
+$pdf->SetLineWidth(0.2);
+
+$pdf->SetFont('', 'B', 12);
+// Header        
+$pdf->SetFillColor(180, 180, 180);
+$pdf->Cell(50, 5, 'CODIGO', 1, 0, 'C', 1);
+$pdf->Cell(0, 5, 'DESCRIPCION', 1, 0, 'C', 1);
+
+$pdf->Ln();
+$pdf->SetFont('', '');
+$pdf->SetFillColor(255, 255, 255);
+//CONSULTAS DE LOS REGISTROS
+if (!empty(isset($_REQUEST['vdesde'])) && !empty(isset($_REQUEST['vhasta']))) {
+    if ($_REQUEST['opcion'] == 1) { //por codigo
+        $marcas = consultas::get_datos("select * from marca where mar_cod between ".$_REQUEST['vdesde']." and ".$_REQUEST['vhasta']);
+    }else{
+        $marcas = consultas::get_datos("select * from marca where mar_descri between '".$_REQUEST['vdesde']."' and '".$_REQUEST['vhasta']."'");
+    }
+}else{
+    $marcas = consultas::get_datos("select * from marca order by mar_cod");
+}
+if (!empty($marcas)) {
+    foreach ($marcas as $marca) {
+        $pdf->Cell(50, 5, $marca['mar_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(0, 5, $marca['mar_descri'], 1, 0, 'L', 1);
         $pdf->Ln();
-        $pdf->SetFont('', '');
-        $pdf->SetFillColor(255, 255, 255);
-        //CONSULTAS DE LOS REGISTROS
-        $marcas = consultas::get_datos("select * from marca order by mar_cod");            
-                
-        foreach ($marcas as $marca) {
-            $pdf->Cell(50,5,$marca['mar_cod'], 1, 0, 'C', 1);
-            $pdf->Cell(0,5,$marca['mar_descri'], 1, 0, 'C', 1);
-            $pdf->Ln();
-        }
-        
+    }
+}else{
+    $pdf->Cell(0, 0, "No se han registrado marcas", 1, 0, 'L', 1);
+}
+
+
 
 
 //SALIDA AL NAVEGADOR
