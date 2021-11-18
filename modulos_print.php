@@ -1,5 +1,5 @@
 <?php
-
+require 'ver_session.php'; /*VERIFICAR SESSION*/
 include_once './tcpdf/tcpdf.php';
 include_once 'clases/conexion.php';
 

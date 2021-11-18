@@ -1,5 +1,5 @@
 <?php
-
+require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
 
 switch ($_REQUEST['accion']) {

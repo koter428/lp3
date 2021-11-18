@@ -10,6 +10,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php
+        require 'ver_session.php'; /*VERIFICAR SESSION*/
         session_start(); /* Reanudar sesion */
         require 'menu/css_lte.ctp';
         ?>
@@ -73,7 +74,7 @@
                                             </form>
                                             <?php
                                             //consulta a la tabla $deposito
-                                            $deposito = consultas::get_datos("select * from deposito where dep_descri != '0' order by dep_cod");
+                                            $deposito = consultas::get_datos("select * from deposito where dep_cod != '0' order by dep_cod");
                                             $deposito = consultas::get_datos("select * from deposito where dep_descri  ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%'order by dep_cod");
                                             //var_dump($deposito);
                                             if (!empty($deposito)) {

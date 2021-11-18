@@ -9,6 +9,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php 
+        require 'ver_session.php'; /*VERIFICAR SESSION*/
         session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
@@ -34,9 +35,9 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="fa fa-newspaper-o"></i>
-                                    <h3 class="box-title">Pedido de Ventas</h3>
+                                    <h3 class="box-title">Pedido de Compras</h3>
                                     <div class="box-tools">
-                                        <a href="pedventas_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                        <a href="pedcompra_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -60,7 +61,7 @@
                                             </form>                                            
                                             <?php 
                                             //consulta a la tabla marca
-                                            $pedidos = consultas::get_datos("select * from v_pedido_cabventa where ped_cod::varchar ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by ped_cod desc");
+                                            $pedidos = consultas::get_datos("select * from v_pedido_cabcompra where ped_com::varchar ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by ped_com desc");
                                             //var_dump($marcas);
                                             if (!empty($pedidos)) { ?>
                                             <div class="table-responsive">
@@ -69,7 +70,7 @@
                                                         <tr>
                                                             <th>N° Pedido</th>
                                                             <th>Fecha</th>
-                                                            <th>Cliente</th>
+                                                            <th>Proveedor</th>
                                                             <th>Total</th>
                                                             <th>Estado</th>
                                                             <th class="text-center">Acciones</th>
@@ -78,27 +79,27 @@
                                                     <tbody>
                                                         <?php foreach ($pedidos as $ped) { ?>
                                                         <tr>
-                                                            <td data-title='N° Pedido'><?php echo $ped['ped_cod'];?></td>
+                                                            <td data-title='N° Pedido'><?php echo $ped['ped_com'];?></td>
                                                             <td data-title='Fecha'><?php echo $ped['ped_fecha'];?></td>
-                                                            <td data-title='Cliente'><?php echo $ped['cliente'];?></td>
+                                                            <td data-title='Proveedor'><?php echo $ped['proveedor'];?></td>
                                                             <td data-title='Total'><?php echo $ped['ped_total'];?></td>
                                                             <td data-title='Estado'><?php echo $ped['estado'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                                 <?php if($ped['estado']=="PENDIENTE"){?>
-                                                                <a href="pedventas_det.php?vped_cod=<?php echo $ped['ped_cod'];?>" class="btn btn-success btn-sm" role='button'
+                                                                <a href="pedcompra_det.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-success btn-sm" role='button'
                                                                    data-title='Detalles' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-list"></span>
                                                                 </a>                                                                
-                                                                <a href="pedventas_edit.php?vped_cod=<?php echo $ped['ped_cod'];?>" class="btn btn-warning btn-sm" role='button'
+                                                                <a href="pedcompra_edit.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
-                                                                <a onclick="anular(<?php echo "'".$ped['ped_cod']."_".$ped['cliente']."_".$ped['ped_fecha']."'"?>)" class="btn btn-danger btn-sm" role='button'
+                                                                <a onclick="anular(<?php echo "'".$ped['ped_com']."_".$ped['proveedor']."_".$ped['ped_fecha']."'"?>)" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Anular' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#anular">
                                                                     <span class="glyphicon glyphicon-remove"></span>
                                                                 </a>                                                                        
                                                                 <?php }?>
-                                                                <a href="pedventas_print.php?vped_cod=<?php echo $ped['ped_cod'];?>" class="btn btn-default btn-sm" role='button'
+                                                                <a href="pedcompra_print.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-default btn-sm" role='button'
                                                                    data-title='Imprimir' rel='tooltip' data-placement='top' target="print">
                                                                     <span class="glyphicon glyphicon-print"></span>
                                                                 </a>                                                                   
@@ -111,7 +112,7 @@
                                             <?php }else { ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span> 
-                                                No se han registrado marcas...
+                                                No se han registrado compras...
                                             </div>
                                             <?php }
                                             ?>
@@ -157,9 +158,9 @@
         <script>
             function anular(datos){
                 var dat = datos.split('_');
-                $('#si').attr('href','pedventas_control.php?vped_cod='+dat[0]+'&accion=3');
+                $('#si').attr('href','pedcompra_control.php?vped_com='+dat[0]+'&accion=3');
                 $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea anular el \n\
-                pedido N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del cliente <strong>'+dat[1]+'</strong> ?');
+                pedido N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del proveedor <strong>'+dat[1]+'</strong> ?');
             }
         </script>        
     </body>

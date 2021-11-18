@@ -1,4 +1,5 @@
 <?php
+require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
 session_start();
 

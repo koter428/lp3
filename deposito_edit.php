@@ -9,6 +9,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php 
+        require 'ver_session.php'; /*VERIFICAR SESSION*/
         session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
@@ -18,8 +19,8 @@
             <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
             <?php require 'menu/toolbar_lte.ctp';?><!--MENU PRINCIPAL-->
             <div class="content-wrapper">
-                <div class="content">                                           
-                    <div class="row">                                           
+                <div class="content">
+                    <div class="row">
                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                             <div class="box box-warning">
                                 <div class="box-header">
@@ -33,18 +34,14 @@
                                 </div> 
                                 <form action="deposito_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from deposito where dep_descri=".$_GET['vdep_descri']);?>
+                                        <?php $resultado = consultas::get_datos("select * from deposito where dep_cod=".$_GET['vdep_cod']);?>
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="2"/>
-                                            <input type="hidden" name="vdep_cod" value="<?php echo $resultado[0]['vdep_cod']?>"/>
+                                            <input type="hidden" name="vdep_cod" value="<?php echo $resultado[0]['dep_cod']?>"/>
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
                                                 <input type="text" name="vdep_descri" class="form-control" required="" autofocus="" 
-                                                       value="<?php echo $resultado[0]['vdep_descri']?>"/>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vid_sucursal" class="form-control" required="" autofocus="" 
-                                                       value="<?php echo $resultado[0]['vid_sucursal']?>"/>
+                                                       value="<?php echo $resultado[0]['dep_descri']?>"/>
                                             </div>
                                         </div>
                                     </div>

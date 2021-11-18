@@ -1,4 +1,5 @@
 <?php 
+require 'ver_session.php'; /*VERIFICAR SESSION*/
     require 'clases/conexion.php';
     session_start();
     $detalles = consultas::get_datos("select * from v_detalle_compras where com_cod=".$_REQUEST['vcom_cod']

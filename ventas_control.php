@@ -1,7 +1,10 @@
 <?php
+require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
 session_start();
-
+ 
+    // print_r($_REQUEST); return;
+    
 $sql="select sp_ventas(".$_REQUEST['accion'].",
 ".$_REQUEST['vven_cod'].", 
 ".$_SESSION['emp_cod'].", 

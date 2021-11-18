@@ -17,14 +17,14 @@
             case 1: //insertar
                 $sql =  "insert into deposito(dep_cod,dep_descri,id_sucursal) " .
                         "values((select coalesce(max(dep_cod),0)+1 from deposito),'" .
-                        strtoupper($_REQUEST['vdep_descri']) . "','" . $_REQUEST['vid_sucursal'] . "')";
+                        strtoupper($_REQUEST['vdep_descri']) . "','" . $_REQUEST['vdep_porcen'] . "')";
                 $mensaje = "Se guardo correctamente";
                 break;
 
             case 2: //actualizar
-                $sql =  "update deposito set dep_cod = '" . strtoupper($_REQUEST['vdep_cod']) . "', " .
-                        "tipo_descri='" . $_REQUEST['vdep_descri'] . "' " .
-                        "where id_sucursal ='" . $_REQUEST['vid_sucursal'] . "'";
+                $sql =  "update tipo_impuesto set dep_descri = '" . strtoupper($_REQUEST['vdep_descri']) . "', " .
+                        "tipo_porcen='" . $_REQUEST['vid_sucursal'] . "' " .
+                        "where tipo_cod ='" . $_REQUEST['vdep_cod'] . "'";
                 $mensaje = "Se actualizo correctamente";
                 break;
 

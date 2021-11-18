@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Teléfono:</label>
                                             <div class="col-lg-4">
-                                                <input type="tel" name="vcli_telefono" class="form-control" placeholder="Ingrese el teléfono del cliente"/>
+                                                <input type="tel" name="vcli_telefono" class="form-control" placeholder="Ingrese el teléfono del cliente" maxlength="15"/>
                                             </div>
                                         </div>                  
                                         <div class="form-group">

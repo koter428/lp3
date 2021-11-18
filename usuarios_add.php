@@ -1,89 +1,62 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="shortcut icon" type="image/x-icon" href="/Lp3/img/avatar_1.png">
-        <title>LP3</title>
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-        <?php 
-        session_start();/*Reanudar sesion*/
-        require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
-
-    </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
-            <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
-            <?php require 'menu/toolbar_lte.ctp';?><!--MENU PRINCIPAL-->
-            <div class="content-wrapper">
-                <div class="content">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="box box-primary">
-                                <div class="box-header">
-                                    <i class="ion ion-android-person-add"></i>
-                                    <h3 class="box-title">Agregar Clientes</h3>
-                                    <div class="box-tools">
-                                        <a href="usuarios_index.php" class="btn btn-primary pull-right btn-sm" data-title="Volver" rel="tooltip">
-                                            <i class="fa fa-arrow-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <form action="usuarios_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                    <div class="box-body">
-                                        <input type="hidden" name="vcli_cod" value="0"/>
-                                        <input type="hidden" name="accion" value="1"/>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2">C.I N°:</label>
-                                            <div class="col-lg-4">
-                                                <input type="number" name="vcli_ci" class="form-control" required="" autofocus="" min="1" placeholder="Ingrese el C.I del cliente"/>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2">Nombres:</label>
-                                            <div class="col-lg-6">
-                                                <input type="text" name="vcli_nombre" class="form-control" required="" placeholder="Ingrese el nombre del cliente"/>
-                                            </div>
-                                        </div>                  
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2">Apellidos:</label>
-                                            <div class="col-lg-6">
-                                                <input type="text" name="vcli_apellido" class="form-control" required="" placeholder="Ingrese el apellido del cliente"/>
-                                            </div>
-                                        </div> 
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2">Teléfono:</label>
-                                            <div class="col-lg-4">
-                                                <input type="tel" name="vcli_telefono" class="form-control" placeholder="Ingrese el teléfono del cliente"/>
-                                            </div>
-                                        </div>                  
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2">Dirección:</label>
-                                            <div class="col-lg-6">
-                                                <textarea class="form-control" name="vcli_direcc" placeholder="Ingrese la dirección del cliente"></textarea>
-                                            </div>
-                                        </div>                                                          
-                                    </div>  
-                                    <div class="box-footer">
-                                        <button type="reset" class="btn btn-default">
-                                            <i class="fa fa-remove"></i> Cancelar
-                                        </button>
-                                        <button type="submit" class="btn btn-primary pull-right">
-                                            <i class="fa fa-floppy-o"></i> Guardar
-                                        </button>                                        
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<?php 
+require 'ver_session.php'; /*VERIFICAR SESSION*/
+require 'clases/conexion.php';
+session_start();
+?>
+<div class="modal-header">
+    <button class="close" data-dismiss="modal" aria-label="Close">
+        <i class="fa fa-remove"></i></button>
+    <h4 class="modal-title"><i class="ion ion-person-add"></i> Agregar Usuario</h4>
+</div>
+<form action="usuarios_control.php" method="POST" accept-charset="utf-8" class="form-horizontal">
+    <input type="hidden" name="accion" value="1">
+    <input type="hidden" name="vusu_cod" value="0">
+    <div class="modal-body">
+    <div class="form-group">
+        <label class="control-label col-lg-2 col-md-2 col-sm-2">Empleado:</label>
+        <div class="col-lg-8 col-md-8">
+                <?php $empleados = consultas::get_datos("select * from empleado where emp_cod not in(select emp_cod from usuarios) order by emp_nombre");?>
+                <select class="form-control select2" name="vemp_cod" required="">
+                    <?php if (!empty($empleados)) {                                                         
+                    foreach ($empleados as $empleado) { ?>
+                    <option value="<?php echo $empleado['emp_cod']?>"><?php echo $empleado['emp_nombre']." ".$empleado['emp_apellido']?></option>
+                    <?php }                                                    
+                    }else{ ?>
+                    <option value="">No se encontraron empleados sin usuario</option>
+                    <?php }?>
+                </select> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2 col-md-2 col-sm-2">Grupo:</label>
+        <div class="col-lg-6 col-md-6">
+                <?php $grupos = consultas::get_datos("select * from grupos order by gru_nombre");?>
+                <select class="form-control select2" name="vgru_cod" required="">
+                    <?php if (!empty($grupos)) {                                                         
+                    foreach ($grupos as $grupo) { ?>
+                    <option value="<?php echo $grupo['gru_cod']?>"><?php echo $grupo['gru_nombre']?></option>
+                    <?php }                                                    
+                    }else{ ?>
+                    <option value="">Debe insertar al menos un grupo</option>
+                    <?php }?>
+                </select> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2 col-md-2 col-sm-2">Alias/Nick:</label>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <input type="text" class="form-control" name="vusu_nick" minlength="4"/>
+        </div>
+    </div>
+        <div class="form-group">
+            <label class="control-label col-lg-2 col-md-2 col-sm-2">Contraseña:</label>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <input type="password" class="form-control" name="vusu_clave" minlength="4"/>
             </div>
-                  <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
-            </div>                  
-        <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
-    </body>
-</html>
-
-
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="reset" data-dismiss="modal" class="btn btn-default pull-left"><i class="fa fa-remove"></i> Cerrar</button>
+        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-floppy-o"></i> Crear</button>
+    </div>
+</form>

@@ -13,7 +13,8 @@ and open the template in the editor.
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-        <?php 
+        <?php
+        require 'ver_session.php'; /*VERIFICAR SESSION*/ 
         session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 

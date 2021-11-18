@@ -9,6 +9,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php 
+        require 'ver_session.php'; /*VERIFICAR SESSION*/
         session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
@@ -56,7 +57,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Teléfono:</label>
                                             <div class="col-lg-4">
-                                                <input type="tel" name="vemp_tel" class="form-control" placeholder="Ingrese el teléfono del empleado"/>
+                                                <input type="tel" name="vemp_tel" class="form-control" placeholder="Ingrese el teléfono del empleado" maxlength="20"/>
                                             </div>
                                         </div>                  
                                         <div class="form-group">

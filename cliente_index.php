@@ -7,7 +7,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php 
-        session_start();/*Reanudar sesion*/
+        require 'ver_session.php'; /*VERIFICAR SESSION*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>

@@ -9,9 +9,9 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php 
+		require 'ver_session.php'; /*VERIFICAR SESSION*/
         session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
-
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -27,16 +27,18 @@
                             <div class="alert alert-danger" id="mensaje">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php echo $_SESSION['mensaje'];
-                                    $_SESSION['mensaje'] = '';
-                                ?>
+                                    $_SESSION['mensaje'] = ''; ?>
                             </div>
                             <?php } ?>
                             <div class="box box-primary">
+                              <?php  if ($_SESSION['MARCA']['leer']==='t') {?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Marcas</h3>
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['MARCA']['insertar']==='t') { ?>                                                                                    
                                         <a href="marca_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                    <?php } ?>   
                                         <a href="marca_print.php" class="btn btn-default btn-sm pull-right" data-title='Imprimir' rel='tooltip' data-placement='top' target="_blank"><i class="fa fa-print"></i></a>
                                     </div>
                                 </div>
@@ -77,30 +79,35 @@
                                                         <tr>
                                                             <td data-title='Descripción'><?php echo $mar['mar_descri'];?></td>
                                                             <td data-title='Acciones' class="text-center">
+                                                            <?php if ($_SESSION['MARCA']['editar']=='t') { ?>
                                                                 <a href="marca_edit.php?vmar_cod=<?php echo $mar['mar_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
-                                                                    <span class="glyphicon glyphicon-edit"></span>
-                                                                </a>
+                                                                    <span class="glyphicon glyphicon-edit"></span></a>
+                                                                    <?php }?>   
+                                                                <?php if ($_SESSION['MARCA']['borrar']=='t') { ?>
                                                                 <a href="marca_del.php?vmar_cod=<?php echo $mar['mar_cod'];?>" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Borrar' rel='tooltip' data-placement='top'>
-                                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                                </a>                                                                        
+                                                                    <span class="glyphicon glyphicon-trash"></span></a>
+                                                                    <?php }?>                                                                        
                                                             </td>
                                                         </tr>
                                                         <?php } ?>
                                                     </tbody>
-                                                </table>
-                                            </div>
-                                            <?php }else { ?>
+                                                    </table>
+                                                </div>
+                                               <?php }else{ ?>
                                             <div class="alert alert-info flat">
-                                                <span class="glyphicon glyphicon-info-sign"></span> 
+                                                <span class="glyphicon glyphicon-info-sign"></span>
                                                 No se han registrado marcas...
-                                            </div>
-                                            <?php }
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
+                                            </div>  
+                                            <?php } ?>
+                                               <?php }else{  ?>
+                                                <div class="box-body"></div>
+                                            <div class="alert alert-info flat">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                                 No posee permisos de lectura
+                                            </div>  
+                                        <?php } ?>            
                             </div>
                         </div>                        
                     </div>
