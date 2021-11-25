@@ -1,6 +1,6 @@
 <!-- index -->
 <?php
-session_start();
+@session_start();
 if ($_SESSION) {
     session_destroy();
 }

@@ -11,7 +11,7 @@
 
         <?php
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start(); /* Reanudar sesion */
+        @session_start(); /* Reanudar sesion */
         require 'menu/css_lte.ctp';
         ?>
         <!--ARCHIVOS CSS-->
@@ -83,7 +83,6 @@
                                                     <table class="table table-condensed table-striped table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <th>deposito</th>
                                                                 <th>Descripcion</th>
                                                                 <th>sucursal</th>
                                                                 <th class="text-center">Acciones</th>

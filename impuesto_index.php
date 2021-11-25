@@ -11,7 +11,7 @@
 
         <?php
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start(); /* Reanudar sesion */
+        @session_start(); /* Reanudar sesion */
         require 'menu/css_lte.ctp';
         ?>
         <!--ARCHIVOS CSS-->
@@ -45,7 +45,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
-                                    <h3 class="box-title">tipos de impuestos</h3>
+                                    <h3 class="box-title">Tipo de Impuesto</h3>
                                     <div class="box-tools">
                                         <a href="impuesto_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i></a>
@@ -83,13 +83,15 @@
                                                     <table class="table table-condensed table-striped table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <th>tipos de impuestos</th>
+                                                                <th>Código</th>
+                                                                <th>Impuesto</th>
                                                                 <th class="text-center">Acciones</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php foreach ($impuesto as $tipo) { ?>
                                                                 <tr>
+                                                                    <td data-title='Código'><?php echo $tipo['tipo_cod']; ?></td>
                                                                     <td data-title='tipo_impuesto'><?php echo $tipo['tipo_descri']; ?></td>
                                                                     <td data-title='porcentaje'><?php echo $tipo['tipo_porcen']; ?></td>
                                                                     <td data-title='Acciones' class="text-center">

@@ -10,7 +10,7 @@
 
         <?php
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start(); /* Reanudar sesion */
+        @session_start(); /* Reanudar sesion */
         require 'menu/css_lte.ctp';
         ?><!--ARCHIVOS CSS-->
 
@@ -82,6 +82,7 @@
                                                                 <th>Razon Social </th>
                                                                 <th>Direccion</th>
                                                                 <th>Telefono </th> 
+                                                                <th>Código</th> 
                                                                 <th class="text-center">Acciones </th>
                                                             </tr>
                                                         </thead>
@@ -92,6 +93,7 @@
                                                                     <td data-title='razonsocial'><?php echo $prv['prv_razonsocial']; ?></td>
                                                                     <td data-title='direccion'><?php echo $prv['prv_direccion']; ?></td>
                                                                     <td data-title='telefono'><?php echo $prv['prv_telefono']; ?></td>
+                                                                    <td data-title='Código'><?php echo $prv['prv_cod']; ?></td>
                                                                     <td data-title='Acciones' class="text-center"><a href="proveedor_edit.php?vprv_cod=<?php echo $prv['prv_cod']; ?>" 
                                                                                                                      class="btn btn-warning btn-sm" 
                                                                                                                      role='button' data-title='Editar' rel='tooltip' data-placement='left'>

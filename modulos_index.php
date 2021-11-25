@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -76,6 +76,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Descripción</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -83,6 +84,7 @@
                                                         <?php foreach ($modulos as $modulo) { ?>
                                                         <tr>
                                                             <td data-title="Descripción"><?php echo $modulo['mod_nombre'];?></td>
+                                                            <td data-title="Descripción"><?php echo $modulo['mod_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
                                                                 <a onclick="editar(<?php echo "'".$modulo['mod_cod']."_".$modulo['mod_nombre']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">

@@ -2,7 +2,7 @@
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
 
-session_start();
+@session_start();
 
 $sql="select sp_grupos(".$_REQUEST['accion'].",".$_REQUEST['vgru_cod'].",'".$_REQUEST['vgru_nombre']."') as resul";
 

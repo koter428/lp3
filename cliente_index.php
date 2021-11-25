@@ -67,6 +67,7 @@
                                                             <th>C.I N°</th>
                                                             <th>Teléfono</th>
                                                             <th>Dirección</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -77,6 +78,7 @@
                                                             <td data-title="C.I Nº"><?php echo $cliente['cli_ci'];?></td>
                                                              <td data-title="Telefono"><?php echo $cliente['cli_telefono'];?></td> 
                                                              <td data-title="Dirección"><?php echo $cliente['cli_direcc'];?></td>
+                                                             <td data-title="Código"><?php echo $cliente['cli_cod'];?></td>
                                                              <td data-title="Acciones" class="text-center">
                                                                  <a href="cliente_edit.php?vcli_cod=<?php echo $cliente['cli_cod'];?>" class="btn btn-warning btn-sm" role="button"
                                                                     data-title="Editar" >

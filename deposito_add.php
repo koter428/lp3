@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -38,16 +38,32 @@
                                             <input type="hidden" name="accion" value="1"/>
                                             <input type="hidden" name="vdep_cod" value="0"/>                                            
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2"> Descripción:</label>
-                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="col-lg-5 col-md-5 col-sm-5">
                                                 <input type="text" name="vdep_descri" class="form-control" required="" autofocus=""/>
                                             </div>
                                         </div>
-                                        <div class="form-group">                                    
-                                            <label class="control-label col-lg-2 col-md-2 col-sm-2"> Sucursal:</label>
-                                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                                <input type="text" name="vid_sucursal" class="form-control" required="" autofocus=""/>
+                                         <!-- AGREGAR LISTA DESPLEGABLE SUCURSAL -->
+                                         <div class="form-group">
+                                            <label class="control-label col-lg-2">Sucursal:</label>
+                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                                <div class="input-group">
+                                                    <?php $sucursal = consultas::get_datos("select * from sucursal order by id_sucursal");?>
+                                                    <select class="form-control select2" name="vmar_cod" required="">
+                                                        <option value="">Seleccione una Sucursal</option>
+                                                        <?php foreach ($sucursal as $sucur) { ?>
+                                                          <option value="<?php echo $sucur['id_sucursal'];?>"><?php echo $sucur['id_sucursal'];?></option>   
+                                                        <?php }?>
+                                                    </select>  
+                                                    <span class="input-group-btn btn-flat">
+                                                        <a class="btn btn-primary" data-title ="Agregar Sucursal " rel="tooltip" data-placement="top"
+                                                           data-toggle="modal" data-target="#registrar">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- FIN LISTA DESPLEGABLE SUCURSAL -->
                                     </div>
                                     <div class="box-footer">
                                         <button type="reset" class="btn btn-primary" data-title="Cancelar" rel="tooltip"> 
@@ -61,7 +77,36 @@
                     </div>
                 </div>
             </div>
-             
+             <!-- MODAL REGISTRAR IMPUESTO -->
+             <div class="modal fade" id="registrar" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registra Sucursal</strong></h4>
+                              </div>
+                              <form action="sucursal_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                  <input type="hidden" name="accion" value="5">
+                                  <input type="hidden" name="vtipo_cod" value="0">
+                                  <div class="modal-body">
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-3">Agregar una Sucursal:</label>
+                                          <div class="col-sm-9">
+                                              <input type="text" name="id_sucursal" class="form-control" required="" autofocus=""/>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                          <i class="fa fa-remove"></i> Cerrar</button>
+                                          <button type="submit" class="btn btn-primary pull-right">
+                                          <i class="fa fa-floppy-o"></i> Registrar</button>                                          
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- FIN MODAL REGISTRAR IMPUESTO -->               
             </div>
                   <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
                             

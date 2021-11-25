@@ -20,7 +20,7 @@ require 'ver_session.php'; /*VERIFICAR SESSION*/
             $consulta = consultas::get_datos("select * from sucursal order by suc_descri");
             break;
     }
-    session_start(); /* reanudar la sesión */
+    @session_start(); /* reanudar la sesión */
 
     if (consultas::ejecutar_sql($sql)) {
         $_SESSION['mensaje'] = $mensaje;

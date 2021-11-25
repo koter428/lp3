@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
   
     </head>
@@ -42,16 +42,22 @@
                                                 <input type="text" name="vart_descri" class="form-control" required="" autofocus=""/>
                                             </div>
                                         </div>
-                                        <!-- AGREGAR LISTA DESPLEGABLE MARCA -->
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-2">Marca:</label>
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
-                                                <div class="input-group">
-                                                    <?php $marcas = consultas::get_datos("select * from marca order by mar_descri");?>
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-2">Cod. Barra:</label>
+                                          <div class="col-lg-6 col-md-6 col-sm-6">
+                                              <input type="text" name="vart_codbarra" class="form-control" required=""  maxlength="15"/>
+                                          </div>
+                                      </div>  
+                                       <!-- AGREGAR LISTA DESPLEGABLE MARCA -->
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Marca:</label>
+                                        <div class="col-lg-5">
+                                              <div class="input-group">
+                                                    <?php $marcas = consultas::get_datos("select * from marca order by mar_cod");?>
                                                     <select class="form-control select2" name="vmar_cod" required="">
                                                         <option value="">Seleccione una marca</option>
                                                         <?php foreach ($marcas as $marca) { ?>
-                                                          <option value="<?php echo $marca['mar_cod'];?>"><?php echo $marca['mar_descri'];?></option>   
+                                                          <option value="<?php echo $marca['mar_cod'];?>" selected><?php echo $marca['mar_descri'];?></option>   
                                                         <?php }?>
                                                     </select>  
                                                     <span class="input-group-btn btn-flat">
@@ -61,25 +67,19 @@
                                                         </a>
                                                     </span>
                                                 </div>
-                                            </div>
                                         </div>
-                                        <!-- FIN LISTA DESPLEGABLE MARCA -->
-                                      <div class="form-group">
-                                          <label class="control-label col-sm-2">Cod. Barra:</label>
-                                          <div class="col-lg-6 col-md-6 col-sm-6">
-                                              <input type="text" name="vart_codbarra" class="form-control" required=""  maxlength="15"/>
-                                          </div>
-                                      </div>                                        
+                                    </div>
+                                    <!-- FIN LISTA DESPLEGABLE MARCA -->                                      
                                       <div class="form-group">
                                           <label class="control-label col-sm-2">Precio Compra:</label>
                                           <div class="col-lg-4 col-md-4 col-sm-4">
-                                              <input type="number" name="vart_precioc" class="form-control" min="0"/>
+                                              <input type="number" name="vart_precioc" class="form-control" min="0" value="0"/>
                                           </div>
                                       </div> 
                                       <div class="form-group">
                                           <label class="control-label col-sm-2">Precio Venta:</label>
                                           <div class="col-lg-4 col-md-4 col-sm-4">
-                                              <input type="number" name="vart_preciov" class="form-control" min="0"/>
+                                              <input type="number" name="vart_preciov" class="form-control" min="0" value="0"/>
                                           </div>
                                       </div> 
                                         <!-- AGREGAR LISTA DESPLEGABLE IMPUESTO -->
@@ -127,7 +127,7 @@
                                   <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Marca</strong></h4>
                               </div>
                               <form action="marca_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                  <input type="hidden" name="accion" value="4">
+                                  <input type="hidden" name="accion" value="5">
                                   <input type="hidden" name="vmar_cod" value="0">
                                   <div class="modal-body">
                                       <div class="form-group">
@@ -157,13 +157,19 @@
                                   <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registra Impuesto</strong></h4>
                               </div>
                               <form action="impuesto_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                  <input type="hidden" name="accion" value="4">
+                                  <input type="hidden" name="accion" value="5">
                                   <input type="hidden" name="vtipo_cod" value="0">
                                   <div class="modal-body">
                                       <div class="form-group">
                                           <label class="control-label col-sm-3">Agregar un Impuesto:</label>
                                           <div class="col-sm-9">
                                               <input type="text" name="vtipo_descri" class="form-control" required="" autofocus=""/>
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-3">Porcentaje:</label>
+                                          <div class="col-sm-9">
+                                              <input type="number" name="vtipo_porcen" class="form-control" value="0" required="" autofocus=""/>
                                           </div>
                                       </div>
                                   </div>
@@ -182,5 +188,3 @@
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>
-
-

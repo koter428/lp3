@@ -1,7 +1,7 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
-session_start();
+@session_start();
 
 $sql = "select sp_emp(".$_REQUEST['accion'].",".$_REQUEST['vemp_cod'].",".$_REQUEST['vcar_cod']
             .",'".$_REQUEST['vemp_nombre']."','".$_REQUEST['vemp_apellido']."','"

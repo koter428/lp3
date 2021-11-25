@@ -7,7 +7,7 @@
     if($porcentaje < 0)
         $sms_error = "El porcentaje no debe ser negativo.";
     
-    session_start();
+    @session_start();
     if($sms_error != ""){
         $_SESSION['mensaje'] = $sms_error;
         header("location:deposito_index.php");

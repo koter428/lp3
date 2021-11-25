@@ -8,7 +8,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -67,6 +67,7 @@
                                                             <th>Nombres y Apellidos</th>
                                                             <th>Teléfono</th>
                                                             <th>Dirección</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -77,6 +78,7 @@
                                                             <td data-title="Nombres y Apellidos"><?php echo $emp['emp_nombre'].", " .$emp['emp_apellido'];?></td>
                                                              <td data-title="Telefono"><?php echo $emp['emp_tel'];?></td> 
                                                              <td data-title="Dirección"><?php echo $emp['emp_direcc'];?></td>
+                                                             <td data-title="Código"><?php echo $emp['emp_cod'];?></td>
                                                              <td data-title="Acciones" class="text-center">
                                                                  <a href="empleado_edit.php?vemp_cod=<?php echo $emp['emp_cod'];?>" class="btn btn-warning btn-sm" role="button"
                                                                     data-title="Editar" >

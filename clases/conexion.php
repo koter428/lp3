@@ -20,7 +20,10 @@
         public static function get_datos($sql)
         {
             //EJECUTAMOS LA SENTENCIA SQL QUE LE PASAMOS POR PARAMETROS AL METODO
-                    $res = pg_query(parent::con(), $sql) or die($sql.'<br>'. utf8_decode(pg_last_error()));
+                    $res = pg_query(parent::con(), $sql);
+                    if(!$res){
+                        return null;
+                    }
 
                     //PREGUNTAMOS SI NUESTRA CONSULTA NOS RETORNA DATOS
                     if(isset($res)){//EN CASO DE RETORNAR DATOS
@@ -34,8 +37,7 @@
                         }else{//SI LA VARIABLE t NO CONTIENE DATOS
                             return null;//RETORNAMOS NULO
                         }
-            }
-
+                    }
         }
 
             //DECLARAMOS EL METODO ejecutar_sql PASANDOLE COMO PARAMETRO LA SENTENCIA.

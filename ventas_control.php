@@ -1,7 +1,7 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
-session_start();
+@session_start();
  
     // print_r($_REQUEST); return;
     

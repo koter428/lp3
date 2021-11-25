@@ -1,4 +1,10 @@
 <?php
+	// esta funcion separa el mensaje de la base de datos
+	function fn_separar_mensajebd($msn){
+		$resultado = explode("*",$msn);
+		return $resultado;
+	}
+
     function fn_validar_dato($dato,$tipo,$formato_fecha='Y-m-d H:i')
 	{
 		if($tipo == "float"){

@@ -1,34 +1,35 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
-    require 'clases/conexion.php';
+require 'clases/conexion.php';
+require 'funciones/lib_funciones.php';
 
-    switch ($_REQUEST['accion']) {
-        case 1: //insertar
-            $sql = "insert into marca(mar_cod,mar_descri) "
-                . "values((select coalesce(max(mar_cod),0)+1 from marca),'" . strtoupper($_REQUEST['vmar_descri']) . "')";
-            $mensaje = "Se guardo correctamente";
-            break;
+@session_start();
 
-        case 2: //actualizar
-            $sql = "update marca set mar_descri = '" . strtoupper($_REQUEST['vmar_descri']) . 
-                   "' where  mar_cod ='" . $_REQUEST['vmar_cod'];
-            $mensaje = "Se actualizo correctamente";
-            break;
+$accion = $_REQUEST['accion'];
+$accion_desde = $accion;
+if(strcmp($accion,"5") == 0) $accion = "1";
 
-        case 3: //borrar
-            $sql = "delete from marca where mar_cod = '" . $_REQUEST['vmar_cod'] . "'";
-            $mensaje = "Se borro correctamente";
-            
-            $consulta = consultas::get_datos("select * from marca order by mar_descri");
-            break;
+if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
+    $sql = "select sp_marca(" . $accion . "," . (!empty($_REQUEST['vmar_cod']) ? $_REQUEST['vmar_cod'] : 0) . ",'" .
+    (!empty($_REQUEST['vmar_descri']) ? $_REQUEST['vmar_descri'] : '') . "') as resul";
+}
+else if (strcmp($accion,"3") == 0){
+    $sql = "select sp_marca(" . $accion . "," . $_REQUEST['vmar_cod']. ",'') as resul";
+}
+//echo $sql; return;
+
+$mensaje = consultas::get_datos($sql);
+
+if (isset($mensaje)) {
+    if (strcmp($accion_desde,"5") == 0){ 
+        header("location:articulo_add.php");
     }
-    session_start(); /* reanudar la sesión */
-
-    if (consultas::ejecutar_sql($sql)) {
-        $_SESSION['mensaje'] = $mensaje;
-        header("location:marca_index.php");
-    } else {
-        $_SESSION['mensaje'] = 'Error al procesar \n' . pg_last_error();
-        header("location:marca_index.php");
+    else{ 
+        $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+        $_SESSION['mensaje'] = $mensaje[0];
+        header("location:" . $mensaje[1] . ".php");
     }
-?>
+} else {
+    $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+    header("location:" . "marca_index.php");
+}

@@ -1,5 +1,5 @@
 <?php
-
+@session_start();
 require './clases/conexion.php';
 
 //echo "Usuario:".$_REQUEST['usuario'];
@@ -12,7 +12,6 @@ $sql = "select * from v_usuarios where usu_nick='".$_REQUEST['usuario']
 
 $resultado = consultas::get_datos($sql);
 
-session_start();
 
 
 

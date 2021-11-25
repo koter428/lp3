@@ -76,6 +76,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Descripción</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -83,6 +84,7 @@
                                                         <?php foreach ($cargos as $cargo) { ?>
                                                         <tr>
                                                             <td data-title="Descripción"><?php echo $cargo['car_descri'];?></td>
+                                                            <td data-title="Código"><?php echo $cargo['car_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
                                                                 <a onclick="editar(<?php echo "'".$cargo['car_cod']."_".$cargo['car_descri']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">

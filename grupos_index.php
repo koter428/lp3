@@ -76,6 +76,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Nombre</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -83,6 +84,7 @@
                                                         <?php foreach ($grupos as $grupo) { ?>
                                                         <tr>
                                                             <td data-title="nombre"><?php echo $grupo['gru_nombre'];?></td>
+                                                            <td data-title="Código"><?php echo $grupo['gru_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
                                                                 <a onclick="editar(<?php echo "'".$grupo['gru_cod'];?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">

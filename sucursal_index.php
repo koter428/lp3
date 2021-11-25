@@ -11,7 +11,7 @@
 
     <?php
     require 'ver_session.php'; /*VERIFICAR SESSION*/
-    session_start();/*Reanudar sesion*/
+    @session_start();/*Reanudar sesion*/
     require 'menu/css_lte.ctp'; ?>
     <!--ARCHIVOS CSS-->
 
@@ -77,6 +77,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Sucursal </th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones </th>
                                                         </tr>
                                                     </thead>
@@ -84,6 +85,7 @@
                                                         <?php foreach ($sucursales as $suc) { ?>
                                                             <tr>
                                                                 <td data-title='Descripción'><?php echo $suc['suc_descri']; ?></td>
+                                                                <td data-title='Código'><?php echo $suc['id_sucursal']; ?></td>
                                                                 <td data-title='Acciones' class="text-center">
                                                                     <a href="sucursal_edit.php?vid_sucursal=<?php echo $suc['id_sucursal']; ?>" class="btn btn-warning btn-sm" role='button' data-title='Editar' rel='tooltip' data-placement='left'>
                                                                         <span class="glyphicon glyphicon-edit"></span>

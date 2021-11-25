@@ -9,7 +9,7 @@ require 'ver_session.php'; /*VERIFICAR SESSION*/
     if(!fn_validar_dato($telefono, "telefono"))
         $sms_error = "Teléfono incorrecto.";*/
     
-    session_start();
+    @session_start();
     /*if($sms_error != ""){
         $_SESSION['mensaje'] = $sms_error;
         header("location:cliente_index.php");

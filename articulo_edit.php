@@ -16,7 +16,7 @@ and open the template in the editor.
 
     <?php
     require 'ver_session.php'; /*VERIFICAR SESSION*/
-    session_start();/*Reanudar sesion*/
+    @session_start();/*Reanudar sesion*/
     require 'menu/css_lte.ctp'; ?>
     <!--ARCHIVOS CSS-->
 
@@ -46,20 +46,20 @@ and open the template in the editor.
                             <form action="articulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                 <div class="box-body">
                                     <?php
-                                        $resultado = consultas::get_datos("select * from articulo where art_cod='" . $_GET['vart_cod'] . "'");
-                                        $sql = "SELECT * FROM marca ORDER BY CASE WHEN mar_cod='" . $resultado[0]["mar_cod"] . "' THEN 1 ELSE 2 END, mar_cod;";
+                                        $articulo = consultas::get_datos("select * from articulo where art_cod='" . $_GET['vart_cod'] . "'");
+                                        $sql = "SELECT * FROM marca ORDER BY CASE WHEN mar_cod='" . $articulo[0]["mar_cod"] . "' THEN 1 ELSE 2 END, mar_cod;";
                                         $marcas = consultas::get_datos($sql);
-                                        $sql = "SELECT * FROM tipo_impuesto ORDER BY CASE WHEN tipo_cod='" . $resultado[0]["tipo_cod"] . "' THEN 1 ELSE 2 END, tipo_cod;";
+                                        $sql = "SELECT * FROM tipo_impuesto ORDER BY CASE WHEN tipo_cod='" . $articulo[0]["tipo_cod"] . "' THEN 1 ELSE 2 END, tipo_cod;";
                                         $impuestos = consultas::get_datos($sql);
                                     ?>
                                     <div class="form-group">
                                         <input type="hidden" name="accion" value="2" />
-                                        <input type="hidden" name="vart_cod" value="<?php echo $resultado[0]['art_cod'] ?>" />
+                                        <input type="hidden" name="vart_cod" value="<?php echo $articulo[0]['art_cod'] ?>" />
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Descripcion:</label>
                                         <div class="col-lg-6">
-                                            <input type="text" name="vart_descri" class="form-control" required="" value="<?php echo $resultado[0]['art_descri'] ?>" maxlength="15" />
+                                            <input type="text" name="vart_descri" class="form-control" required="" value="<?php echo $articulo[0]['art_descri'] ?>" maxlength="15" />
                                         </div>
                                     </div>
                                     <!-- AGREGAR LISTA DESPLEGABLE MARCA -->
@@ -67,11 +67,11 @@ and open the template in the editor.
                                         <label class="col-lg-2 control-label">Marca:</label>
                                         <div class="col-lg-5">
                                               <div class="input-group">
-                                                    <?php $marcas = consultas::get_datos("select * from marca order by mar_descri");?>
+                                                    <?php $marcas = consultas::get_datos("select * from marca order by mar_cod = " . $articulo[0]["mar_cod"]);?>
                                                     <select class="form-control select2" name="vmar_cod" required="">
                                                         <option value="">Seleccione una marca</option>
                                                         <?php foreach ($marcas as $marca) { ?>
-                                                          <option value="<?php echo $marca['mar_cod'];?>"><?php echo $marca['mar_descri'];?></option>   
+                                                          <option value="<?php echo $marca['mar_cod'];?>" selected><?php echo $marca['mar_descri'];?></option>   
                                                         <?php }?>
                                                     </select>  
                                                     <span class="input-group-btn btn-flat">
@@ -87,20 +87,20 @@ and open the template in the editor.
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Cod. Barra:</label>
                                         <div class="col-lg-6">
-                                            <input type="text" name="vart_codbarra" class="form-control" required="" value="<?php echo $resultado[0]['art_codbarra'] ?>" 
+                                            <input type="text" name="vart_codbarra" class="form-control" required="" value="<?php echo $articulo[0]['art_codbarra'] ?>" 
                                             maxlength="15"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                        <label class="control-label col-sm-2">Precio Compra:</label>
                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <input type="number" name="vart_precioc" class="form-control" required="" value="<?php echo $resultado[0]['art_precioc'] ?>" />
+                                            <input type="number" name="vart_precioc" class="form-control" required="" value="<?php echo $articulo[0]['art_precioc'] ?>" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2">Precio Venta:</label>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <input type="number" name="vart_preciov" class="form-control" required="" value="<?php echo $resultado[0]['art_preciov'] ?>" />
+                                            <input type="number" name="vart_preciov" class="form-control" required="" value="<?php echo $articulo[0]['art_preciov'] ?>" />
                                         </div>
                                     </div>
                                      <!-- AGREGAR LISTA DESPLEGABLE IMPUESTO -->
@@ -108,11 +108,14 @@ and open the template in the editor.
                                             <label class="control-label col-lg-2">Impuesto:</label>
                                             <div class="col-lg-5 col-md-5 col-sm-5">
                                                 <div class="input-group" method="post">
-                                                    <?php $tipos = consultas::get_datos("select * from tipo_impuesto order by tipo_cod");?>
+                                                    <?php 
+                                                        $sql = "select * from tipo_impuesto order by tipo_cod = " . $articulo[0]["tipo_cod"];
+                                                        $tipos = consultas::get_datos($sql);
+                                                    ?>
                                                     <select class="form-control select2" name="vtipo_cod" required="">
                                                         <option value="">Seleccione un impuesto</option>
                                                         <?php foreach ($tipos as $tipo) { ?>
-                                                          <option value="<?php echo $tipo['tipo_cod'];?>"><?php echo $tipo['tipo_descri'];?></option>   
+                                                          <option value="<?php echo $tipo['tipo_cod'];?>" selected><?php echo $tipo['tipo_descri'];?></option>   
                                                         <?php }?>
                                                     </select>  
                                                     <span class="input-group-btn btn-flat">

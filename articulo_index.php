@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -74,6 +74,7 @@
                                                             <th>Precio Costo</th>
                                                             <th>Precio Venta</th>
                                                             <th>Impuesto</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -85,6 +86,7 @@
                                                             <td data-title='Precio Costo'><?php echo number_format($art['art_precioc'],0,",", ".");?></td>
                                                             <td data-title='Precio Venta'><?php echo number_format($art['art_preciov'],0,",", ".");?></td>
                                                             <td data-title='Precio Venta'><?php echo $art['tipo_descri'];?></td>
+                                                            <td data-title='Código'><?php echo $art['art_cod'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                                 <a href="articulo_edit.php?vart_cod=<?php echo $art['art_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>

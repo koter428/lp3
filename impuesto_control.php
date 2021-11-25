@@ -1,48 +1,34 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
-    require 'clases/conexion.php';
-    
-    // Validaciones
-    $sms_error = "";
-    $porcentaje = $_REQUEST["vtipo_porcen"];
-    if($porcentaje < 0)
-        $sms_error = "El porcentaje no debe ser negativo.";
-    
-    session_start();
-    if($sms_error != ""){
-        $_SESSION['mensaje'] = $sms_error;
-        header("location:impuesto_index.php");
-    }
+require 'clases/conexion.php';
+require 'funciones/lib_funciones.php';
+
+@session_start();
+
+$accion = $_REQUEST['accion'];
+$accion_desde = $accion; 
+if(strcmp($accion,"5") == 0) $accion = 1;
+
+if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){ 
+    $sql = "select sp_impuesto(" . $accion . "," . (!empty($_REQUEST['vtipo_cod']) ? $_REQUEST['vtipo_cod'] : 0) . ",'" .
+    (!empty($_REQUEST['vtipo_descri']) ? $_REQUEST['vtipo_descri'] : '') . "'," .
+    (!empty($_REQUEST['vtipo_porcen']) ? $_REQUEST['vtipo_porcen'] :  0) . ") as resul";
+}
+else if (strcmp($accion,"3") == 0){
+    $sql = "select sp_impuesto(" . $accion . "," . $_REQUEST['vtipo_cod']. ",'',0) as resul";
+}
+  
+$mensaje = consultas::get_datos($sql);
+
+if (isset($mensaje)) {
+    if(strcmp($accion_desde,"5") == 0)
+        header("location:articulo_add.php");
     else{
-        switch ($_REQUEST['accion']){
-            case 1: //insertar
-                $sql =  "insert into tipo_impuesto(tipo_cod,tipo_descri,tipo_porcen) " .
-                        "values((select coalesce(max(tipo_cod),0)+1 from tipo_impuesto),'" .
-                        strtoupper($_REQUEST['vtipo_descri']) . "','" . $_REQUEST['vtipo_porcen'] . "')";
-                $mensaje = "Se guardo correctamente";
-                break;
-
-            case 2: //actualizar
-                $sql =  "update tipo_impuesto set tipo_descri = '" . strtoupper($_REQUEST['vtipo_descri']) . "', " .
-                        "tipo_porcen='" . $_REQUEST['vtipo_porcen'] . "' " .
-                        "where tipo_cod ='" . $_REQUEST['vtipo_cod'] . "'";
-                $mensaje = "Se actualizo correctamente";
-                break;
-
-            case 3: //borrar
-                $sql = "delete from tipo_impuesto where tipo_cod='" . $_REQUEST['vtipo_cod'] . "'";
-                $mensaje = "Se borro correctamente";
-                break;
-        }
-        
-        if (consultas::ejecutar_sql($sql)) {
-            $_SESSION['mensaje'] = $mensaje;
-            header("location:impuesto_index.php");
-        } else {
-            $_SESSION['mensaje'] = 'Error al procesar \n' . pg_last_error();
-            header("location:impuesto_index.php");
-        }
+        $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+        $_SESSION['mensaje'] = $mensaje[0];
+        header("location:" . $mensaje[1] . ".php");   
     }
-    
-    
-    
+} else {
+    $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+    header("location:" . "impuesto_index.php");
+}

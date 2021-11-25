@@ -2,7 +2,7 @@
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
 
-session_start();
+@session_start();
 
 $sql = "select sp_detalle_pedventa(
 ".$_REQUEST['accion'].",

@@ -10,7 +10,7 @@
 
         <?php 
 		require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -30,8 +30,8 @@
                                     $_SESSION['mensaje'] = ''; ?>
                             </div>
                             <?php } ?>
-                            <div class="box box-primary">
-                              <?php  if ($_SESSION['MARCA']['leer']==='t') {?>
+                         <div class="box box-primary">
+                         <?php if ($_SESSION['MARCA']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Marcas</h3>
@@ -71,6 +71,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Marca</th>
+                                                            <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -78,6 +79,7 @@
                                                         <?php foreach ($marcas as $mar) { ?>
                                                         <tr>
                                                             <td data-title='Descripción'><?php echo $mar['mar_descri'];?></td>
+                                                            <td data-title='Código'><?php echo $mar['mar_cod'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                             <?php if ($_SESSION['MARCA']['editar']=='t') { ?>
                                                                 <a href="marca_edit.php?vmar_cod=<?php echo $mar['mar_cod'];?>" class="btn btn-warning btn-sm" role='button'
@@ -95,22 +97,30 @@
                                                     </tbody>
                                                     </table>
                                                 </div>
-                                               <?php }else{ ?>
+                                                <?php }else{ ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span>
                                                 No se han registrado marcas...
-                                            </div>  
-                                            <?php } ?>
-                                               <?php }else{  ?>
-                                                <div class="box-body"></div>
-                                            <div class="alert alert-info flat">
-                                                <span class="glyphicon glyphicon-info-sign"></span>
-                                                 No posee permisos de lectura
-                                            </div>  
-                                        <?php } ?>            
-                            </div>
-                        </div>                        
+                                            </div>   
+                                            <?php }
+                                            ?>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                                 </div>
+                            <?php } ?>
+                        </div>
                     </div>
+                </div>
+            </div>
                     <!-- FIN FILA 1 -->
                 </div>   
                 <!-- FIN CONTENEDOR PRINCIPAL -->

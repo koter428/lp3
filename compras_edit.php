@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -43,7 +43,7 @@
                                                 <input type="text" name="vcom_fecha" class="form-control" value="<?php echo $compras[0]['com_fecha'];?>" readonly=""/>                                                
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-xs-12">
-                                                <label>proveedor:</label>
+                                                <label>Proveedor:</label>
                                                     <div class="input-group">
                                                         <?php $clientes = consultas::get_datos("select prv_cod,prv_ruc,prv_razonsocial as nombres"
                                                                 . " from proveedor order by prv_cod=".$compras[0]['prv_cod']." desc");?>

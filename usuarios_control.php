@@ -1,7 +1,7 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
-session_start();
+@session_start();
 
 $sql = "select sp_usuarios(".$_REQUEST['accion'].",".$_REQUEST['vusu_cod'].", '".$_REQUEST['vusu_nick']."',
     '".$_REQUEST['vusu_clave']."',".$_REQUEST['vemp_cod'].", ".$_REQUEST['vgru_cod'].", ".$_SESSION['id_sucursal'].") as resul";

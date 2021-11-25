@@ -27,7 +27,7 @@ switch ($_REQUEST['accion']) {
         $mensaje = "Se borro correctamente";
         break;
 }
-session_start(); /* reanudar la sesión */
+@session_start(); /* reanudar la sesión */
 
 if (consultas::ejecutar_sql($sql)) {
     $_SESSION['mensaje'] = $mensaje;

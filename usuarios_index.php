@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -57,6 +57,7 @@
                                                                 <th>Nick</th>
                                                                 <th>Grupo</th>
                                                                 <th>Sucursal</th>
+                                                                <th>Código</th>
                                                                 <th class="text-center">Acciones</th>
                                                             </tr>
                                                         </thead>
@@ -67,6 +68,7 @@
                                                                 <td data-title="Nick"><?php echo $usuario['usu_nick']?></td>
                                                                 <td data-title="Grupo"><?php echo $usuario['gru_nombre']?></td>
                                                                 <td data-title="Sucursal"><?php echo $usuario['suc_descri']?></td>
+                                                                <td data-title="Código"><?php echo $usuario['usu_cod']?></td>
                                                                 <td data-title="Acciones" class="text-center">
                                                                     <a onclick="editar(<?php echo "'".$usuario['car_cod']."_".$usuario['car_descri']."'"?>)" class="btn btn-warning btn-sm" role="button" data-title="Editar" 
                                                                        data-toggle="modal" data-target="#editar" rel="tooltip" data-placement="top">

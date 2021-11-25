@@ -1,7 +1,7 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
     require 'clases/conexion.php';
-    session_start();
+    @session_start();
 
     $pedidos = consultas::get_datos("select * from v_pedido_cabventa where cli_cod =".$_REQUEST['vcli_cod']
         ." and estado = 'PENDIENTE' and id_sucursal =".$_SESSION['id_sucursal']);
