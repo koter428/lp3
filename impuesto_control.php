@@ -6,8 +6,6 @@ require 'funciones/lib_funciones.php';
 @session_start();
 
 $accion = $_REQUEST['accion'];
-$accion_desde = $accion; 
-if(strcmp($accion,"5") == 0) $accion = 1;
 
 if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){ 
     $sql = "select sp_impuesto(" . $accion . "," . (!empty($_REQUEST['vtipo_cod']) ? $_REQUEST['vtipo_cod'] : 0) . ",'" .
@@ -21,13 +19,9 @@ else if (strcmp($accion,"3") == 0){
 $mensaje = consultas::get_datos($sql);
 
 if (isset($mensaje)) {
-    if(strcmp($accion_desde,"5") == 0)
-        header("location:articulo_add.php");
-    else{
         $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
         $_SESSION['mensaje'] = $mensaje[0];
         header("location:" . $mensaje[1] . ".php");   
-    }
 } else {
     $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
     header("location:" . "impuesto_index.php");

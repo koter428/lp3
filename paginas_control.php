@@ -1,38 +1,29 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
+require 'funciones/lib_funciones.php';
 
 @session_start();
 
-switch ($_REQUEST['accion']){
-            case 1: //insertar
-                $sql =  "insert into paginas(pag_cod,pag_nombre,pag_direc,mod_cod)" .
-                        "values((select coalesce(max(pag_cod),0)+1 from paginas),'" .
-                                   $_REQUEST['vpag_cod'] . "','" .
-                        strtoupper($_REQUEST['vpag_nombre']) . "','" .
-                                   $_REQUEST['vmod_cod']."','" .
-                        strtoupper($_REQUEST['vpag_direc']) . "')"; 
-                $mensaje='Se inserto correctamente la pagina';
-                break;
+$accion = $_REQUEST['accion'];
 
-            case 2: //actualizar
-                $sql="update paginas set pag_cod = '".$_REQUEST['vpag_cod'] . "'," .
-                "pag_nombre='".strtoupper($_REQUEST['vpag_nombre']) . "','" .
-                "mod_cod='".$_REQUEST['vmod_cod'] . "','" .
-                "where pag_direc='" .$_REQUEST['vpag_direc'] . "'";
-        $mensaje='Se actualizo correctamente';
-                break;
-            case 3: //borrar
-                $sql="delete from  paginas where vpag_cod ='" . $_REQUEST['vpag_cod'] . "'";
-                $mensaje = "Se borro correctamente";
-                break;
-        }
-$resultado = consultas::get_datos($sql);
+if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){ 
+    $sql = "select sp_paginas(" . $accion . "," . (!empty($_REQUEST['vpag_cod']) ? $_REQUEST['vpag_cod'] : 0) . ",'" .
+    (!empty($_REQUEST['vpag_direc']) ? $_REQUEST['vpag_direc'] : 0) . "'," .
+    (!empty($_REQUEST['vpag_nombre']) ? $_REQUEST['vpag_nombre']: '') . "','" .
+    (!empty($_REQUEST['vmod_cod']) ? $_REQUEST['vmod_cod'] : '') . "') as resul";
+}
+else if (strcmp($accion,"3") == 0){
+    $sql = "select sp_paginas(" . $accion . "," . $_REQUEST['vpag_cod']. ",'',0) as resul";
+}
+  
+$mensaje = consultas::get_datos($sql);
 
-if ($resultado[0]['resul']!=null) {
-    $_SESSION['mensaje']= $resultado[0]['resul'];
-    header("location:paginas_index.php");
-}else{
-    $_SESSION['mensaje']= "Error:".$sql;
-    header("location:paginas_index.php");    
+if (isset($mensaje)) {
+        $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+        $_SESSION['mensaje'] = $mensaje[0];
+        header("location:" . $mensaje[1] . ".php");   
+} else {
+    $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+    header("location:" . "paginas_index.php");
 }

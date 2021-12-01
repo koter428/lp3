@@ -1,16 +1,16 @@
-﻿-- Function: sp_articulo(integer, integer, character varying, integer, character varying, integer, integer, integer)
+-- Function: sp_articulo(integer, integer, character varying, integer, character varying, integer, integer, integer)
 
 -- DROP FUNCTION sp_articulo(integer, integer, character varying, integer, character varying, integer, integer, integer);
 
 CREATE OR REPLACE FUNCTION sp_articulo(
     ban integer,
-    vart_cod integer default 0,
-    vart_codbarra character varying default '',
-    vmar_cod integer default 0,
-    vart_descri character varying default '',
-    vart_precioc integer default 0,
-    vart_preciov integer default 0,
-    vtipo_cod integer default 0)
+    vart_cod integer DEFAULT 0,
+    vart_codbarra character varying DEFAULT ''::character varying,
+    vmar_cod integer DEFAULT 0,
+    vart_descri character varying DEFAULT ''::character varying,
+    vart_precioc integer DEFAULT 0,
+    vart_preciov integer DEFAULT 0,
+    vtipo_cod integer DEFAULT 0)
   RETURNS character varying AS
 $BODY$
 declare mensaje varchar default null;

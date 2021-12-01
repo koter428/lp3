@@ -2,7 +2,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="/lp3" class="logo">
+    <a href="/lp3" class="logo bg-purple">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>LP</b>3</span>
         <!-- logo for regular state and mobile devices -->
@@ -10,5 +10,4 @@
             <span class="logo-lg">SYSLP3</span>
     </a>
     <?php require 'menu/navbar_lte.ctp'; ?><!--NOTIFICACIONES-->
-
 </header>

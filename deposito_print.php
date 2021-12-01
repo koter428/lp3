@@ -24,7 +24,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Antonio Portillo');
-$pdf->SetTitle('REPORTE DE CARGO');
+$pdf->SetTitle('REPORTE DE DEPOSITO');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 $pdf->setPrintHeader(false);
@@ -55,7 +55,7 @@ $pdf->SetFont('times', 'B', 18);
 
 // AGREGAR PAGINA
 $pdf->AddPage('P', 'LEGAL');
-$pdf->Cell(0, 0, "REPORTE DE CARGO", 0, 1, 'C');
+$pdf->Cell(0, 0, "REPORTE DE DEPOSITO", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
 //COLOR DE TABLA
@@ -68,22 +68,22 @@ $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(50, 5, 'CODIGO', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, 'DESCRIPCION', 1, 0, 'C', 1);
+$pdf->Cell(70, 5, 'DESCRIPCION', 1, 0, 'C', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
 $pdf->SetFillColor(255, 255, 255);
 //CONSULTAS DE LOS REGISTROS
-$cargos = consultas::get_datos("select * from cargo order by car_cod");
+$cargos = consultas::get_datos("select * from deposito order by dep_cod");
 
 if (!empty($cargos)) {
     foreach ($cargos as $cargo) {
-        $pdf->Cell(50, 5, $cargo['car_cod'], 1, 0, 'C', 1);
-        $pdf->Cell(0, 5, $cargo['car_descri'], 1, 0, 'L', 1);
+        $pdf->Cell(50, 5, $cargo['dep_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(70, 5, $cargo['dep_descri'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 }else{
-    $pdf->Cell(0, 0, "No se han registrado cargos", 1, 0, 'L', 1);
+    $pdf->Cell(0, 0, "No se han registrado deposito", 1, 0, 'L', 1);
 }
 
 

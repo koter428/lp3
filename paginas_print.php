@@ -55,7 +55,7 @@ $pdf->SetFont('times', 'B', 18);
 
 // AGREGAR PAGINA
 $pdf->AddPage('P', 'LEGAL');
-$pdf->Cell(0, 0, "REPORTE DE CLIENTE", 0, 1, 'C');
+$pdf->Cell(0, 0, "REPORTE DE PAGINA", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
 //COLOR DE TABLA
@@ -68,22 +68,22 @@ $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(10, 5, '#', 1, 0, 'C', 1);
-$pdf->Cell(70, 5, 'NOMBRE Y APELLIDOS', 1, 0, 'C', 1);
+$pdf->Cell(0, 5, 'DIRECCION Y NOMBRE', 1, 0, 'C', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
 $pdf->SetFillColor(255, 255, 255);
 //CONSULTAS DE LOS REGISTROS
-$clientes = consultas::get_datos("select * from clientes order by cli_cod");
+$clientes = consultas::get_datos("select * from paginas order by pag_cod");
 
 if (!empty($clientes)) {
     foreach ($clientes as $cliente) {
-        $pdf->Cell(10, 5, $cliente['cli_cod'], 1, 0, 'C', 1);
-        $pdf->Cell(70, 5, $cliente['cli_nombre']." ".$cliente['cli_apellido'], 1, 0, 'L', 1);
+        $pdf->Cell(10, 5, $cliente['pag_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(0, 5, $cliente['pag_direc']." ".$cliente['pag_nombre'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 }else{
-    $pdf->Cell(0, 0, "No se han registrado clientes", 1, 0, 'L', 1);
+    $pdf->Cell(0, 0, "No se han registrado paginas", 1, 0, 'L', 1);
 }
 
 

@@ -24,7 +24,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Antonio Portillo');
-$pdf->SetTitle('REPORTE DE CARGO');
+$pdf->SetTitle('REPORTE DE modulo');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 $pdf->setPrintHeader(false);
@@ -67,8 +67,8 @@ $pdf->SetLineWidth(0.2);
 $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
-$pdf->Cell(10, 5, '#', 1, 0, 'C', 1);
-$pdf->Cell(70, 5, 'NOMBRES', 1, 0, 'C', 1);
+$pdf->Cell(30, 5, 'codigo', 1, 0, 'C', 1);
+$pdf->Cell(55, 5, 'NOMBRES', 1, 0, 'C', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
@@ -78,7 +78,8 @@ $modulos = consultas::get_datos("select * from modulos order by mod_cod");
 
 if (!empty($modulos)) {
     foreach ($modulos as $modulo) {
-        $pdf->Cell(80, 1, $modulo['mod_cod']." ".$modulo['mod_nombre'], 1, 0, 'L', 1);
+        $pdf->Cell(5, 1, $modulo['mod_cod'], 1, 0, 'L', 1);
+        $pdf->Cell(80, 1, $modulo['mod_nombre'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 }else{

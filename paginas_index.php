@@ -31,14 +31,16 @@
                             </div>
                             <?php } ?>                            
                             <div class="box box-primary">
+                            <?php if ($_SESSION['PAGINAS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Paginas</h3>                                    
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['PAGINAS']['insertar']==='t') { ?> 
                                         <a class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip" 
                                            data-toggle="modal" data-target="#registrar">
                                             <i class="fa fa-plus"></i>
-                                        </a>
+                                        </a> <?php } ?> 
                                         <a href="paginas_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>
                                         </a>                                        
@@ -90,14 +92,16 @@
                                                             <td data-title="Nombre"><?php echo $pag['pag_nombre'];?></td>
                                                             <td data-title="modulo"><?php echo $pag['mod_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
+                                                            <?php if ($_SESSION['PAGINAS']['editar']=='t') { ?>
                                                                 <a onclick="editar(<?php echo "'".$pag['pag_cod']."_".$pag['pag_nombre']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
                                                                     <i class="fa fa-edit"></i>
-                                                                </a>
+                                                                </a> <?php }?> 
+                                                                <?php if ($_SESSION['PAGINAS']['borrar']=='t') { ?>
                                                                 <a onclick="borrar(<?php echo "'".$pag['pag_cod']."_".$pag['pag_nombre']."'";?>)" class="btn btn-danger btn-sm" role="buttom" 
                                                                    data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
                                                                     <i class="fa fa-trash"></i>
-                                                                </a>                                                                
+                                                                </a>   <?php }?>                                                               
                                                             </td>
                                                         </tr>
                                                         <?php }?>
@@ -236,7 +240,17 @@
                       </div>
                   </div>
                   <!-- FIN MODAL BORRAR -->                   
-            </div>                  
+            </div>       
+            <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
         <script>
             $("#mensaje").delay(4000).slideUp(200,function(){

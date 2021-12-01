@@ -3,21 +3,32 @@ require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
 @session_start();
 
-switch ($_REQUEST['accion']) {
-    case 1:
-$sql = "select sp_emp(".$_REQUEST['accion'].",".$_REQUEST['vemp_cod'].",".$_REQUEST['vcar_cod']
-            .",'".$_REQUEST['vemp_nombre']."','".$_REQUEST['vemp_apellido']."','"
-            .$_REQUEST['vemp_direcc']."','".$_REQUEST['vemp_tel']."') as result;
-                
-$sql = "select sp_usu(".$_REQUEST['accion'].",".$_REQUEST['vemp_cod'].",".$_REQUEST['vcar_cod'] 
-            .",'".$_REQUEST['vemp_nombre']."','".$_REQUEST['vemp_apellido']."','"
-            .$_REQUEST['vemp_direcc']."','".$_REQUEST['vemp_tel']."') as result;
-
+if  ($_REQUEST['vusu_nick'] == null){
+    $_SESSION['mensaje'] = "este mensaje esta vacio";
+    header("location:clave_index.php"); 
+}
+if ($_REQUEST['vusu_clave_1'] != $_REQUEST['vusu_clave_2']) {
+    $_SESSION['mensaje'] = "error contraseña no consuide";
+   header("location:clave_index.php"); 
+}
+//die($_REQUEST['vusu_nick']);
+$sql = "select usu_clave from usuarios where usu_cod = '" . $_REQUEST['vusu_cod'] . "'
+ and usu_clave ='" . md5($_REQUEST['vusu_clave_0']) . "'";
+$verificar = consultas::get_datos($sql);
+if($verificar == null){
+    $_SESSION['mensaje'] = "FELICIDADES, HICISTE ALGO MAL, APRENDA DE SUS ERRORES PROFE DE MIERDA";
+header("location:clave_index.php");
+die();
+}
+//echo $sql; return;
+$sql = "update usuarios set usu_clave = '". md5($_REQUEST['vusu_clave_1']) ."' where usu_cod = '" . $_REQUEST['vusu_cod'] . "'
+and usu_clave ='" . md5($_REQUEST['vusu_clave_0']) . "'";
 
 if (consultas::ejecutar_sql($sql)) {
-    $_SESSION['mensaje'] = $mensaje;
-    header("location:cliente_index.php");
-}else{
-    $_SESSION['mensaje'] = "Error al procesar ".$sql;
-    header("location:cliente_index.php");    
+    $_SESSION['mensaje'] = "se a cambiado exitosamente!";
+    header("location:clave_index.php");
+    
+} else {
+    $_SESSION['mensaje'] = "no se pudo actualizar contraseña " . pg_last_error();
+    header("location:clave_index.php");
 }

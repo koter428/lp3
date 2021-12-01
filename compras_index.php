@@ -33,11 +33,14 @@
                             </div>
                             <?php } ?>
                             <div class="box box-primary">
+                            <?php if ($_SESSION['COMPRAS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="fa fa-newspaper-o"></i>
                                     <h3 class="box-title">COMPRAS</h3>
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['COMPRAS']['insertar']==='t') { ?> 
                                         <a href="compras_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                        <?php } ?> 
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -90,14 +93,16 @@
                                                             <td data-title='Estado'><?php echo $com['com_estado'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                                 <?php if($com['com_estado']=="PENDIENTE"){?>
+                                                                    <?php if ($_SESSION['COMPRAS']['editar']=='t') { ?>
                                                                 <a href="compras_det.php?vcom_cod=<?php echo $com['com_cod'];?>" class="btn btn-success btn-sm" role='button'
                                                                    data-title='Detalles' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-list"></span>
-                                                                </a>                                                                
+                                                                </a> <?php }?>  
+                                                                <?php if ($_SESSION['COMPRAS']['borrar']=='t') { ?>                                                               
                                                                 <a href="compras_edit.php?vcom_cod=<?php echo $com['com_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
-                                                                </a>
+                                                                </a> <?php }?>
                                                                 <a onclick="anular(<?php echo "'".$com['com_cod']."_".$com['prv_razonsocial']."_".$com['com_fecha']."'"?>)" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Anular' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#anular">
                                                                     <span class="glyphicon glyphicon-remove"></span>
@@ -122,6 +127,16 @@
                                             ?>
                                         </div>
                                     </div>
+                                    <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?> 
                                 </div>
                             </div>
                         </div>                        

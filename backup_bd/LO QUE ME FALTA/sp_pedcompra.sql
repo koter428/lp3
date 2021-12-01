@@ -4,10 +4,10 @@
 
 CREATE OR REPLACE FUNCTION sp_pedcompra(
     ban integer,
-    vped_com integer DEFAULT 0,
-    vemp_cod integer DEFAULT 0,
-    vprv_cod integer DEFAULT 0,
-    vid_sucursal integer DEFAULT 0)
+    vped_com integer,
+    vemp_cod integer,
+    vprv_cod integer,
+    vid_sucursal integer)
   RETURNS character varying AS
 $BODY$
 declare mensaje varchar default null;
@@ -17,7 +17,7 @@ begin
 		VALUES (calcular_ultimo('pedido_cabcompra','ped_com'),current_date, vemp_cod,
 		vprv_cod, 'P',vid_sucursal);
 		mensaje = 'Se agregó correctamente el pedido de compra';	
-	elsif ban = 2 then 
+	elsif ban  = 2 then 
 		update pedido_cabcompra set prv_cod = vprv_cod
 		where ped_com = vped_com;
 		mensaje = 'Se actualizó correctamente el pedido de compra';	

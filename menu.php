@@ -31,7 +31,7 @@
                     <div class="box box-primary">
                         <div class="box-header">
                             <center>
-                                <h2>!Bienvenido al Menu Principal <?php echo $_SESSION['nombres']; ?>!</h2>
+                                <h2>¡Bienvenido al Menu Principal <?php echo $_SESSION['nombres']; ?>!</h2>
                             </center>
                         </div>
                     </div>
@@ -43,61 +43,57 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-green">
                         <div class="inner">
                             <h3>53<sup style="font-size: 20px">%</sup></h3>
-                            
                             <p>REFERENCIALES</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="paginas_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
              <div class="col-lg-3 col-6">
                <!-- small box -->
-               <div class="small-box bg-info">
+               <div class="small-box bg-aqua">
                  <div class="inner">
                    <h3>150</h3>
-    
                    <p>COMPRAS</p>
                  </div>
                  <div class="icon">
                    <i class="ion ion-bag"></i>
                  </div>
-                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                 <a href="compras_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                </div>
              </div>
                 <!-- ./col -->
               <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-warning">
+                <div class="small-box bg-yellow">
                   <div class="inner">
                     <h3>44</h3>
-    
                     <p>VENTAS</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="ventas_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <!-- ./col -->
               <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-danger">
+                <div class="small-box bg-red">
                   <div class="inner">
-                    <h3>65</h3>
-    
-                    <p>INFORME</p>
+                    <h3>SEGURIDAD</h3>
+                    <p>CONTRASEÑA</p>
                   </div>
                   <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                   </div>
-                  <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="clave_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <!-- ./col -->

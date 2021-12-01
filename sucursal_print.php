@@ -78,8 +78,8 @@ $clientes = consultas::get_datos("select * from sucursal order by id_sucursal");
 
 if (!empty($clientes)) {
     foreach ($clientes as $cliente) {
-        $pdf->Cell(10, 5, $cliente['suc_descri'], 1, 0, 'C', 1);
-        $pdf->Cell(70, 5, $cliente['id_sucursal'], 1, 0, 'L', 1);
+        $pdf->Cell(10, 5, $cliente['id_sucursal'], 1, 0, 'C', 1);
+        $pdf->Cell(70, 5, $cliente['suc_descri'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 }else{

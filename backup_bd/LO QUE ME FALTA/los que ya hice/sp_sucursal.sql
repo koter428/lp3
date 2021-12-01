@@ -29,3 +29,18 @@ $BODY$
   COST 100;
 ALTER FUNCTION sp_sucursal(integer, integer, character varying)
   OWNER TO postgres;
+
+/*
+	Prueba del procedimiento
+	1- grabar
+		select sp_sucursal(1,0,'asuncion');
+
+	2- modificar
+		select sp_sucursal(2,3,'idiotas');
+
+	3- eliminar
+		select sp_sucursal(3,3);
+
+	select * from sucursal order by 1
+
+ */

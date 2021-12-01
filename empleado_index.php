@@ -27,12 +27,15 @@
                             </div>
                              <?php } ?>
                             <div class="box box-primary">
+                            <?php if ($_SESSION['EMPLEADOS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-android-person"></i>
                                     <h3 class="box-title">Empleados</h3>
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['EMPLEADOS']['insertar']==='t') { ?> 
                                         <a href="empleado_add.php" class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip">
                                             <i class="fa fa-plus"></i>
+                                            <?php } ?> 
                                             <a href="empleado_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>                                            
                                         </a>
@@ -64,6 +67,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Cargo</th>
+                                                            <th>descripcion</th>
                                                             <th>Nombres y Apellidos</th>
                                                             <th>Teléfono</th>
                                                             <th>Dirección</th>
@@ -75,19 +79,22 @@
                                                      <?php foreach ($empleado as $emp){ ?>
                                                         <tr>
                                                             <td data-title="cargo"><?php echo $emp['car_cod'];?></td>
+                                                            <td data-title="descripcion"><?php echo $emp['car_descri'];?></td>
                                                             <td data-title="Nombres y Apellidos"><?php echo $emp['emp_nombre'].", " .$emp['emp_apellido'];?></td>
                                                              <td data-title="Telefono"><?php echo $emp['emp_tel'];?></td> 
                                                              <td data-title="Dirección"><?php echo $emp['emp_direcc'];?></td>
                                                              <td data-title="Código"><?php echo $emp['emp_cod'];?></td>
                                                              <td data-title="Acciones" class="text-center">
+                                                             <?php if ($_SESSION['EMPLEADOS']['editar']=='t') { ?>
                                                                  <a href="empleado_edit.php?vemp_cod=<?php echo $emp['emp_cod'];?>" class="btn btn-warning btn-sm" role="button"
                                                                     data-title="Editar" >
                                                                  <i class="fa fa-edit"></i>
-                                                                 </a>
+                                                                 </a>  <?php }?> 
+                                                                 <?php if ($_SESSION['EMPLEADOS']['borrar']=='t') { ?>
                                                                  <a href="empleado_del.php?vemp_cod=<?php echo $emp['emp_cod'];?>" class="btn btn-danger btn-sm" role="button"
                                                                     data-title="Borrar" >
                                                                  <i class="fa fa-trash"></i>
-                                                                 </a>
+                                                                 </a><?php }?> 
                                                              </td>
                                                         </tr>
                                                         <?php } ?>
@@ -108,6 +115,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>

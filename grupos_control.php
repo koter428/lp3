@@ -1,17 +1,31 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
 require 'clases/conexion.php';
+require 'funciones/lib_funciones.php';
 
 @session_start();
 
-$sql="select sp_grupos(".$_REQUEST['accion'].",".$_REQUEST['vgru_cod'].",'".$_REQUEST['vgru_nombre']."') as resul";
+$accion = $_REQUEST['accion'];
 
-$resultado = consultas::get_datos($sql);
-
-if ($resultado[0]['resul']!=null) {
-    $_SESSION['mensaje']= $resultado[0]['resul'];
-    header("location:grupos_index.php");
-}else{
-    $_SESSION['mensaje']= "Error:".$sql;
-    header("location:grupos_index.php");    
+if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
+    $sql = "select sp_grupos(" . $accion . "," . (!empty($_REQUEST['vgru_cod']) ? $_REQUEST['vgru_cod'] : 0) . ",'" .
+    (!empty($_REQUEST['vgru_nombre']) ? $_REQUEST['vgru_nombre'] : "") . "') as resul";
+}  
+else if (strcmp($accion,"3") == 0){
+    $sql = "select sp_grupos(" . $accion . "," . $_REQUEST['vgru_cod']. ",0,'') as resul";
 }
+//echo $sql; return;
+
+$mensaje = consultas::get_datos($sql);
+
+if (isset($mensaje)) {
+    $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+    $_SESSION['mensaje'] = $mensaje[0];
+    header("location:" . $mensaje[1] . ".php");
+} else {
+    $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+    header("location:" . "grupos_index.php");
+}
+
+ERROR: no existe la función sp_grupos(integer, integer, integer, unknown) LINE 1: select sp_grupos(3,3,0,'') as resul ^ HINT: 
+Ninguna función coincide en el nombre y tipos de argumentos. Puede ser necesario agregar conversión explícita de tipos.

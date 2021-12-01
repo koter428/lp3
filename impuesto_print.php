@@ -77,8 +77,9 @@ $clientes = consultas::get_datos("select * from tipo_impuesto order by tipo_cod"
 
 if (!empty($clientes)) {
     foreach ($clientes as $cliente) {
-        $pdf->Cell(75, 5, $cliente['tipo_descri'], 1, 0, 'C', 1);
-        $pdf->Cell(75, 5, $cliente['tipo_porcen'], 1, 0, 'L', 1);
+        $pdf->Cell(10, 5, $cliente['tipo_cod'], 1, 0, 'O', 1);
+        $pdf->Cell(35, 5, $cliente['tipo_descri'], 1, 0, 'C', 1);
+        $pdf->Cell(35, 5, $cliente['tipo_porcen'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 }else{

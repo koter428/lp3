@@ -1,38 +1,32 @@
 <?php
-require 'ver_session.php'; /*VERIFICAR SESSION*/
-require 'clases/conexion.php';
+    require 'ver_session.php'; /*VERIFICAR SESSION*/
+    require 'clases/conexion.php';
+    require 'funciones/lib_funciones.php';
 
-switch ($_REQUEST['accion']) {
-    case 1://insertar
-        $sql = "insert into proveedor values((select coalesce(max(prv_cod),0)+1 from proveedor),'"
-                . $_REQUEST['vprv_ruc'] . "', '"
-                . $_REQUEST['vprv_razonsocial'] . "', '"
-                . $_REQUEST['vprv_direccion'] . "', '" . $_REQUEST['vprv_telefono'] . "')";
+    @session_start();
 
-        $mensaje = "Se guardo correctamente";
-        break;
+    $accion = $_REQUEST['accion'];
 
-    case 2://actualizar
-        $sql = "update proveedor set prv_ruc='" . $_REQUEST['vprv_ruc'] 
-            . "', prv_razonsocial='" . $_REQUEST['vprv_razonsocial'] 
-            . "', prv_direccion='" . $_REQUEST['vprv_direccion'] 
-            . "', prv_telefono='" . $_REQUEST['vprv_telefono'] 
-            . "' where  prv_cod=" . $_REQUEST['vprv_cod'];
+    if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
+        $sql = "select sp_proveedor(" . $accion . "," . 
+        (!empty($_REQUEST['vprv_cod']) ? $_REQUEST['vprv_cod'] : 0) . ",'" .
+        (!empty($_REQUEST['vprv_ruc']) ? $_REQUEST['vprv_ruc'] : 0) . "','" .
+        (!empty($_REQUEST['vprv_razonsocial']) ? $_REQUEST['vprv_razonsocial'] : '') . "','" .
+        (!empty($_REQUEST['vprv_direccion']) ? $_REQUEST['vprv_direccion'] : 0) . "','" .
+        (!empty($_REQUEST['vprv_telefono']) ? $_REQUEST['vprv_telefono'] : '') . "') as resul";
+    }
+    else if (strcmp($accion,"3") == 0){
+        $sql = "select sp_proveedor(" . $accion . "," . $_REQUEST['vprv_cod'] . ") as resul";
+    }
+    //  echo $sql; return;
 
-        $mensaje = "Se actualizo correctamente";
-        break;
+    $mensaje = consultas::get_datos($sql);
 
-    case 3://borrar
-        $sql = "delete from proveedor where  prv_cod =" . $_REQUEST['vprv_cod'];
-        $mensaje = "Se borro correctamente";
-        break;
-}
-@session_start(); /* reanudar la sesión */
-
-if (consultas::ejecutar_sql($sql)) {
-    $_SESSION['mensaje'] = $mensaje;
-    header("location:proveedor_index.php");
-} else {
-    $_SESSION['mensaje'] = 'Error al procesar \n' . $sql;
-    header("location:proveedor_index.php");
-}
+    if (isset($mensaje)) {
+        $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+        $_SESSION['mensaje'] = $mensaje[0];
+        header("location:" . $mensaje[1] . ".php");
+    } else {
+        $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+        header("location:" . "proveedor_index.php");
+    }

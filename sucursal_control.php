@@ -1,31 +1,28 @@
 <?php
 require 'ver_session.php'; /*VERIFICAR SESSION*/
-    require 'clases/conexion.php';
+require 'clases/conexion.php';
+require 'funciones/lib_funciones.php';
 
-    switch ($_REQUEST['accion']) {
-        case 1: //insertar
-            $sql = "insert into sucursal(id_sucursal,suc_descri) "
-                . "values((select coalesce(max(id_sucursal),0)+1 from sucursal),'" . strtoupper($_REQUEST['vsuc_descri']) . "')";
-            $mensaje = "Se guardo correctamente";
-            break;
+@session_start();
 
-        case 2: //actualizar
-            $sql = "update sucursal set suc_descri = '" . strtoupper($_REQUEST['vsuc_descri']) . "' where  id_sucursal =" . $_REQUEST['vid_sucursal'];
-            $mensaje = "Se actualizo correctamente";
-            break;
+$accion = $_REQUEST['accion'];
 
-        case 3: //borrar
-            $sql = "delete from sucursal where id_sucursal = '" . $_REQUEST['vid_sucursal'] . "'";
-            $mensaje = "Se borro correctamente";
-            $consulta = consultas::get_datos("select * from sucursal order by suc_descri");
-            break;
-    }
-    @session_start(); /* reanudar la sesión */
+if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
+    $sql = "select sp_sucursal(" . $accion . "," . (!empty($_REQUEST['vid_sucursal']) ? $_REQUEST['vid_sucursal'] : 0) . ",'" .
+    (!empty($_REQUEST['vsuc_descri']) ? $_REQUEST['vsuc_descri'] : "") . "') as resul";
+}
+else if (strcmp($accion,"3") == 0){
+    $sql = "select sp_sucursal(" . $accion . "," . $_REQUEST['vid_sucursal']. ",'') as resul";
+}
+//echo $sql; return;
 
-    if (consultas::ejecutar_sql($sql)) {
-        $_SESSION['mensaje'] = $mensaje;
-        header("location:sucursal_index.php");
-    } else {
-        $_SESSION['mensaje'] = 'Error al procesar \n' . pg_last_error();
-        header("location:sucursal_index.php");
-    }
+$mensaje = consultas::get_datos($sql);
+
+if (isset($mensaje)) {
+    $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+    $_SESSION['mensaje'] = $mensaje[0];
+    header("location:" . $mensaje[1] . ".php");
+} else {
+    $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+    header("location:" . "sucursal_index.php");
+}

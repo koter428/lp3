@@ -1,47 +1,29 @@
 <?php
-    require 'clases/conexion.php';
-    
-    // Validaciones
-    $sms_error = "";
-    $porcentaje = $_REQUEST["vid_sucursal"];
-    if($porcentaje < 0)
-        $sms_error = "El porcentaje no debe ser negativo.";
-    
-    @session_start();
-    if($sms_error != ""){
-        $_SESSION['mensaje'] = $sms_error;
-        header("location:deposito_index.php");
-    }
-    else{
-        switch ($_REQUEST['accion']){
-            case 1: //insertar
-                $sql =  "insert into deposito(dep_cod,dep_descri,id_sucursal) " .
-                        "values((select coalesce(max(dep_cod),0)+1 from deposito),'" .
-                        strtoupper($_REQUEST['vdep_descri']) . "','" . $_REQUEST['vdep_porcen'] . "')";
-                $mensaje = "Se guardo correctamente";
-                break;
+require 'ver_session.php'; /*VERIFICAR SESSION*/
+require 'clases/conexion.php';
+require 'funciones/lib_funciones.php';
 
-            case 2: //actualizar
-                $sql =  "update tipo_impuesto set dep_descri = '" . strtoupper($_REQUEST['vdep_descri']) . "', " .
-                        "tipo_porcen='" . $_REQUEST['vid_sucursal'] . "' " .
-                        "where tipo_cod ='" . $_REQUEST['vdep_cod'] . "'";
-                $mensaje = "Se actualizo correctamente";
-                break;
+@session_start();
+$accion = $_REQUEST['accion'];
+// print_r($_REQUEST); return;
 
-            case 3: //borrar
-                $sql = "delete from deposito where dep_cod='" . $_REQUEST['vdep_cod'] . "'";
-                $mensaje = "Se borro correctamente";
-                break;
-        }
-        
-        if (consultas::ejecutar_sql($sql)) {
-            $_SESSION['mensaje'] = $mensaje;
-            header("location:deposito_index.php");
-        } else {
-            $_SESSION['mensaje'] = 'Error al procesar \n' . pg_last_error();
-            header("location:deposito_index.php");
-        }
-    }
-    
-    
-  
+if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){ 
+    $sql = "select sp_deposito(" . $accion . "," . (!empty($_REQUEST['vdep_cod']) ? $_REQUEST['vdep_cod'] : 0) . ",'" .
+    (!empty($_REQUEST['vdep_descri']) ? $_REQUEST['vdep_descri'] : '') . "'," .
+    (!empty($_REQUEST['vid_sucursal']) ? $_REQUEST['vid_sucursal'] :  1) . ") as resul";
+}
+else if (strcmp($accion,"3") == 0){
+    $sql = "select sp_deposito(" . $accion . "," . $_REQUEST['vdep_cod']. ") as resul";
+}
+
+// echo $sql;return;
+$mensaje = consultas::get_datos($sql);
+
+if (isset($mensaje)) {
+        $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+        $_SESSION['mensaje'] = $mensaje[0];
+        header("location:" . $mensaje[1] . ".php");   
+} else {
+    $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+    header("location:" . "deposito_index.php");
+}

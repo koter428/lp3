@@ -23,16 +23,19 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="box box-primary">
+                            <?php if ($_SESSION['USUARIOS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="fa fa-clipboard"></i>
                                     <h3 class="box-title">Usuarios</h3>
                                     <div class="box-tools">
-                                        <a href="cargo_print.php" class="btn btn-default btn-sm" data-title ="Imprimir" rel="tooltip" data-placement="top" target="print">
+                                        <a href="usuarios_print.php" class="btn btn-default btn-sm" data-title ="Imprimir" rel="tooltip" data-placement="top" target="print">
                                             <i class="fa fa-print"></i>
                                         </a>
+                                        <?php if ($_SESSION['USUARIOS']['insertar']==='t') { ?> 
                                         <a onclick="add()" class="btn btn-primary btn-sm" data-title = "Agregar" rel="tooltip" 
                                            data-placement="top" data-toggle="modal" data-target="#mymodal"> 
-                                            <i class="fa fa-plus"></i></a>                                        
+                                            <i class="fa fa-plus"></i></a>   
+                                            <?php } ?>                                      
                                     </div>
                                 </div>
                                 <!-- AQUI VA EL CONTENIDO DE LA TABLA-->
@@ -70,12 +73,16 @@
                                                                 <td data-title="Sucursal"><?php echo $usuario['suc_descri']?></td>
                                                                 <td data-title="Código"><?php echo $usuario['usu_cod']?></td>
                                                                 <td data-title="Acciones" class="text-center">
+                                                                <?php if ($_SESSION['USUARIOS']['editar']=='t') { ?>
                                                                     <a onclick="editar(<?php echo "'".$usuario['car_cod']."_".$usuario['car_descri']."'"?>)" class="btn btn-warning btn-sm" role="button" data-title="Editar" 
                                                                        data-toggle="modal" data-target="#editar" rel="tooltip" data-placement="top">
                                                                         <span class="glyphicon glyphicon-edit"></span></a>
+                                                                        <?php }?>
+                                                                        <?php if ($_SESSION['USUARIOS']['borrar']=='t') { ?>
                                                                     <a onclick="borrar(<?php echo "'".$usuario['car_cod']."_".$usuario['car_descri']."'"?>)" class="btn btn-danger btn-sm" role="button" data-title="Borrar" 
                                                                        rel="tooltip" data-placement="top" data-toggle='modal' data-target='#borrar'>
-                                                                        <span class="glyphicon glyphicon-trash"></span></a>                        
+                                                                        <span class="glyphicon glyphicon-trash"></span></a>        
+                                                                        <?php }?>                
                                                                 </td>
                                                             </tr>
                                                             <?php } ?>
@@ -115,7 +122,7 @@
                                       <i class="fa fa-remove"></i></button>
                                       <h4 class="modal-title"><i class="fa fa-edit"></i> Editar Cargos</h4>
                               </div>
-                              <form action="cargo_control.php" method="POST" accept-charset="utf-8" class="form-horizontal">
+                              <form action="usuarios_control.php" method="POST" accept-charset="utf-8" class="form-horizontal">
                                   <input type="hidden" name="accion" value="2">
                                   <input type="hidden" name="vcar_cod" id="cod">
                                   <div class="modal-body">
@@ -157,7 +164,17 @@
                       </div>                      
                   </div>
                   <!-- FIN MODAL PARA BORRAR-->                   
-            </div>                  
+            </div>      
+            <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
         <script>
             $('#mensaje').delay(4000).slideUp(200,function(){

@@ -48,7 +48,7 @@
                                             <div class="col-lg-5 col-md-5 col-sm-5">
                                                 <div class="input-group">
                                                     <?php $sucursal = consultas::get_datos("select * from sucursal order by id_sucursal");?>
-                                                    <select class="form-control select2" name="vmar_cod" required="">
+                                                    <select class="form-control select2" name="vid_sucursal" required="">
                                                         <option value="">Seleccione una Sucursal</option>
                                                         <?php foreach ($sucursal as $sucur) { ?>
                                                           <option value="<?php echo $sucur['id_sucursal'];?>"><?php echo $sucur['id_sucursal'];?></option>   

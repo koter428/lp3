@@ -17,7 +17,7 @@ begin
 	elsif ban = 2 then
 		update modulos set mod_nombre = trim(upper(vmod_nombre))
 		where mod_cod = vmod_cod;
-		mensaje = 'Se actualizó correctamente el modulos*modulos_index';
+		mensaje = 'Se modificó correctamente el modulos*modulos_index';
 	elsif ban = 3 then
 		delete from modulos
 		where mod_cod = vmod_cod;
@@ -30,3 +30,18 @@ $BODY$
   COST 100;
 ALTER FUNCTION sp_modulos(integer, integer, character varying)
   OWNER TO postgres;
+
+/*
+	Prueba del procedimiento
+	1- grabar
+		select sp_modulos(1,0,'secundario');
+
+	2- modificar
+		select sp_modulos(2,7,'camila te odio');
+
+	3- eliminar
+		select sp_modulos(3,7);
+        4-visualizar
+	select * from deposito order by 1
+
+*/

@@ -5,7 +5,6 @@ include_once 'clases/conexion.php';
 
 // Extend the TCPDF class to create custom Header and Footer
 class MYPDF extends TCPDF {
-
     // Page footer
     public function Footer() {
         // Position at 15 mm from bottom
@@ -68,9 +67,9 @@ $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(30, 5, 'CODIGO', 1, 0, 'C', 1);
-$pdf->Cell(60, 5, 'DESCRIPCION', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, 'PRECIO C.', 1, 0, 'C', 1);
-$pdf->Cell(30, 5, 'PRECIO V.', 1, 0, 'C', 1);
+$pdf->Cell(70, 5, 'DESCRIPCION', 1, 0, 'C', 1);
+$pdf->Cell(25, 5, 'PRECIO C.', 1, 0, 'C', 1);
+$pdf->Cell(25, 5, 'PRECIO V.', 1, 0, 'C', 1);
 $pdf->Cell(0, 5, 'IMPUESTO', 1, 0, 'C', 1);
 
 $pdf->Ln();
@@ -81,11 +80,17 @@ $articulos = consultas::get_datos("select * from v_articulo order by art_cod");
 
 if (!empty($articulos)) {
     foreach ($articulos as $articulo) {
-        $pdf->Cell(30, 5, $articulo['art_cod'], 1, 0, 'C', 1);
-        $pdf->Cell(60, 5, $articulo['art_descri']." ".$articulo['mar_descri'], 1, 0, 'L', 1);
-        $pdf->Cell(30, 5, number_format($articulo['art_precioc'],0,",","."), 1, 0, 'C', 1);
-        $pdf->Cell(30, 5, number_format($articulo['art_preciov'],0,",","."), 1, 0, 'C', 1);
-        $pdf->Cell(0, 5, $articulo['tipo_descri'], 1, 0, 'C', 1);
+        $startX = $pdf->GetX();
+        $startY = $pdf->GetY();
+        
+        $pdf->MultiCell(30, 5, $articulo['art_cod'], 1, 'C', 1, 0,'','',1,0,0,1,15,'M', 1);
+        $pdf->MultiCell(70, 5, $articulo['art_descri']." ".$articulo['mar_descri'], 1, 'L', 1, 0,'','',1,0,0,1,15,'M', 1);
+        $pdf->MultiCell(25, 5, number_format($articulo['art_precioc'],0,",","."), 1, 'C', 1, 0,'','',1,0,0,1,15,'M', 1);
+        $pdf->MultiCell(25, 5, number_format($articulo['art_preciov'],0,",","."), 1, 'C', 1, 0,'','',1,0,0,1,15,'M', 1);
+        $pdf->MultiCell(0, 5, $articulo['tipo_descri'], 1, 'C', 1, 0,'','',1,0,0,1,15,'M', 1);
+
+        $pdf->SetXY($startX,$startY);
+
         $pdf->Ln();
     }
 }else{
@@ -96,5 +101,5 @@ if (!empty($articulos)) {
 
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('./reporte_articulo.pdf', 'I');
 ?>

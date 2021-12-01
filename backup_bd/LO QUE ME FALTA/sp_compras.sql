@@ -43,3 +43,19 @@ $BODY$
   COST 100;
 ALTER FUNCTION sp_compras(integer, integer, integer, integer, character varying, integer, integer, integer, integer)
   OWNER TO postgres;
+
+  /*
+	Prueba del procedimiento
+	1- grabar
+		select sp_compras(1,1,0,0,'2019-13-14','CONTADO',1,0,0,'PENDIENTE',1);
+
+	2- modificar
+		select sp_compras(2,9,1825325,'alan','acosta','+59521555666','Palma 424 casi Estrella');
+
+	3- eliminar
+		select sp_compras(3,9);
+
+	select * from compras order by 1
+
+
+ */

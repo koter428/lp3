@@ -27,12 +27,15 @@
                             </div>
                              <?php } ?>
                             <div class="box box-primary">
+                            <?php if ($_SESSION['CLIENTE']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-android-person"></i>
                                     <h3 class="box-title">Clientes</h3>
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['CLIENTE']['insertar']==='t') { ?> 
                                         <a href="cliente_add.php" class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip">
                                             <i class="fa fa-plus"></i>
+                                            <?php } ?> 
                                             <a href="cliente_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>                                            
                                         </a>
@@ -80,14 +83,17 @@
                                                              <td data-title="Dirección"><?php echo $cliente['cli_direcc'];?></td>
                                                              <td data-title="Código"><?php echo $cliente['cli_cod'];?></td>
                                                              <td data-title="Acciones" class="text-center">
+                                                              <?php if ($_SESSION['CLIENTE']['editar']=='t') { ?>
                                                                  <a href="cliente_edit.php?vcli_cod=<?php echo $cliente['cli_cod'];?>" class="btn btn-warning btn-sm" role="button"
                                                                     data-title="Editar" >
-                                                                 <i class="fa fa-edit"></i>
-                                                                 </a>
+                                                                 <i class="fa fa-edit"></i></a>
+                                                                 <?php }?> 
+                                                                 <?php if ($_SESSION['CLIENTE']['borrar']=='t') { ?>
                                                                  <a href="cliente_del.php?vcli_cod=<?php echo $cliente['cli_cod'];?>" class="btn btn-danger btn-sm" role="button"
                                                                     data-title="Borrar" >
-                                                                 <i class="fa fa-trash"></i>
-                                                                 </a>
+                                                                 <i class="fa fa-trash"></i></a>
+                                                                 <?php }?>
+
                                                              </td>
                                                         </tr>
                                                         <?php } ?>
@@ -106,6 +112,16 @@
                                            </div>
                                           </div>
                                         </div>
+                                        <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                                     </div>
                                 </div>
                             </div>

@@ -38,11 +38,14 @@
                             </div>
                         <?php } ?>
                         <div class="box box-primary">
+                        <?php if ($_SESSION['SUCURSAL']['leer']==='t') { ?>
                             <div class="box-header">
                                 <i class="ion ion-clipboard"></i>
                                 <h3 class="box-title">Sucursales</h3>
                                 <div class="box-tools">
+                                <?php if ($_SESSION['SUCURSAL']['insertar']==='t') { ?> 
                                     <a href="sucursal_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='left'><i class="fa fa-plus"></i></a>
+                                    <?php } ?> 
                                     <a href="sucursal_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>                                            
                                         </a>
@@ -87,12 +90,14 @@
                                                                 <td data-title='Descripción'><?php echo $suc['suc_descri']; ?></td>
                                                                 <td data-title='Código'><?php echo $suc['id_sucursal']; ?></td>
                                                                 <td data-title='Acciones' class="text-center">
+                                                                <?php if ($_SESSION['SUCURSAL']['editar']=='t') { ?>
                                                                     <a href="sucursal_edit.php?vid_sucursal=<?php echo $suc['id_sucursal']; ?>" class="btn btn-warning btn-sm" role='button' data-title='Editar' rel='tooltip' data-placement='left'>
                                                                         <span class="glyphicon glyphicon-edit"></span>
-                                                                    </a>
+                                                                    </a>    <?php }?> 
+                                                                    <?php if ($_SESSION['SUCURSAL']['borrar']=='t') { ?>
                                                                     <a href="sucursal_del.php?vid_sucursal=<?php echo $suc['id_sucursal']; ?>" class="btn btn-danger btn-sm" role='button' data-title='Borrar' rel='tooltip' data-placement='left'>
                                                                         <span class="glyphicon glyphicon-trash"></span></a>
-                                                                </td>
+                                                                </td>    <?php }?> 
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -108,7 +113,16 @@
                                     </div>
 
                                 </div>
-
+                                <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>

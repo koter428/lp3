@@ -34,15 +34,17 @@
                                     ?>
                                 </div>
                             <?php } ?>
-                            <div class="box box-primary">
+                            <div class="box box-primary">           
+                            <?php if ($_SESSION['PROVEEDOR']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Proveedores</h3>
                                      <div class="box-tools">
                                         <div class="box-tools">
+                                        <?php if ($_SESSION['PROVEEDOR']['insertar']==='t') { ?> 
                                             <a href="proveedor_add.php" class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip">
                                             <i class="fa fa-plus"></i>
-                                        </a>
+                                        </a>  <?php } ?>
                                             <a href="proveedor_print.php"class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>  
                                         </a>                                        
@@ -94,13 +96,17 @@
                                                                     <td data-title='direccion'><?php echo $prv['prv_direccion']; ?></td>
                                                                     <td data-title='telefono'><?php echo $prv['prv_telefono']; ?></td>
                                                                     <td data-title='Código'><?php echo $prv['prv_cod']; ?></td>
-                                                                    <td data-title='Acciones' class="text-center"><a href="proveedor_edit.php?vprv_cod=<?php echo $prv['prv_cod']; ?>" 
-                                                                                                                     class="btn btn-warning btn-sm" 
-                                                                                                                     role='button' data-title='Editar' rel='tooltip' data-placement='left'>
-                                                                            <span class="glyphicon glyphicon-edit"></span></a>
+                                                                    <td data-title='Acciones' class="text-center">
+                                                                    <?php if ($_SESSION['PROVEEDOR']['editar']=='t') { ?>
+                                                                    <a href="proveedor_edit.php?vprv_cod=<?php echo $prv['prv_cod']; ?>" class="btn btn-warning btn-sm" 
+                                                                      role='button' data-title='Editar' rel='tooltip' data-placement='left'>
+                                                                    <span class="glyphicon glyphicon-edit"></span></a>
+                                                                    <?php }?>
+                                                                    <?php if ($_SESSION['PROVEEDOR']['borrar']=='t') { ?>
                                                                         <a href="proveedor_del.php?vprv_cod=<?php echo $prv['prv_cod']; ?>" class="btn btn-danger btn-sm" role='button'
                                                                            data-title='Borrar' rel='tooltip' data-placement='left'>
                                                                             <span class="glyphicon glyphicon-trash"></span></a></td>
+                                                                            <?php }?>
                                                                 </tr>
                                                             <?php } ?>
                                                         </tbody>
@@ -116,7 +122,16 @@
                                         </div>
 
                                     </div>
-
+                                    <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                                 </div>
                             </div>
                         </div>

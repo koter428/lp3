@@ -32,3 +32,18 @@ $BODY$
   COST 100;
 ALTER FUNCTION sp_impuesto(integer, integer, character varying, integer)
   OWNER TO postgres;
+
+/*
+	Prueba del procedimiento
+	1- grabar
+		select sp_impuesto(1,0,'iva 20',1);
+
+	2- modificar
+		select sp_impuesto(2,4,'iva 40',3);
+
+	3- eliminar
+		select sp_impuesto(3,4);
+
+	select * from paginas order by 1
+
+ */

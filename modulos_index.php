@@ -31,14 +31,16 @@
                             </div>
                             <?php } ?>                            
                             <div class="box box-primary">
+                            <?php if ($_SESSION['MODULOS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Modulos</h3>                                    
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['MODULOS']['insertar']==='t') { ?> 
                                         <a class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip" 
                                            data-toggle="modal" data-target="#registrar">
                                             <i class="fa fa-plus"></i>
-                                        </a>
+                                        </a> <?php } ?> 
                                         <a href="modulos_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>
                                         </a>                                        
@@ -86,14 +88,16 @@
                                                             <td data-title="Descripción"><?php echo $modulo['mod_nombre'];?></td>
                                                             <td data-title="Descripción"><?php echo $modulo['mod_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
+                                                            <?php if ($_SESSION['MODULOS']['editar']=='t') { ?>
                                                                 <a onclick="editar(<?php echo "'".$modulo['mod_cod']."_".$modulo['mod_nombre']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
                                                                     <i class="fa fa-edit"></i>
-                                                                </a>
+                                                                </a><?php }?>
+                                                                <?php if ($_SESSION['MODULOS']['borrar']=='t') { ?>
                                                                 <a onclick="borrar(<?php echo "'".$modulo['mod_cod']."_".$modulo['mod_nombre']."'";?>)" class="btn btn-danger btn-sm" role="buttom" 
                                                                    data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
                                                                     <i class="fa fa-trash"></i>
-                                                                </a>                                                                
+                                                                </a><?php }?>
                                                             </td>
                                                         </tr>
                                                         <?php }?>
@@ -123,7 +127,7 @@
                                   <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
                                   <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Modulos</strong></h4>
                               </div>
-                              <form action="modulo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                              <form action="modulos_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                   <input type="hidden" name="accion" value="1">
                                   <input type="hidden" name="vmod_cod" value="0">
                                   <div class="modal-body">
@@ -196,7 +200,17 @@
                       </div>
                   </div>
                   <!-- FIN MODAL BORRAR -->                   
-            </div>                  
+            </div>      
+            <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
         <script>
             $("#mensaje").delay(4000).slideUp(200,function(){

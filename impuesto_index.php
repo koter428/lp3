@@ -43,14 +43,17 @@
                                 </div>
                               <?php } ?>
                             <div class="box box-primary">
+                            <?php if ($_SESSION['TIPO DE IMPUESTO']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Tipo de Impuesto</h3>
                                     <div class="box-tools">
                                         <a href="impuesto_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i></a>
+                                            <?php if ($_SESSION['TIPO DE IMPUESTO']['insertar']==='t') { ?> 
                                         <a href="impuesto_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'
                                         ><i class="fa fa-plus"></i></a>
+                                        <?php } ?> 
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -95,12 +98,14 @@
                                                                     <td data-title='tipo_impuesto'><?php echo $tipo['tipo_descri']; ?></td>
                                                                     <td data-title='porcentaje'><?php echo $tipo['tipo_porcen']; ?></td>
                                                                     <td data-title='Acciones' class="text-center">
+                                                                    <?php if ($_SESSION['TIPO DE IMPUESTO']['editar']=='t') { ?>
                                                                         <a href="impuesto_edit.php?vtipo_cod=<?php echo $tipo['tipo_cod']; ?>" class="btn btn-warning btn-sm" role='button' data-title='Editar' rel='tooltip' data-placement='top'>
                                                                             <span class="glyphicon glyphicon-edit"></span>
-                                                                        </a>
+                                                                        </a><?php }?> 
+                                                                        <?php if ($_SESSION['TIPO DE IMPUESTO']['borrar']=='t') { ?>
                                                                         <a href="impuesto_del.php?vtipo_cod=<?php echo $tipo['tipo_cod']; ?>" class="btn btn-danger btn-sm" role='button' data-title='Borrar' rel='tooltip' data-placement='top'>
                                                                             <span class="glyphicon glyphicon-trash"></span>
-                                                                        </a>
+                                                                        </a><?php }?> 
                                                                     </td>
                                                                 </tr>
                                                            <?php } ?>
@@ -115,6 +120,16 @@
                                                     <?php }
                                                     ?>
                                         </div>
+                                        <?php }else{ ?>
+                                         <div>
+                                             <div class="box-body">
+                                                 <div class="alert alert-info flat">
+                                                <span class="glyphicon glyphicon-info-sign"></span>
+                                               No posee permisos de lectura 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>

@@ -31,3 +31,18 @@ $BODY$
   COST 100;
 ALTER FUNCTION sp_marca(integer, integer, character varying)
   OWNER TO postgres;
+
+/*
+	Prueba del procedimiento
+	1- grabar
+		select sp_marca(1,0,'porquee');
+
+	2- modificar
+		select sp_marca(2,15,'te amo');
+
+	3- eliminar
+		select sp_marca(3,15);
+
+	select * from marca order by 1
+
+ */

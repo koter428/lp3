@@ -31,14 +31,16 @@
                             </div>
                             <?php } ?>                            
                             <div class="box box-primary">
+                            <?php if ($_SESSION['GRUPOS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Grupos</h3>                                    
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['GRUPOS']['insertar']==='t') { ?> 
                                         <a class="btn btn-primary btn-sm" data-title="Agregar" rel="tooltip" 
                                            data-toggle="modal" data-target="#registrar">
                                             <i class="fa fa-plus"></i>
-                                        </a>
+                                        </a><?php } ?> 
                                         <a href="grupos_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i>
                                         </a>                                        
@@ -86,14 +88,16 @@
                                                             <td data-title="nombre"><?php echo $grupo['gru_nombre'];?></td>
                                                             <td data-title="Código"><?php echo $grupo['gru_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
-                                                                <a onclick="editar(<?php echo "'".$grupo['gru_cod'];?>)" class="btn btn-warning btn-sm" role="buttom" 
+                                                            <?php if ($_SESSION['GRUPOS']['editar']=='t') { ?>
+                                                                <a onclick="editar(<?php echo  "'".$grupo['gru_cod']."_".$grupo['gru_nombre']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
                                                                     <i class="fa fa-edit"></i>
-                                                                </a>
-                                                                <a onclick="borrar(<?php echo "'".$grupo['gru_cod'];?>)" class="btn btn-danger btn-sm" role="buttom" 
+                                                                </a> <?php }?> 
+                                                                <?php if ($_SESSION['GRUPOS']['borrar']=='t') { ?>
+                                                                <a onclick="borrar(<?php echo "'".$grupo['gru_cod']."_".$grupo['gru_nombre']."'";?>)" class="btn btn-danger btn-sm" role="buttom" 
                                                                    data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
                                                                     <i class="fa fa-trash"></i>
-                                                                </a>                                                                
+                                                                </a>  <?php }?>                                                           
                                                             </td>
                                                         </tr>
                                                         <?php }?>
@@ -196,7 +200,17 @@
                       </div>
                   </div>
                   <!-- FIN MODAL BORRAR -->                   
-            </div>                  
+                 </div>   
+                 <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
         <script>
             $("#mensaje").delay(4000).slideUp(200,function(){

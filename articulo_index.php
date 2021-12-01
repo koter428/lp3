@@ -33,11 +33,14 @@
                             </div>
                             <?php } ?>
                             <div class="box box-primary">
+                            <?php if ($_SESSION['ARTICULOS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Articulos</h3>
                                     <div class="box-tools">
+                                    <?php if ($_SESSION['ARTICULOS']['insertar']==='t') { ?> 
                                         <a href="articulo_add.php" class="btn btn-primary btn-sm" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                        <?php } ?> 
                                         <a href="articulo_print.php" class="btn btn-default btn-sm" data-title='Imprimir' rel='tooltip' data-placement='top' target="_blank"><i class="fa fa-print"></i></a>
                                     </div>
                                 </div>
@@ -88,14 +91,16 @@
                                                             <td data-title='Precio Venta'><?php echo $art['tipo_descri'];?></td>
                                                             <td data-title='Código'><?php echo $art['art_cod'];?></td>
                                                             <td data-title='Acciones' class="text-center">
+                                                            <?php if ($_SESSION['ARTICULOS']['editar']=='t') { ?>
                                                                 <a href="articulo_edit.php?vart_cod=<?php echo $art['art_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
-                                                                    <span class="glyphicon glyphicon-edit"></span>
-                                                                </a>
+                                                                    <span class="glyphicon glyphicon-edit"></span></a>
+                                                                <?php }?> 
+                                                                <?php if ($_SESSION['ARTICULOS']['borrar']=='t') { ?>
                                                                 <a onclick="borrar(<?php echo "'".$art['art_cod']."_".$art['art_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
-                                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                                </a>                                                                        
+                                                                    <span class="glyphicon glyphicon-trash"></span></a>     
+                                                                    <?php }?>                                                                   
                                                             </td>
                                                         </tr>
                                                         <?php } ?>
@@ -112,6 +117,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php }else{ ?>
+                             <div>
+                                 <div class="box-body">
+                                     <div class="alert alert-info flat">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                   No posee permisos de lectura 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
                             </div>
                         </div>                        
                     </div>

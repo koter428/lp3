@@ -9,7 +9,7 @@ $accion = $_REQUEST['accion'];
 
 if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
     $sql = "select sp_cargo(" . $accion . "," . (!empty($_REQUEST['vcar_cod']) ? $_REQUEST['vcar_cod'] : 0) . ",'" .
-    (!empty($_REQUEST['vcar_descri']) ? $_REQUEST['vcar_descri'] : 0) . "') as resul";
+    (!empty($_REQUEST['vcar_descri']) ? $_REQUEST['vcar_descri'] : "") . "') as resul";
 }
 else if (strcmp($accion,"3") == 0){
     $sql = "select sp_cargo(" . $accion . "," . $_REQUEST['vcar_cod']. ",'') as resul";

@@ -32,3 +32,18 @@ $BODY$
   COST 100;
 ALTER FUNCTION sp_deposito(integer, integer, character varying, integer)
   OWNER TO postgres;
+
+/*
+	Prueba del procedimiento
+	1- grabar
+		select sp_deposito(1,0,'deposito',1);
+
+	2- modificar
+		select sp_deposito(2,4,'idiotas',1);
+
+	3- eliminar
+		select sp_deposito(3,4);
+
+	select * from deposito order by 1
+
+ */

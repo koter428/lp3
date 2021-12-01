@@ -1,6 +1,6 @@
 <!-- navbar_ite.ctp -->
 <!-- Header Navbar: style can be found in header.less -->
-<nav class="navbar navbar-static-top" role="navigation">
+<nav class="navbar navbar-static-top bg-purple" role="navigation">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
@@ -12,16 +12,28 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?php if(!empty($_SESSION['usu_foto'])){ echo $_SESSION['usu_foto'];}else{ echo "img/login.png";}?>" class="user-image" alt="User Image">
-                    <span class="hidden-xs"><?php echo $_SESSION['usu_nick'];?></span>
+                    <img src="<?php if (!empty($_SESSION['usu_foto'])) {
+                                    echo $_SESSION['usu_foto'];
+                                } else {
+                                    echo "img/login.png";
+                                } ?>" class="user-image" alt="User Image">
+                    <span class="hidden-xs"><?php echo $_SESSION['usu_nick']; ?></span>
                 </a>
                 <ul class="dropdown-menu">
                     <!-- Imagen de Usuario -->
                     <li class="user-header">
-                        <img src="<?php if(!empty($_SESSION['usu_foto'])){ echo $_SESSION['usu_foto'];}else{ echo "img/login.png";}?>" class="img-circle" alt="User Image">
+                        <img src="<?php if (!empty($_SESSION['usu_foto'])) {
+                                        echo $_SESSION['usu_foto'];
+                                    } else {
+                                        echo "img/login.png";
+                                    } ?>" class="img-circle" alt="User Image">
                         <p>
-                            <?php echo $_SESSION['nombres'];?>
-                            <small>Cargo: <?php if(!empty($_SESSION['cargo'])){ echo $_SESSION['cargo'];}else{ echo "No especificado";}?></small>
+                            <?php echo $_SESSION['nombres']; ?>
+                            <small>Cargo: <?php if (!empty($_SESSION['cargo'])) {
+                                                echo $_SESSION['cargo'];
+                                            } else {
+                                                echo "No especificado";
+                                            } ?></small>
                         </p>
                     </li>
 
@@ -31,7 +43,7 @@
                             <a href="/lp3/perfil.php" class="btn btn-default">Perfil</a>
                         </div>
                         <div class="pull-right">
-                            <a href="/lp3" class="btn btn-default">Salir</a>
+                            <a href="/lp3" class="btn btn-default">Cerrar Sesion</a>
                         </div>
                     </li>
                 </ul>
