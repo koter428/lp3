@@ -113,7 +113,7 @@
                           <div class="modal-content">
                               <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
-                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Articulo</strong></h4>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Cliente</strong></h4>
                               </div>
                                <form action="cliente_control" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">

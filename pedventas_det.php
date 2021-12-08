@@ -151,7 +151,7 @@
                                                                 <select class="form-control select2" name="vdep_cod" required="">
                                                                     <option value="">Seleccione un deposito</option>
                                                                     <?php foreach ($depositos as $deposito) { ?>
-                                                                      <option value="<?php echo $deposito['dep_cod'];?>"><?php echo $deposito['dep_descri'];?></option>   
+                                                                      <option value="<?php echo $deposito['dep_cod'];?>"><?php  echo $deposito['dep_descri'];?></option>   
                                                                     <?php }?>
                                                                 </select>  
                                                         </div>

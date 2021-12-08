@@ -21,15 +21,15 @@
             <div class="content-wrapper">
                 <div class="content">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <?php if (!empty($_SESSION['mensaje'])) { ?>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">  
+                        <?php if (!empty($_SESSION['mensaje'])) { ?>
                             <div class="alert alert-danger" id="mensaje">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php echo $_SESSION['mensaje'];
-                                    $_SESSION['mensaje'] = '';
+                                $_SESSION['mensaje'] = '';
                                 ?>
                             </div>
-                            <?php } ?>                            
+                            <?php } ?>                 
                             <div class="box box-primary">
                             <?php if ($_SESSION['GRUPOS']['leer']==='t') { ?>
                                 <div class="box-header">
@@ -83,18 +83,18 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($grupos as $grupo) { ?>
+                                                        <?php foreach ($grupos as $grup) { ?>
                                                         <tr>
-                                                            <td data-title="nombre"><?php echo $grupo['gru_nombre'];?></td>
-                                                            <td data-title="Código"><?php echo $grupo['gru_cod'];?></td>
+                                                            <td data-title="nombre"><?php echo $grup['gru_nombre'];?></td>
+                                                            <td data-title="Código"><?php echo $grup['gru_cod'];?></td>
                                                             <td data-title="Acciones" class="text-center">
                                                             <?php if ($_SESSION['GRUPOS']['editar']=='t') { ?>
-                                                                <a onclick="editar(<?php echo  "'".$grupo['gru_cod']."_".$grupo['gru_nombre']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
+                                                                <a onclick="editar(<?php echo  "'".$grup['gru_cod']."_".$grup['gru_nombre']."'";?>)" class="btn btn-warning btn-sm" role="buttom" 
                                                                    data-title="Editar" rel="tooltip" data-toggle="modal" data-target="#editar">
                                                                     <i class="fa fa-edit"></i>
                                                                 </a> <?php }?> 
                                                                 <?php if ($_SESSION['GRUPOS']['borrar']=='t') { ?>
-                                                                <a onclick="borrar(<?php echo "'".$grupo['gru_cod']."_".$grupo['gru_nombre']."'";?>)" class="btn btn-danger btn-sm" role="buttom" 
+                                                                <a onclick="borrar(<?php echo "'".$grup['gru_cod']."_".$grup['gru_nombre']."'";?>)" class="btn btn-danger btn-sm" role="buttom" 
                                                                    data-title="Borrar" rel="tooltip" data-toggle="modal" data-target="#borrar">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>  <?php }?>                                                           
@@ -125,7 +125,7 @@
                           <div class="modal-content">
                               <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
-                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Grupos</strong></h4>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Grupo</strong></h4>
                               </div>
                               <form action="grupos_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                   <input type="hidden" name="accion" value="1">
@@ -159,12 +159,12 @@
                               </div>
                               <form action="grupos_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                    <input type="hidden" name="accion" value="2">
-                                  <input type="hidden" name="vcar_cod" id="cod" value="0">
+                                  <input type="hidden" name="vgru_cod" id="cod" value="0">
                                   <div class="modal-body">
                                       <div class="form-group">
                                           <label class="control-label col-sm-2">Descripción:</label>
                                           <div class="col-sm-10">
-                                              <input type="text" name="vgru_nombre" id="descri" class="form-control" required="" autofocus=""/>
+                                              <input type="text" name="vgru_nombre" id="nombre" class="form-control" required="" autofocus=""/>
                                           </div>
                                       </div>
                                   </div>

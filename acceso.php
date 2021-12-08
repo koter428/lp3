@@ -16,7 +16,7 @@ $resultado = consultas::get_datos($sql);
 
 
 if ($resultado[0]['usu_cod']==null) {
-    $_SESSION['error'] = 'Usuario o contraseña incorrectos';
+    $_SESSION['#error'] = 'Usuario o contraseña incorrectos';
     header('location:index.php');
 }else{
     $_SESSION['usu_cod']=$resultado[0]['usu_cod'];
@@ -33,3 +33,9 @@ if ($resultado[0]['usu_cod']==null) {
 }
 
 ?>
+  <!--<?php require 'menu/js_lte.ctp'; ?>
+        <script>
+            $("#error").delay(4000).slideUp(200,function(){
+                $(this).alert('close');
+            })
+        </script>-->

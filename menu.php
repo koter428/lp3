@@ -51,7 +51,7 @@
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="paginas_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="paginas_index.php" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -65,7 +65,7 @@
                  <div class="icon">
                    <i class="ion ion-bag"></i>
                  </div>
-                 <a href="compras_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                 <a href="compras_index.php" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
                </div>
              </div>
                 <!-- ./col -->
@@ -79,7 +79,7 @@
                   <div class="icon">
                     <i class="ion ion-person-add"></i>
                   </div>
-                  <a href="ventas_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="ventas_index.php" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <!-- ./col -->
@@ -93,7 +93,7 @@
                   <div class="icon">
                     <i class="ion ion-pie-graph"></i>
                   </div>
-                  <a href="clave_index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="clave_index.php" class="small-box-footer">Mas info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               <!-- ./col -->

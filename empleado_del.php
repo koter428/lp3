@@ -46,7 +46,7 @@ and open the template in the editor.
                                             <label class="control-label col-lg-2 col-md-2 col-sm-2">Cargo:</label>
                                             <div class="col-lg-8 col-md-8 col-sm-8">
                                                 <input type="text" name="vcar_cod" class="form-control" disabled="" 
-                                                       value="<?php echo $resultado[0]['car_cod']?>"/>
+                                                       value="<?php echo $resultado[0]['car_descri']?>"/>
                                             </div>
                                         </div>
                                         <div class="form-group">  

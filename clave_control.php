@@ -16,7 +16,7 @@ $sql = "select usu_clave from usuarios where usu_cod = '" . $_REQUEST['vusu_cod'
  and usu_clave ='" . md5($_REQUEST['vusu_clave_0']) . "'";
 $verificar = consultas::get_datos($sql);
 if($verificar == null){
-    $_SESSION['mensaje'] = "FELICIDADES, HICISTE ALGO MAL, APRENDA DE SUS ERRORES PROFE DE MIERDA";
+    $_SESSION['mensaje'] = "LASTIMA LA CONTRASEÑA NO PUDO SER CAMBIADA";
 header("location:clave_index.php");
 die();
 }

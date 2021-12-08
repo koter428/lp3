@@ -67,8 +67,8 @@ $pdf->SetLineWidth(0.2);
 $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
-$pdf->Cell(30, 5, 'CODIGO', 1, 0, 'C', 1);
-$pdf->Cell(25, 5, 'NOMBRE', 1, 0, 'C', 1);
+$pdf->Cell(15, 5, '#', 1, 0, 'C', 1);
+$pdf->Cell(30, 5, 'NOMBRE', 1, 0, 'C', 1);
 $pdf->Cell(30, 5, 'EMPLEADO', 1, 0, 'C', 1);
 $pdf->Cell(25, 5, 'GRUPO', 1, 0, 'C', 1);
 
@@ -80,8 +80,8 @@ $articulos = consultas::get_datos("select * from usuarios order by usu_cod");
 
 if (!empty($articulos)) {
     foreach ($articulos as $articulo) {
-        $pdf->Cell(30, 5, $articulo['usu_cod'], 1, 0, 'C', 1);
-        $pdf->Cell(25, 5, $articulo['usu_nick']." ".$articulo['emp_cod'], 1, 0, 'L', 1);
+        $pdf->Cell(15, 5, $articulo['usu_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(30, 5, $articulo['usu_nick']." ".$articulo['emp_cod'], 1, 0, 'L', 1);
         $pdf->Cell(30, 5, number_format($articulo['gru_cod'],0,",","."), 1, 0, 'C', 1);
         $pdf->Cell(25, 5, number_format($articulo['id_sucursal'],0,",","."), 1, 0, 'C', 1);
         $pdf->Ln();

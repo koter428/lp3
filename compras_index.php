@@ -24,11 +24,11 @@
                     <!-- FILA 1 -->
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <?php if (!empty($_SESSION['mensaje'])) { ?>
+                        <?php if (!empty($_SESSION['mensaje'])) { ?>
                             <div class="alert alert-danger" id="mensaje">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php echo $_SESSION['mensaje'];
-                                    $_SESSION['mensaje'] = '';
+                                $_SESSION['mensaje'] = '';
                                 ?>
                             </div>
                             <?php } ?>

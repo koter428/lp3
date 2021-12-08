@@ -44,15 +44,24 @@
                                                            value="<?php echo $usu[0]['usu_nick'] ?>"/>
                                                 </div>
                                             </div>
+                                            <!-- AGREGAR LISTA DESPLEGABLE CLAVE -->
                                             <div class="form-group">
-                                                <label class="control-label col-lg-2">Contraseña:</label>
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <input type="password" name="vclave" class="form-control" value="<?php echo $usu[0]['usu_clave']; ?>"required="" disabled=""/>                                                
+                                            <label class="control-label col-lg-2">Contraseña:</label>
+                                            <div class="col-lg-6">
+                                              <div class="input-group">
+                                                    <input type="password" name="vclave" class="form-control" value="<?php echo $usu[0]['usu_clave']; ?>"required="" disabled=""/>
+                                                    <span class="input-group-btn btn-flat">
+                                                    <a href="clave_index.php" class="btn btn-warning btn-sm" 
+                                                        data-title='¿desea cambiar la clave?' rel='tooltip' data-placement='top'><i class="glyphicon glyphicon-edit"></i></a>
+                                                    </a>
+                                                </span>
+                                                </div>
                                                 </div>
                                             </div>
+                                    <!-- FIN LISTA DESPLEGABLE CLAVE -->
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Codigo Empleado:</label>
-                                            <div class="ol-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <input type="text" name="vcod_emp" class="form-control" value="<?php echo $usu[0]['car_descri']; ?>"required="" disabled=""/>                                                
                                             </div>
                                         </div>

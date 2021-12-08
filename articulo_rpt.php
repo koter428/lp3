@@ -45,8 +45,8 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="list-group">
-                                                                    <a href="articulo_rpt.php?opcion=1" class="list-group-item">Por Codigo</a>
-                                                                    <a href="articulo_rpt.php?opcion=2" class="list-group-item">Por Descripción</a>
+                                                                <a href="articulo_rpt.php?opcion=1" class="list-group-item <?php echo (isset($_GET['opcion']) && $_GET['opcion'] == 1 ) ? 'bg-light-blue' : ''; ?>">Por Codigo</a>
+                                                                    <a href="articulo_rpt.php?opcion=2" class="list-group-item <?php echo (isset($_GET['opcion']) && $_GET['opcion'] == 2 ) ? 'bg-light-blue' : ''; ?>"">Por Descripción</a>
                                                                 </div>
                                                             </div>
                                                         </div>

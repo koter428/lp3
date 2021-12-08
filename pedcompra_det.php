@@ -35,7 +35,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="ion ion-plus"></i>
-                                    <h3 class="box-title">Borrar Detalle Pedido</h3>
+                                    <h3 class="box-title">Agregar Detalle Pedido</h3>
                                     <div class="box-tools">
                                         <a href="pedcompra_index.php" class="btn btn-primary btn-sm pull-right" data-title='Volver' rel='tooltip' data-placement='top'><i class="fa fa-arrow-left"></i></a>
                                     </div>
@@ -44,8 +44,9 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                          
                                             <?php 
-                                            //consulta a la tabla marca
-                                            $pedidos = consultas::get_datos("select * from v_pedido_cabcompra where ped_cod=".$_REQUEST['vped_com']);
+                                            //consulta a la tabla pedidos
+                                            $sql="select * from v_pedido_cabcompra where ped_com=".$_REQUEST['vped_com'];
+                                            $pedidos = consultas::get_datos($sql);
                                             //var_dump($marcas);
                                             if (!empty($pedidos)) { ?>
                                             <div class="table-responsive">
@@ -75,7 +76,7 @@
                                             <?php }else { ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span> 
-                                                No se han registrado marcas...
+                                                No se han registrado pedidos de compras...
                                             </div>
                                             <?php }
                                             ?>
@@ -85,8 +86,11 @@
                                     <!-- INCICIO DETALLES-->
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <?php $detalles = consultas::get_datos("select * from v_detalle_pedcompra where ped_com=".$pedidos[0]['vped_com']);
-                                                 if (!empty($detalles)) { ?>
+                                            <?php 
+                                                $sql="select * from v_detalle_pedcompra where ped_com=".$_REQUEST['vped_com'];
+                                                // echo $sql;return;
+                                                $detalles = consultas::get_datos($sql);
+                                                if (!empty($detalles)) { ?>
                                             <div class="box-header">
                                                 <i class="fa fa-list"></i>
                                                 <h3 class="box-title">Detalle Items</h3>
@@ -114,11 +118,11 @@
                                                             <td data-title="Impuesto"><?php echo $det['tipo_descri'];?></td>
                                                             <td data-title="Precio"><?php echo number_format($det['subtotal'],0,",",".");?></td>
                                                             <td class="text-center">
-                                                                <a onclick="editar(<?php echo $det['ped_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-warning btn-sm" role='button'
+                                                                <a onclick="editar(<?php echo $det['ped_com'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
-                                                                <a onclick="borrar(<?php echo "'".$det['ped_cod']."_".$det['art_cod']."_".$det['dep_cod']."_".$det['art_descri']." ".$det['mar_descri']."'"?>)" class="btn btn-danger btn-sm" role='button'
+                                                                <a onclick="borrar(<?php echo "'".$det['ped_com']."_".$det['art_cod']."_".$det['dep_cod']."_".$det['art_descri']." ".$det['mar_descri']."'"?>)" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
                                                                     <span class="glyphicon glyphicon-trash"></span>
                                                                 </a>                                                                  
@@ -141,7 +145,7 @@
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                             <form action="pedcompra_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="accion" value="1">
-                                                <input type="hidden" name="vped_com" value="<?php echo $pedidos[0]['ped_cod'];?>">
+                                                <input type="hidden" name="vped_com" value="<?php echo $pedidos[0]['ped_com'];?>">
                                                 <div class="box-body">
                                                     <!-- AGREGAR LISTA DESPLEGABLE DEPOSITO -->
                                                     <div class="form-group">
@@ -156,7 +160,6 @@
                                                                 </select>  
                                                         </div>
                                                     </div>
-                                                    <!-- FIN LISTA DESPLEGABLE DEPOSITO -->
                                                     <!-- AGREGAR LISTA DESPLEGABLE ARTICULO -->
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Articulo:</label>

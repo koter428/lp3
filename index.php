@@ -70,10 +70,10 @@ if ($_SESSION) {
                     </label>
                     <p class="help-block"><a href="#">No puede acceder a su cuenta?</a></p>
                 </div>
-                <?php if(!empty($_SESSION['error'])){ ?>
+                <?php if(!empty($_SESSION['#error'])){ ?>
                 <div class="alert alert-danger">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>
-                    <?php echo $_SESSION['error'];?>
+                    <?php echo $_SESSION['#error'];?>
                 </div>
                 <?php } ?>
             </form>
@@ -82,6 +82,12 @@ if ($_SESSION) {
         
         
         <!-- Aqui van los archivos js-->
+         <!--<?php require 'menu/js_lte.ctp'; ?>
+        <script>
+            $("#error").delay(4000).slideUp(200,function(){
+                $(this).alert('close');
+            })
+        </script>-->
         <script src="js/jquery-1.12.2.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </body>

@@ -23,7 +23,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Antonio Portillo');
+$pdf->SetAuthor('lp3');
 $pdf->SetTitle('REPORTE DE CARGO');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
@@ -87,8 +87,6 @@ if (!empty($cargos)) {
 }
 
 
-
-
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('reporte_cargo.pdf', 'I');
 ?>

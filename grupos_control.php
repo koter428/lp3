@@ -8,11 +8,12 @@ require 'funciones/lib_funciones.php';
 $accion = $_REQUEST['accion'];
 
 if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
-    $sql = "select sp_grupos(" . $accion . "," . (!empty($_REQUEST['vgru_cod']) ? $_REQUEST['vgru_cod'] : 0) . ",'" .
+    $sql = "select sp_grupos(" . $accion . "," . 
+    (!empty($_REQUEST['vgru_cod']) ? $_REQUEST['vgru_cod'] : 0) . ",'" .
     (!empty($_REQUEST['vgru_nombre']) ? $_REQUEST['vgru_nombre'] : "") . "') as resul";
 }  
 else if (strcmp($accion,"3") == 0){
-    $sql = "select sp_grupos(" . $accion . "," . $_REQUEST['vgru_cod']. ",0,'') as resul";
+    $sql = "select sp_grupos(" . $accion . "," . $_REQUEST['vgru_cod'] . ") as resul";
 }
 //echo $sql; return;
 
@@ -26,6 +27,3 @@ if (isset($mensaje)) {
     $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
     header("location:" . "grupos_index.php");
 }
-
-ERROR: no existe la función sp_grupos(integer, integer, integer, unknown) LINE 1: select sp_grupos(3,3,0,'') as resul ^ HINT: 
-Ninguna función coincide en el nombre y tipos de argumentos. Puede ser necesario agregar conversión explícita de tipos.

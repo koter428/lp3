@@ -67,7 +67,7 @@ $pdf->SetLineWidth(0.2);
 $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
-$pdf->Cell(50, 5, 'CODIGO', 1, 0, 'C', 1);
+$pdf->Cell(30, 5, 'CODIGO', 1, 0, 'C', 1);
 $pdf->Cell(70, 5, 'DESCRIPCION', 1, 0, 'C', 1);
 
 $pdf->Ln();
@@ -78,7 +78,7 @@ $cargos = consultas::get_datos("select * from deposito order by dep_cod");
 
 if (!empty($cargos)) {
     foreach ($cargos as $cargo) {
-        $pdf->Cell(50, 5, $cargo['dep_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(30, 5, $cargo['dep_cod'], 1, 0, 'C', 1);
         $pdf->Cell(70, 5, $cargo['dep_descri'], 1, 0, 'L', 1);
         $pdf->Ln();
     }

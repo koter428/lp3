@@ -11,7 +11,7 @@
 
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="login.png" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="<?php if (!empty($_SESSION['usu_foto'])) {
                                     echo $_SESSION['usu_foto'];
                                 } else {

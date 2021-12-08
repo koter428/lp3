@@ -10,7 +10,7 @@
 
         <?php 
         require 'ver_session.php'; /*VERIFICAR SESSION*/
-        @@session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -35,7 +35,7 @@
                                 <form action="pedcompra_control.php" method="get" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
                                         <input type="hidden" name="accion" value="1"/>
-                                        <input type="hidden" name="vped_codm value="0"/>
+                                        <input type="hidden" name="vped_cod" value="0"/>
                                         <div class="row">
                                             <?php $fecha = consultas::get_datos("select current_date as fecha");?>
                                             <div class="col-lg-3 col-md-6 col-xs-12">
@@ -65,11 +65,13 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-md-6 col-xs-12">
                                                 <label>Sucursal:</label>
-                                                <input type="text" class="form-control" value="<?php echo $_SESSION['sucursal'];?>" readonly=""/>                                                
+                                                <input type="text" class="form-control" name="vsucursal" id="vsucursal" value="<?php echo $_SESSION['sucursal'];?>" readonly=""/>
+                                                <input type="hidden" class="form-control" name="vid_sucursal" id="vid_sucursal" value="<?php echo $_SESSION['id_sucursal'];?>" readonly=""/>
                                             </div>      
                                             <div class="col-lg-6 col-md-6 col-xs-12">
                                                 <label>Empleado:</label>
-                                                <input type="text" class="form-control" value="<?php echo $_SESSION['nombres'];?>" readonly=""/>                                                
+                                                <input type="text" class="form-control" name="vemp_nombres" id="vemp_nombres" value="<?php echo $_SESSION['nombres'];?>" readonly=""/>                                                
+                                                <input type="hidden" class="form-control" name="vemp_cod" id="vemp_cod" value="<?php echo $_SESSION['emp_cod'];?>" readonly=""/>                                                
                                             </div>                                                  
                                         </div>
                                     </div>
@@ -92,12 +94,12 @@
                           <div class="modal-content">
                               <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
-                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Articulo</strong></h4>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Proveedor</strong></h4>
                               </div>
                                <form action="proveedor_control" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
                                         <input type="hidden" name="vprv_cod" value="0"/>
-                                        <input type="hidden" name="accion" value="1"/>
+                                        <input type="hidden" name="accion" value="5"/>
                                         <div class="form-group">
                                             <label class="control-label col-lg-3">Ruc:</label>
                                             <div class="col-lg-6">

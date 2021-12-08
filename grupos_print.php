@@ -68,7 +68,7 @@ $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(50, 5, 'CODIGO', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, 'NOMBRE', 1, 0, 'C', 1);
+$pdf->Cell(70, 5, ' CARGO', 1, 0, 'C', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
@@ -79,7 +79,7 @@ $grupos = consultas::get_datos("select * from grupos order by gru_cod");
 if (!empty($grupos)) {
     foreach ($grupos as $grupos) {
         $pdf->Cell(50, 5, $grupos['gru_cod'], 1, 0, 'C', 1);
-        $pdf->Cell(0, 5, $grupos['gru_nombre'], 1, 0, 'L', 1);
+        $pdf->Cell(70, 5, $grupos['gru_nombre'], 1, 0, 'L', 1);
         $pdf->Ln();
     }
 }else{

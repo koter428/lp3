@@ -12,7 +12,6 @@
         require 'ver_session.php'; /*VERIFICAR SESSION*/
         @@session_start();/*Reanudar sesion*/
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
-
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -97,7 +96,7 @@
                                <form action="cliente_control" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
                                         <input type="hidden" name="vcli_cod" value="0"/>
-                                        <input type="hidden" name="accion" value="1"/>
+                                        <input type="hidden" name="accion" value="5"/>
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">C.I N°:</label>
                                             <div class="col-lg-5">

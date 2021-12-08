@@ -68,18 +68,22 @@ $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(10, 5, '#', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, 'DIRECCION Y NOMBRE', 1, 0, 'C', 1);
+$pdf->Cell(55, 5, 'NOMBRE', 1, 0, 'L', 1);
+$pdf->Cell(35, 5, 'UBICACION', 1, 0, 'L', 1);
+$pdf->Cell(22, 5, 'MODULO', 1, 0, 'L', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
 $pdf->SetFillColor(255, 255, 255);
 //CONSULTAS DE LOS REGISTROS
-$clientes = consultas::get_datos("select * from paginas order by pag_cod");
+$paginas = consultas::get_datos("select * from paginas order by pag_cod");
 
-if (!empty($clientes)) {
-    foreach ($clientes as $cliente) {
-        $pdf->Cell(10, 5, $cliente['pag_cod'], 1, 0, 'C', 1);
-        $pdf->Cell(0, 5, $cliente['pag_direc']." ".$cliente['pag_nombre'], 1, 0, 'L', 1);
+if (!empty($paginas)) {
+    foreach ($paginas as $pag) {
+        $pdf->Cell(10, 5, $pag['pag_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(55, 5, $pag['pag_nombre'], 1, 0, 'L', 1);
+        $pdf->Cell(35, 5,  $pag['pag_direc'], 1, 0, 'L', 1); 
+        $pdf->Cell(22, 5, $pag['mod_cod'], 1, 0, 'C', 1);
         $pdf->Ln();
     }
 }else{
@@ -90,5 +94,5 @@ if (!empty($clientes)) {
 
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('reporte_paginas.pdf', 'I');
 ?>

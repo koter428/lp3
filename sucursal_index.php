@@ -95,8 +95,9 @@
                                                                         <span class="glyphicon glyphicon-edit"></span>
                                                                     </a>    <?php }?> 
                                                                     <?php if ($_SESSION['SUCURSAL']['borrar']=='t') { ?>
-                                                                    <a href="sucursal_del.php?vid_sucursal=<?php echo $suc['id_sucursal']; ?>" class="btn btn-danger btn-sm" role='button' data-title='Borrar' rel='tooltip' data-placement='left'>
-                                                                        <span class="glyphicon glyphicon-trash"></span></a>
+                                                                        <a onclick="borrar(<?php echo "'".$suc['id_sucursal']."_".$suc['suc_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
+                                                                        data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
+                                                                        <span class="glyphicon glyphicon-trash"></span></a>         
                                                                 </td>    <?php }?> 
                                                             </tr>
                                                         <?php } ?>
@@ -131,14 +132,43 @@
         </div>
         <?php require 'menu/footer_lte.ctp'; ?>
         <!--ARCHIVOS JS-->
+        <!-- MODAL BORRAR -->
+        <div class="modal fade" id="borrar" role="dialog">
+                   <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                        <h4 class="modal-title custom_align">Atenci&oacute;n!!!</h4>
+                                    </div>
+                                        <div class="modal-body">
+                                            <div class="alert alert-danger" id="confirmacion"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a  id="si" class="btn btn-primary">
+                                                <i class="fa fa-check"></i> Si</a>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            <i class="fa fa-remove"></i> No</button>                                          
+                                        </div>
+                                </div>
+                   </div>
+               </div>
+                <!-- FIN MODAL BORRAR -->      
     </div>
     <?php require 'menu/js_lte.ctp'; ?>
     <!--ARCHIVOS JS-->
     <script>
-        $("#mensaje").delay(4000).slideUp(200, function() {
-            $(this).alert('close');
-        })
-    </script>
+            $("#mensaje").delay(4000).slideUp(200,function(){
+                $(this).alert('close');
+            })
+        </script>
+        <script>
+        function borrar(datos){
+            var dat = datos.split("_");
+            $('#si').attr('href','sucursal_control.php?vid_sucursal='+dat[0]+'&vsuc_descri='+dat[1]+'&accion=3');
+            $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
+            Desea borrrar el sucursal <strong>'+dat[1]+'</strong>?');
+        }        
+        </script>
 </body>
 
 </html>

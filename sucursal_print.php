@@ -55,7 +55,7 @@ $pdf->SetFont('times', 'B', 18);
 
 // AGREGAR PAGINA
 $pdf->AddPage('P', 'LEGAL');
-$pdf->Cell(0, 0, "REPORTE DE CLIENTE", 0, 1, 'C');
+$pdf->Cell(0, 0, "REPORTE DE SUCURSAL", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
 //COLOR DE TABLA
@@ -68,7 +68,7 @@ $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
 $pdf->Cell(10, 5, '#', 1, 0, 'C', 1);
-$pdf->Cell(70, 5, 'NOMBRE Y APELLIDOS', 1, 0, 'C', 1);
+$pdf->Cell(70, 5, 'ID Y DESCRIPCION', 1, 0, 'C', 1);
 
 $pdf->Ln();
 $pdf->SetFont('', '');
@@ -83,12 +83,12 @@ if (!empty($clientes)) {
         $pdf->Ln();
     }
 }else{
-    $pdf->Cell(0, 0, "No se han registrado clientes", 1, 0, 'L', 1);
+    $pdf->Cell(0, 0, "No se han registrado sucursal", 1, 0, 'L', 1);
 }
 
 
 
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('reporte_sucursal.pdf', 'I');
 ?>

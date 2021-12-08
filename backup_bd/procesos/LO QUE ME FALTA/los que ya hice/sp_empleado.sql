@@ -15,16 +15,19 @@ $BODY$
 declare mensaje varchar default null;
 begin
 	if ban = 1 then
-		INSERT INTO empleado(emp_cod, car_cod, emp_nombre, 
-		emp_apellido, emp_direcc, emp_tel)
-		VALUES (calcular_ultimo('empleado','emp_cod'),vcar_cod,vemp_apellido, trim(upper(vemp_nombre)), 
-		vemp_direcc, vemp_tel);	
+		INSERT INTO empleado(emp_cod, car_cod, emp_nombre, emp_apellido, emp_direcc, emp_tel)
+		VALUES (calcular_ultimo('empleado','emp_cod'),
+		vcar_cod,
+		trim(upper(vemp_apellido)), 
+		trim(upper(vemp_nombre)), 
+		vemp_direcc, 
+		vemp_tel);	
 		mensaje = 'Se guardó correctamente el empleado*empleado_index';	
 	elsif ban = 2 then
 		update empleado 
-		set emp_nombre = trim(upper(vemp_nombre)),
-		car_cod = vcar_cod, 
-		emp_apellido = vemp_apellido, 
+		set car_cod = vcar_cod, 
+		emp_nombre = trim(upper(vemp_nombre)),
+		emp_apellido = trim(upper(vemp_apellido)), 
 		emp_direcc = vemp_direcc, 
 		emp_tel = vemp_tel
 		where emp_cod = vemp_cod;
@@ -47,7 +50,7 @@ ALTER FUNCTION sp_empleado(integer,integer, integer, character varying, characte
 		select  sp_empleado(1,3,1,'alison','Vargas','villa lisa','45353');
 				                 
 	2- modificar
-		select sp_empleado(2,3,1,'vergas','Vergaras','san lorenzo','5564723');
+		select sp_empleado(2,3,1,'descripcion','vergas','Vergaras','san lorenzo','5564723');
 
 	3- eliminar
 		select sp_empleado(3,3);
@@ -56,3 +59,7 @@ ALTER FUNCTION sp_empleado(integer,integer, integer, character varying, characte
 
 
  */
+
+
+ select sp_empleado(1,0,9,'xxx','xxx','nada','0000') as resul
+ select * from empleado

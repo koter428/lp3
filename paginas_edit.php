@@ -30,36 +30,49 @@ and open the template in the editor.
                             <div class="box box-warning">
                                 <div class="box-header">
                                     <i class="fa fa-edit"></i>
-                                    <h3 class="box-title">Editar Empleado</h3>
+                                    <h3 class="box-title">Editar Paginas</h3>
                                     <div class="box-tools">
-                                        <a href="empleado_index.php" class="btn btn-primary btn-sm" data-title="Volver">
+                                        <a href="paginas_index.php" class="btn btn-primary btn-sm" data-title="Volver">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="empleado_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                    <div class="box-body">
-                                        <?php $resultado = consultas::get_datos("select * from empleado where emp_cod=".$_GET['vemp_cod']);?>
+                                <form action="paginas_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <div class="box-body">
+                                        <?php $resultado = consultas::get_datos("select * from paginas where pag_cod=".$_GET['vpag_cod']);?>
                                         <div class="form-group">
                                             <input type="hidden" name="accion" value="2"/>
-                                            <input type="hidden" name="vemp_cod" value="<?php echo $resultado[0]['emp_cod']?>"/>
-                                           <!-- AGREGAR LISTA DESPLEGABLE CARGO -->
-                                          <div class="form-group">
-                                            <label class="control-label col-lg-2">Cargo:</label>
+                                            <input type="hidden" name="vpag_cod" value="<?php echo $resultado[0]['pag_cod']?>"/>
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-2">Nombre:</label>
+                                          <div class="col-sm-6">
+                                              <input type="text" name="vpag_nombre" id="nombre" class="form-control" required="" autofocus="" value="<?php echo $resultado[0]['pag_nombre']?>"/>
+                                          </div>
+                                      </div>
+                                        <div class="form-group">
+                                          <label class="control-label col-sm-2">Dirección:</label>
+                                          <div class="col-sm-6">
+                                              <input type="text" name="vpag_direc" id="direccion" class="form-control" required="" value="<?php echo $resultado[0]['pag_direc']?>" />
+                                          </div>
+                                      </div>
+                                           <!-- AGREGAR LISTA DESPLEGABLE MODULO -->
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-2">modulo:</label>
                                             <div class="col-lg-6">
                                               <div class="input-group">
                                                    <?php
-                                                    $sql = "select * from cargo order by car_cod = " . $resultado[0]["car_cod"];
-                                                    $cargo = consultas::get_datos($sql);
+                                                    $sql = "SELECT * FROM modulos ORDER BY CASE WHEN mod_cod='" . $resultado[0]["mod_cod"] . "' THEN 1 ELSE 2 END, mod_cod desc;";
+                                                    $modulos = consultas::get_datos($sql);
                                                     ?>
-                                                    <select class="form-control select2" name="vcar_cod" required="">
-                                                        <option value="">Seleccione un cargo</option>
-                                                        <?php foreach ($cargo as $car) { ?>
-                                                          <option value="<?php echo $car['car_cod'];?>" selected><?php echo $car['car_descri'];?></option>   
+                                                    <select class="form-control select2" name="vmod_cod" required="">
+                                                        <option value="">Seleccione un modulo</option>
+                                                        <option value="<?php echo $modulos[0]['mod_cod'];?>" selected><?php echo $modulos[0]['mod_nombre'];?></option>
+                                                        <?php foreach (array_slice($modulos,1) as $modulo) { ?>
+                                                          <option value="<?php echo $modulo['mod_cod'];?>" ><?php echo $modulo['mod_nombre'];?></option>   
                                                         <?php }?>
                                                     </select>  
                                                     <span class="input-group-btn btn-flat">
-                                                        <a class="btn btn-primary" data-title ="Agregar Cargo " rel="tooltip" data-placement="top"
+                                                        <a class="btn btn-primary" data-title ="Agregar modulo " rel="tooltip" data-placement="top"
                                                            data-toggle="modal" data-target="#registrar">
                                                             <i class="fa fa-plus"></i>
                                                         </a>
@@ -67,44 +80,15 @@ and open the template in the editor.
                                                 </div>
                                         </div>
                                     </div>
-                                    <!-- FIN LISTA DESPLEGABLE CARGO -->
-                                              <div class="form-group">
-                                           <label class="col-lg-2 control-label">Nombres:</label>
-                                         <div class="col-lg-6">
-                                           <input type="text" name="vemp_nombre" class="form-control" required=""  
-                                                       value="<?php echo $resultado[0]['emp_nombre']?>"/>
-                                            </div>
-                                         </div>
-                                        <div class="form-group">
-                                           <label class="col-lg-2 control-label">Apellidos:</label>
-                                         <div class="col-lg-6">
-                                           <input type="text" name="vemp_apellido" class="form-control" required=""  
-                                                       value="<?php echo $resultado[0]['emp_apellido']?>"/>
-                                            </div>
-                                         </div>
-                                             <div class="form-group">
-                                           <label class="col-lg-2 control-label">Teléfono:</label>
-                                         <div class="col-lg-6">
-                                           <input type="text" name="vemp_tel" class="form-control" required=""  
-                                                       value="<?php echo $resultado[0]['emp_tel']?>"/>
-                                            </div>
-                                         </div>
-                                             <div class="form-group">
-                                           <label class="col-lg-2 control-label">Dirección:</label>
-                                         <div class="col-lg-6">
-                                           <input type="text" name="vemp_direcc" class="form-control" required=""  
-                                                       value="<?php echo $resultado[0]['emp_direcc']?>"/>
-                                            </div>
-                                         </div>
-                                        </div>
-                                        
+                                    <!-- FIN LISTA DESPLEGABLE MODULO -->
                                     </div>
-                                    <div class="box-footer">
-                                        <button type="reset" class="btn btn-default" data-title="Cancelar" > 
-                                            <i class="fa fa-remove"></i> Cancelar</button>                                        
-                                        <button type="submit" class="btn btn-warning pull-right" data-title="Guardar" > 
-                                            <i class="fa fa-edit"></i> Actualizar</button>
                                     </div>
+                                    <div class="modal-footer">
+                                      <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                          <i class="fa fa-remove"></i> Cerrar</button>
+                                          <button type="submit" class="btn btn-warning pull-right">
+                                          <i class="fa fa-edit"></i> Actualizar</button>                                          
+                                  </div>
                                 </form>
                             </div>
                         </div>
@@ -113,20 +97,20 @@ and open the template in the editor.
             </div>
                   <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
             </div>                  
-             <!-- MODAL REGISTRAR CARGO -->
+             <!-- MODAL REGISTRAR MODULO -->
              <div class="modal fade" id="registrar" role="dialog">
                       <div class="modal-dialog">
                           <div class="modal-content">
                               <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
-                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Cargo</strong></h4>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar modulo</strong></h4>
                               </div>
                               <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                   <input type="hidden" name="accion" value="5">
                                   <input type="hidden" name="vcar_cod" value="0">
                                   <div class="modal-body">
                                       <div class="form-group">
-                                          <label class="control-label col-sm-3">Agregar una Cargo:</label>
+                                          <label class="control-label col-sm-3">Agregar una modulo:</label>
                                           <div class="col-sm-9">
                                               <input type="text" name="vcar_descri" class="form-control" required="" autofocus=""/>
                                           </div>
@@ -142,7 +126,7 @@ and open the template in the editor.
                           </div>
                       </div>
                   </div>
-                  <!-- FIN MODAL REGISTRAR CARGO -->
+                  <!-- FIN MODAL REGISTRAR MODULO -->
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>

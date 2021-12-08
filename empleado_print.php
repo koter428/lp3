@@ -24,7 +24,7 @@ $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Antonio Portillo');
-$pdf->SetTitle('REPORTE DE modulo');
+$pdf->SetTitle('REPORTE DE CARGO');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 $pdf->setPrintHeader(false);
@@ -55,7 +55,7 @@ $pdf->SetFont('times', 'B', 18);
 
 // AGREGAR PAGINA
 $pdf->AddPage('P', 'LEGAL');
-$pdf->Cell(0, 0, "REPORTE DE MODULOS", 0, 1, 'C');
+$pdf->Cell(0, 0, "REPORTE DE EMPLEADO", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
 //COLOR DE TABLA
@@ -67,28 +67,35 @@ $pdf->SetLineWidth(0.2);
 $pdf->SetFont('', 'B', 12);
 // Header        
 $pdf->SetFillColor(180, 180, 180);
-$pdf->Cell(5, 5, '#', 1, 0, 'C', 1);
-$pdf->Cell(0, 5, 'NOMBRES', 1, 0, 'C', 1);
-
+$pdf->Cell(10, 5, '#', 1, 0, 'C', 1);
+$pdf->Cell(25, 5,  "EL CARGO", 1, 0, 'C', 1 );
+$pdf->Cell(35, 5,  "NOMBRE",   1, 0, 'C', 1 );
+$pdf->Cell(35, 5, "APELLIDO", 1, 0, 'C', 1 );
+$pdf->Cell(30, 5, "DIRECCION", 1, 0, 'C', 1 ); 
+$pdf->Cell(30, 5, "TELEFONO", 1, 0, 'C', 1 );
 $pdf->Ln();
 $pdf->SetFont('', '');
 $pdf->SetFillColor(255, 255, 255);
 //CONSULTAS DE LOS REGISTROS
-$modulos = consultas::get_datos("select * from modulos order by mod_cod");
+$empleado = consultas::get_datos("select * from empleado order by emp_cod");
 
-if (!empty($modulos)) {
-    foreach ($modulos as $modulo) {
-        $pdf->Cell(5, 1, $modulo['mod_cod'], 1, 0, 'L', 1);
-        $pdf->Cell(0, 1, $modulo['mod_nombre'], 1, 0, 'L', 1);
+if (!empty($empleado)) {
+    foreach ($empleado as $emple) {
+        $pdf->Cell(10, 5, $emple['emp_cod'], 1, 0, 'O', 1);
+        $pdf->Cell(25, 5, $emple['car_cod'], 1, 0, 'C', 1);
+        $pdf->Cell(35, 5, $emple['emp_nombre'], 1, 0, 'L', 1);
+        $pdf->Cell(35, 5, $emple['emp_apellido'], 1, 0, 'C', 1);
+        $pdf->Cell(30, 5, $emple['emp_direcc'], 1, 0, 'C', 1);
+        $pdf->Cell(30, 5, $emple['emp_tel'], 1, 0, 'C', 1);
         $pdf->Ln();
     }
 }else{
-    $pdf->Cell(0, 0, "No se han registrado modulos", 1, 0, 'L', 1);
+    $pdf->Cell(0, 0, "No se han registrado empleado", 1, 0, 'L', 1);
 }
 
 
 
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('reporte_empleado.pdf', 'I');
 ?>

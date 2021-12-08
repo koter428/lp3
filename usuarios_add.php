@@ -50,7 +50,7 @@ require 'clases/conexion.php';
     </div>
         <div class="form-group">
             <label class="control-label col-lg-2 col-md-2 col-sm-2">Contraseña:</label>
-            <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="col-lg-8 col-md-8">
                 <input type="password" class="form-control" name="vusu_clave" minlength="4"/>
             </div>
         </div>

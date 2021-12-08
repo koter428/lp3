@@ -23,11 +23,12 @@
                     <!-- FILA 1 -->
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <?php if (!empty($_SESSION['mensaje'])) { ?>
+                        <?php if (!empty($_SESSION['mensaje'])) { ?>
                             <div class="alert alert-danger" id="mensaje">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php echo $_SESSION['mensaje'];
-                                    $_SESSION['mensaje'] = ''; ?>
+                                $_SESSION['mensaje'] = '';
+                                ?>
                             </div>
                             <?php } ?>
                          <div class="box box-primary">
@@ -87,9 +88,9 @@
                                                                     <span class="glyphicon glyphicon-edit"></span></a>
                                                                     <?php }?>   
                                                                 <?php if ($_SESSION['MARCA']['borrar']=='t') { ?>
-                                                                <a href="marca_del.php?vmar_cod=<?php echo $mar['mar_cod'];?>" class="btn btn-danger btn-sm" role='button'
-                                                                   data-title='Borrar' rel='tooltip' data-placement='top'>
-                                                                    <span class="glyphicon glyphicon-trash"></span></a>
+                                                                    <a onclick="borrar(<?php echo "'".$mar['mar_cod']."_".$mar['mar_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
+                                                                        data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
+                                                                        <span class="glyphicon glyphicon-trash"></span></a>     
                                                                     <?php }?>                                                                        
                                                             </td>
                                                         </tr>
@@ -125,13 +126,42 @@
                 </div>   
                 <!-- FIN CONTENEDOR PRINCIPAL -->
             </div>
-                  <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
+                  <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->
+                   <!-- MODAL BORRAR -->
+            <div class="modal fade" id="borrar" role="dialog">
+                <div class="modal-dialog">
+                             <div class="modal-content">
+                                 <div class="modal-header">
+                                     <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                     <h4 class="modal-title custom_align">Atenci&oacute;n!!!</h4>
+                                 </div>
+                                     <div class="modal-body">
+                                         <div class="alert alert-danger" id="confirmacion"></div>
+                                     </div>
+                                     <div class="modal-footer">
+                                         <a  id="si" class="btn btn-primary">
+                                             <i class="fa fa-check"></i> Si</a>
+                                             <button type="button" class="btn btn-default" data-dismiss="modal">
+                                         <i class="fa fa-remove"></i> No</button>                                          
+                                     </div>
+                             </div>
+                </div>
+            </div>
+             <!-- FIN MODAL BORRAR -->          
             </div>                  
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
         <script>
             $("#mensaje").delay(4000).slideUp(200,function(){
                 $(this).alert('close');
             })
+        </script>
+        <script>  
+        function borrar(datos){
+            var dat = datos.split("_");
+            $('#si').attr('href','marca_control.php?vmar_cod='+dat[0]+'&vmar_descri='+dat[1]+'&accion=3');
+            $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
+            Desea borrrar el marca <strong>'+dat[1]+'</strong>?');
+        }        
         </script>
     </body>
 </html>

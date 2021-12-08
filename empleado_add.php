@@ -36,12 +36,28 @@
                                     <div class="box-body">
                                         <input type="hidden" name="vemp_cod" value="0"/>
                                         <input type="hidden" name="accion" value="1"/>
-                                        <div class="form-group">
+                                          <!-- AGREGAR LISTA DESPLEGABLE CARGO -->
+                                          <div class="form-group">
                                             <label class="control-label col-lg-2">Cargo:</label>
-                                            <div class="col-lg-4">
-                                                <input type="number" name="vcar_cod" class="form-control" required="" autofocus="" min="1" placeholder="Ingrese el cargo del empleado"/>
-                                            </div>
+                                            <div class="col-lg-6">
+                                              <div class="input-group">
+                                                    <?php $cargo = consultas::get_datos("select * from cargo order by car_cod");?>
+                                                    <select class="form-control select2" name="vcar_cod" required="">
+                                                        <option value="">Seleccione un cargo</option>
+                                                        <?php foreach ($cargo as $car) { ?>
+                                                          <option value="<?php echo $car['car_cod'];?>" selected><?php echo $car['car_descri'];?></option>   
+                                                        <?php }?>
+                                                    </select>  
+                                                    <span class="input-group-btn btn-flat">
+                                                        <a class="btn btn-primary" data-title ="Agregar Cargo " rel="tooltip" data-placement="top"
+                                                           data-toggle="modal" data-target="#registrar">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                    </span>
+                                                </div>
                                         </div>
+                                    </div>
+                                    <!-- FIN LISTA DESPLEGABLE CARGO -->
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Nombres:</label>
                                             <div class="col-lg-6">
@@ -83,6 +99,36 @@
             </div>
                   <?php require 'menu/footer_lte.ctp'; ?><!--ARCHIVOS JS-->  
             </div>                  
+              <!-- MODAL REGISTRAR CARGO -->
+              <div class="modal fade" id="registrar" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Cargo</strong></h4>
+                              </div>
+                              <form action="cargo_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                  <input type="hidden" name="accion" value="5">
+                                  <input type="hidden" name="vcar_cod" value="0">
+                                  <div class="modal-body">
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-3">Agregar una Cargo:</label>
+                                          <div class="col-sm-9">
+                                              <input type="text" name="vcar_descri" class="form-control" required="" autofocus=""/>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                          <i class="fa fa-remove"></i> Cerrar</button>
+                                          <button type="submit" class="btn btn-primary pull-right">
+                                          <i class="fa fa-floppy-o"></i> Registrar</button>                                          
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- FIN MODAL REGISTRAR CARGO -->
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>

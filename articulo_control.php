@@ -28,3 +28,5 @@
         $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
         header("location:" . "articulo_index.php");
     }
+
+  

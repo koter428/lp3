@@ -9,8 +9,9 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
         <?php 
-        require 'ver_session.php'; /*VERIFICAR SESSION*/
-        @session_start();/*Reanudar sesion*/
+         
+        session_start();/*Reanudar sesion*/
+        include './ver_session.php'; 
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
     </head>
@@ -24,11 +25,11 @@
                     <!-- FILA 1 -->
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <?php if (!empty($_SESSION['mensaje'])) { ?>
+                        <?php if (!empty($_SESSION['mensaje'])) { ?>
                             <div class="alert alert-danger" id="mensaje">
                                 <span class="glyphicon glyphicon-info-sign"></span>
                                 <?php echo $_SESSION['mensaje'];
-                                    $_SESSION['mensaje'] = '';
+                                $_SESSION['mensaje'] = '';
                                 ?>
                             </div>
                             <?php } ?>
@@ -43,7 +44,7 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <form  method="get" accept-charset="utf-8" class="form-horizontal">
+                                            <form  method="post" accept-charset="utf-8" class="form-horizontal">
                                                 <div class="box-body">
                                                     <div class="form-group">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -60,9 +61,10 @@
                                                 </div>
                                             </form>                                            
                                             <?php 
-                                            //consulta a la tabla marca
-                                            $pedidos = consultas::get_datos("select * from v_pedido_cabcompra where ped_com::varchar ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by ped_com desc");
-                                            //var_dump($marcas);
+                                            //consulta a la tabla 
+                                            $pedidos = consultas::get_datos("select * from v_pedido_cabcompra"
+                                                    . " where id_sucursal =".$_SESSION['id_sucursal']." and ped_com::varchar ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by ped_com desc");
+                                            //var_dump($pedidos);
                                             if (!empty($pedidos)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
@@ -82,7 +84,7 @@
                                                             <td data-title='N° Pedido'><?php echo $ped['ped_com'];?></td>
                                                             <td data-title='Fecha'><?php echo $ped['ped_fecha'];?></td>
                                                             <td data-title='Proveedor'><?php echo $ped['proveedor'];?></td>
-                                                            <td data-title='Total'><?php echo $ped['ped_total'];?></td>
+                                                            <td data-title='Total'><?php echo number_format($ped['ped_total'],0,",",".");?></td> <!<!-- PARA QUE SEPARE DECIMALES -->
                                                             <td data-title='Estado'><?php echo $ped['estado'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                                 <?php if($ped['estado']=="PENDIENTE"){?>
@@ -90,12 +92,12 @@
                                                                    data-title='Detalles' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-list"></span>
                                                                 </a>                                                                
-                                                                <a href="pedcompra_edit.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-warning btn-sm" role='button'
+                                                                <a href="pedcompras_edit.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
                                                                 <a onclick="anular(<?php echo "'".$ped['ped_com']."_".$ped['proveedor']."_".$ped['ped_fecha']."'"?>)" class="btn btn-danger btn-sm" role='button'
-                                                                   data-title='Anular' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#anular">
+                                                                   data-title="anular" rel="tooltip" data-placement='top' data-toggle="modal" data-target="#anular">
                                                                     <span class="glyphicon glyphicon-remove"></span>
                                                                 </a>                                                                        
                                                                 <?php }?>
@@ -112,7 +114,7 @@
                                             <?php }else { ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span> 
-                                                No se han registrado compras...
+                                                No se han registrado Pedidos de Compras...
                                             </div>
                                             <?php }
                                             ?>
@@ -158,10 +160,10 @@
         <script>
             function anular(datos){
                 var dat = datos.split('_');
-                $('#si').attr('href','pedcompra_control.php?vped_com='+dat[0]+'&accion=3');
-                $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea anular el \n\
-                pedido N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del proveedor <strong>'+dat[1]+'</strong> ?');
+               $('#si').attr('href','pedcompras_control.php?vped_com='+dat[0]+'&accion=3');
+                $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> "Desea anular el \n\
+                pedido N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del Proveedor <strong>'+dat[1]+'</strong> ?');
             }
-        </script>        
+        </script>         
     </body>
 </html>
