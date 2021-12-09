@@ -25,60 +25,68 @@
                             <div class="box box-warning">
                                 <div class="box-header">
                                     <i class="fa fa-edit"></i>
-                                    <h3 class="box-title">Editar Pedido de Ventas</h3>
+                                    <h3 class="box-title">Editar Pedido de compra</h3>
                                     <div class="box-tools">
-                                        <a href="pedventas_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
+                                        <a href="pedcompra_index.php" class="btn btn-primary btn-sm" data-title="Volver" rel="tooltip">
                                             <i class="fa fa-arrow-left"></i>
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="pedventas_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                    <?php $pedidos = consultas::get_datos("select * from v_pedido_cabventa where ped_cod =".$_REQUEST['vped_cod']);?>
+                                <form action="pedcompra_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                    <?php 
+                                    $sql = "select * from v_pedido_cabcompra where ped_com =".$_REQUEST['vped_com'];
+                                    // echo $sql;return;
+                                    $pedidos = consultas::get_datos($sql);
+                                    ?>
                                     <div class="box-body">
                                         <input type="hidden" name="accion" value="2"/>
-                                        <input type="hidden" name="vped_cod" value="<?php echo $pedidos[0]['ped_cod'];?>"/>
+                                        <input type="hidden" name="vped_com" value="<?php echo $pedidos[0]['ped_com'];?>"/>
                                         <div class="row">
                                             <div class="col-lg-3 col-md-6 col-xs-12">
                                                 <label>Fecha:</label>
                                                 <input type="text" name="vped_fecha" class="form-control" value="<?php echo $pedidos[0]['ped_fecha'];?>" readonly=""/>                                                
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-xs-12">
-                                                <label>Cliente:</label>
+                                                <label>Proveedor:</label>
                                                     <div class="input-group">
-                                                        <?php $clientes = consultas::get_datos("select cli_cod,cli_ci,(cli_nombre||' '||cli_apellido) as nombres"
-                                                                . " from clientes order by cli_cod=".$pedidos[0]['cli_cod']." desc");?>
-                                                        <select class="form-control select2" name="vcli_cod" required="">
-                                                            <?php foreach ($clientes as $cliente) { ?>
-                                                              <option value="<?php echo $cliente['cli_cod'];?>"><?php echo "(".$cliente['cli_ci'].") ".$cliente['nombres'];?></option>   
+                                                        <?php
+                                                            $sql = "select * " .
+                                                                   " from proveedor order by prv_cod=".$pedidos[0]['prv_cod']." desc";
+                                                            // echo $sql; return;
+                                                            // print_r($_SESSION); return;
+                                                            $proveedores = consultas::get_datos($sql);?>
+                                                        <select class="form-control select2" name="vprv_cod" required="">
+                                                            <?php foreach ($proveedores as $prv) { ?>
+                                                              <option value="<?php echo $prv['prv_cod'];?>"prv_cod><?php echo "(".$prv['prv_ruc'].") ".$prv['prv_razonsocial'];?></option>   
                                                             <?php }?>
                                                         </select>  
                                                         <span class="input-group-btn btn-flat">
-                                                            <a class="btn btn-primary" data-title ="Agregar Cliente " rel="tooltip" data-placement="top"
+                                                            <a class="btn btn-primary" data-title ="Agregar Proveedor " rel="tooltip" data-placement="top"
                                                                data-toggle="modal" data-target="#registrar">
                                                                 <i class="fa fa-plus"></i>
                                                             </a>
                                                         </span>
                                                     </div>
+                                                      </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-6 col-xs-12">
+                                                                <label>Sucursal:</label>
+                                                                <input type="text" class="form-control" value="<?php echo $_SESSION["sucursal"];?>" readonly=""/>                                                
+                                                            </div>      
+                                                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                                                <label>Empleado:</label>
+                                                                <input type="text" class="form-control" value="<?php echo $_SESSION["nombres"];?>" readonly=""/>                                                
+                                                            </div>                                                  
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-xs-12">
-                                                        <label>Sucursal:</label>
-                                                        <input type="text" class="form-control" value="<?php echo $pedidos[0]['suc_descri'];?>" readonly=""/>                                                
-                                                    </div>      
-                                                    <div class="col-lg-6 col-md-6 col-xs-12">
-                                                        <label>Empleado:</label>
-                                                        <input type="text" class="form-control" value="<?php echo $pedidos[0]['empleado'];?>" readonly=""/>                                                
-                                                    </div>                                                  
-                                                </div>
-                                            </div>
-                                            <div class="box-footer">
-                                                <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip"> 
-                                                    <i class="fa fa-remove"></i> Cancelar</button>                                        
-                                                <button type="submit" class="btn btn-warning pull-right" data-title="Guardar" rel="tooltip"> 
-                                                    <i class="fa fa-edit"></i> Actualizar</button>
-                                            </div>
-                                     </form>
+                                                    <div class="box-footer">
+                                        <button type="reset" class="btn btn-default" data-title="Cancelar" rel="tooltip"> 
+                                            <i class="fa fa-remove"></i> Cancelar</button>                                        
+                                        <button type="submit" class="btn btn-warning pull-right" data-title="Guardar" rel="tooltip"> 
+                                            <i class="fa fa-edit"></i> Actualizar</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -93,32 +101,32 @@
                                   <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
                                   <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Articulo</strong></h4>
                               </div>
-                               <form action="cliente_control" method="post" accept-charset="utf-8" class="form-horizontal">
+                               <form action="proveedor_control" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <div class="box-body">
-                                        <input type="hidden" name="vcli_cod" value="0"/>
+                                        <input type="hidden" name="vprv_cod" value="0"/>
                                         <input type="hidden" name="accion" value="1"/>
                                         <div class="form-group">
-                                            <label class="control-label col-lg-2">C.I N°:</label>
+                                            <label class="control-label col-lg-2">RUC°:</label>
                                             <div class="col-lg-5">
-                                                <input type="number" name="vcli_ci" class="form-control" required="" autofocus="" min="1" placeholder="Ingrese el C.I del cliente"/>
+                                                <input type="number" name="vemp_cod" class="form-control" required="" autofocus="" min="1" placeholder="Ingrese el C.I del cliente"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Nombres:</label>
                                             <div class="col-lg-6">
-                                                <input type="text" name="vcli_nombre" class="form-control" required="" placeholder="Ingrese el nombre del cliente"/>
+                                                <input type="text" name="vprv_ruc" class="form-control" required="" placeholder="Ingrese el nombre del cliente"/>
                                             </div>
                                         </div>                  
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Apellidos:</label>
                                             <div class="col-lg-6">
-                                                <input type="text" name="vcli_apellido" class="form-control" required="" placeholder="Ingrese el apellido del cliente"/>
+                                                <input type="text" name="vprv_razonsocial" class="form-control" required="" placeholder="Ingrese el apellido del cliente"/>
                                             </div>
                                         </div> 
                                         <div class="form-group">
                                             <label class="control-label col-lg-2">Teléfono:</label>
                                             <div class="col-lg-5">
-                                                <input type="tel" name="vcli_telefono" class="form-control" placeholder="Ingrese el teléfono del cliente"/>
+                                                <input type="tel" name="vcli_apellido" class="form-control" placeholder="Ingrese el teléfono del cliente"/>
                                             </div>
                                         </div>                  
                                         <div class="form-group">

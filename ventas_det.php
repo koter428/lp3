@@ -327,7 +327,7 @@
         function editar(ven,art,dep){
             $.ajax({
                 type    : "GET",
-                url     : "/lp3/ventas_dedit.php?vcom_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
+                url     : "/lp3/ventas_dedit.php?vven_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
                 cache   : false,
                 beforeSend:function(){
                    $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
@@ -339,7 +339,7 @@
         };
         function borrar(datos){
             var dat = datos.split('_');
-            $('#si').attr('href','ventas_dcontrol.php?vcom_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
+            $('#si').attr('href','ventas_dcontrol.php?vven_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea quitar el articulo \n\
     <strong>'+dat[3]+'</strong> ?');            
         };

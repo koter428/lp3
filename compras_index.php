@@ -89,7 +89,7 @@
                                                             <td data-title='Fecha'><?php echo $com['com_fecha'];?></td>
                                                             <td data-title='Proveedor'><?php echo $com['prv_razonsocial'];?></td>
                                                             <td data-title='Condición'><?php echo $com['tipo_compra'];?></td>
-                                                            <td data-title='Total'><?php echo $com['com_total'];?></td>
+                                                            <td data-title='Total'><?php echo number_format($com['com_total'],0,'','.');?></td>
                                                             <td data-title='Estado'><?php echo $com['com_estado'];?></td>
                                                             <td data-title='Acciones' class="text-center">
                                                                 <?php if($com['com_estado']=="PENDIENTE"){?>

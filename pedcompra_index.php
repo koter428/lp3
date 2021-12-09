@@ -10,7 +10,7 @@
 
         <?php 
          
-        session_start();/*Reanudar sesion*/
+        @session_start();/*Reanudar sesion*/
         include './ver_session.php'; 
         require 'menu/css_lte.ctp'; ?><!--ARCHIVOS CSS-->
 
@@ -92,7 +92,7 @@
                                                                    data-title='Detalles' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-list"></span>
                                                                 </a>                                                                
-                                                                <a href="pedcompras_edit.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-warning btn-sm" role='button'
+                                                                <a href="pedcompra_edit.php?vped_com=<?php echo $ped['ped_com'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
@@ -160,7 +160,7 @@
         <script>
             function anular(datos){
                 var dat = datos.split('_');
-               $('#si').attr('href','pedcompras_control.php?vped_com='+dat[0]+'&accion=3');
+               $('#si').attr('href','pedcompra_control.php?vped_com='+dat[0]+'&accion=3');
                 $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> "Desea anular el \n\
                 pedido N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del Proveedor <strong>'+dat[1]+'</strong> ?');
             }

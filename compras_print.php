@@ -55,7 +55,7 @@ $pdf->SetFont('times', 'B', 18);
 
 // AGREGAR PAGINA
 $pdf->AddPage('P', 'LEGAL');
-$pdf->Cell(0, 0, "REPORTE DE PEDIDO DE ", 0, 1, 'C');
+$pdf->Cell(0, 0, "REPORTE DE COMPRA", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
 //COLOR DE TABLA
@@ -65,24 +65,25 @@ $pdf->SetDrawColor(0, 0, 0);
 $pdf->SetLineWidth(0.2);
 
 
-//consultar datos cabecera del pedido
-$cabeceras = consultas::get_datos("select * from v_pedido_cabcompra where ped_cod=".$_REQUEST['vcom_cod']);
+//consultar datos cabecera de la compra
+$sql = "select * from v_compras where com_cod=".$_REQUEST['vcom_cod'];
+$cabeceras = consultas::get_datos($sql);
 if (!empty($cabeceras)) {
  $pdf->SetFont('', '', 12);
  
- $ $pdf->Cell(130,2,'CLIENTE: ('.$cabeceras[0]['cli_ci'].") ".$cabeceras[0]['cliente'],0,'','L');
+ $pdf->Cell(130,2,'PROVEEDOR: ('.$cabeceras[0]['prv_ruc'].") ".$cabeceras[0]['proveedores'],0,'','L');
  $pdf->Cell(80,2,'FECHA: '.$cabeceras[0]['com_fecha'],0,1);
  $pdf->Cell(130,2,'ELABORADO POR: '.$cabeceras[0]['empleado'],0,'','L');
  $pdf->Cell(80,2,'ESTADO: '.$cabeceras[0]['com_estado'],0,1);
  $pdf->Cell(130,2,'SUCURSAL: '.$cabeceras[0]['suc_descri'],0,'','L');
- $pdf->Cell(80,2,'PEDIDO N°: '.$cabeceras[0][' com_cod'],0,1); 
+ $pdf->Cell(80,2,'PEDIDO N°: '.$cabeceras[0]['ped_cod'],0,1); 
  
  $pdf->Ln();
  $pdf->SetFont('', 'B', 12);
  //detalles
  $pdf->SetFillColor(180, 180, 180);
  
- $detalles = consultas::get_datos("select * from v_detalle_pedventa where ped_cod=".$cabeceras[0]['ped_cod']);
+ $detalles = consultas::get_datos("select * from v_detalle_compras where com_cod=".$cabeceras[0]['com_cod']);
  if (!empty($detalles)) {
      $pdf->Cell(15,5,'COD.',1,0,'C',1);
      $pdf->Cell(80,5,'DESCRIPCION',1,0,'C',1);
@@ -96,19 +97,20 @@ if (!empty($cabeceras)) {
     foreach ($detalles as $det) {
         $pdf->Cell(15,5,$det['art_cod'],1,0,'C',1);
         $pdf->Cell(80,5,$det['art_descri']." ".$det['mar_descri'],1,0,'L',1);
-        $pdf->Cell(20,5,$det['ped_cant'],1,0,'C',1);
-        $pdf->Cell(20,5, number_format($det['ped_precio'],0,',','.'),1,0,'C',1);
+        $pdf->Cell(20,5,$det['com_cant'],1,0,'C',1);
+        $pdf->Cell(20,5, number_format($det['com_precio'],0,',','.'),1,0,'C',1);
         $pdf->Cell(30,5, number_format($det['subtotal'],0,',','.'),1,0,'C',1);
         $pdf->Cell(30,5,$det['tipo_descri'],1,0,'C',1);
+        $pdf->Ln();
     }
-    $pdf->Ln();
+    
     $pdf->SetFont('', 'B', 12);  
-     $pdf->SetFillColor(180, 180, 180);
+    $pdf->SetFillColor(180, 180, 180);
     $pdf->Cell(135,5,'TOTAL: '.$cabeceras[0]['totalletra'],1,0,'L',1);
-    $pdf->Cell(60,5,number_format($cabeceras[0]['ped_total'],0,',','.'),1,0,'C',1);
+    $pdf->Cell(60,5,number_format($cabeceras[0]['com_total'],0,',','.'),1,0,'C',1);
     
  }else{
-     $pdf->Cell(135,5,'El pedido no tiene detalles cargados',0,'L',1);
+     $pdf->Cell(135,5,'La compra no tiene detalles cargados',0,'L',1);
  }
 }else{
     $pdf->Cell(135,5,'No se encontraron registros coincidentes',0,'L',1);
@@ -117,5 +119,5 @@ if (!empty($cabeceras)) {
 
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_pedventa.pdf', 'I');
+$pdf->Output('reporte_compra.pdf', 'I');
 ?>
