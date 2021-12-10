@@ -50,8 +50,25 @@
                                 <div class="box-body">           
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                        <form action="usuarios_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="input-group custom-search-form">
+                                                                <input type="search" class="form-control" name="buscar"
+                                                                       placeholder="Ingrese valor a buscar..." autofocus=""/>
+                                                                <span class="input-group-btn">
+                                                                    <button type="submit" class="btn btn-primary btn-flat" data-title="Buscar" 
+                                                                            rel="tooltip"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                             <?php 
-                                                $usuarios = consultas::get_datos("select * from v_usuarios order by car_cod");
+                                            //consulta a la tabla usuarios
+                                                $usuarios = consultas::get_datos("select * from v_usuarios where empleado ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by car_cod");
                                                 if (!empty($usuarios)) { ?>
                                                 <div class="table-responsive">
                                                     <table class="table table-striped table-hover table-condensed">
@@ -93,7 +110,7 @@
                                                <?php }else{ ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span>
-                                                No se han registrado cargos...
+                                                No se han registrado ...
                                             </div>  
                                             <?php } ?>
                                         </div>

@@ -66,7 +66,7 @@
                                                             <td data-title='N° Pedido'><?php echo $ped['ped_com'];?></td>
                                                             <td data-title='Fecha'><?php echo $ped['ped_fecha'];?></td>
                                                             <td data-title='Proveedor'><?php echo $ped['proveedor'];?></td>
-                                                            <td data-title='Total'><?php echo $ped['ped_total'];?></td>
+                                                            <td data-title='Total'><?php echo number_format($ped['ped_total'],0,'','.');?></td>
                                                             <td data-title='Estado'><?php echo $ped['estado'];?></td>
                                                         </tr>
                                                         <?php } ?>

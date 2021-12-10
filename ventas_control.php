@@ -14,7 +14,7 @@
     ".(!empty($_REQUEST['vven_plazo'])?$_REQUEST['vven_plazo']:"0").", 
     ".$_SESSION['id_sucursal'].",".(!empty($_REQUEST['vped_cod'])?$_REQUEST['vped_cod']:"0").") as resul";
 
-    echo $sql; return;
+    //echo $sql; return;
     $resultado = consultas::get_datos($sql);
 
     if ($resultado[0]['resul']!=null) {

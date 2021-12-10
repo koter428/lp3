@@ -55,7 +55,7 @@
                                             <label class="control-label col-lg-2 col-md-2">Proveedores:</label>
                                             <div class="col-lg-6 col-md-6 col-sm-5">
                                                 <div class="input-group">
-                                                    <?php $proveedores = consultas::get_datos("select * from proveedor order by prv_razonsocial");?>
+                                                    <?php $proveedores = consultas::get_datos("select * from proveedor order by prv_ruc");?>
                                                     <select class="form-control select2" name="vprv_cod" required="" id="proveedor" onchange="pedidos()">
                                                         <option value="">Seleccione un Proveedor</option>
                                                         <?php foreach ($proveedores as $proveedor) { ?>
@@ -125,14 +125,15 @@
                   }
             };
             /*FUNCION PARA OBTENER LOS PEDIDOS 
-             * DEL COMPRAS */
+             * DEL PROVEEDOR SELECCIONADO */
+            
             function pedidos(){
                 $.ajax({
                    type     : "GET",
                    url      : "/lp3/compras_pedidos.php?vprv_cod="+$('#proveedor').val(),
                    cache    : false,
                 beforeSend:function(){
-                   $("#det_pedidos").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
+                   $("#det_pedidos").html('<img src="img/loader.gif"/ width="60" height="40"><strong>&nbsp;&nbsp;Cargando...</strong>')
                 },
                 success:function(data){
                     $("#det_pedidos").html(data)

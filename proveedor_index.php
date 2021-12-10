@@ -71,7 +71,7 @@
                                             </form>
                                             <?php
                                             //consulta a la tabla proveedor
-                                            $proveedores = consultas::get_datos("select * from proveedor where prv_ruc ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%'order by prv_cod");
+                                            $proveedores = consultas::get_datos("select * from proveedor where prv_ruc ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%' order by prv_cod");
                                             //var_dump($proveedores);
                                             if (!empty($proveedores)) {
                                                 ?>

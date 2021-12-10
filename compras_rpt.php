@@ -26,7 +26,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="fa fa-list"></i>
-                                    <h3 class="box-title">Informe de Pedido de compras</h3>
+                                    <h3 class="box-title">Informe de pedidos</h3>
                                     <div class="box-tools">
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                                             <div class="panel-body">
                                                                 <div class="list-group">
                                                                     <a href="compras_rpt.php?opcion=1" class="list-group-item">Por Fecha</a>
-                                                                    <a href="compras_rpt.php?opcion=2" class="list-group-item">Por Cliente</a>
+                                                                    <a href="compras_rpt.php?opcion=2" class="list-group-item">Por Proveedor</a>
                                                                     <a href="compras_rpt.php?opcion=3" class="list-group-item">Por Articulo</a>
                                                                     <a href="compras_rpt.php?opcion=4" class="list-group-item">Por Empleado</a>
                                                                     <a href="compras_rpt.php?opcion=5" class="list-group-item">Por Condición</a>
@@ -80,22 +80,22 @@
 
                                                                 <?php       break;
                                                                             case 2: 
-                                                                                $clientes = consultas::get_datos("select * from clientes where cli_cod in(select cli_cod from compras)");
+                                                                                $proveedores = consultas::get_datos("select * from proveedor where prv_cod in(select prv_cod from compras)");
                                                                             ?> 
                                                                             <div class="form-group">
-                                                                                <label class="control-label col-lg-2 col-md-2">Cliente:</label>
+                                                                                <label class="control-label col-lg-2 col-md-2">Proveedor:</label>
                                                                                 <div class="col-lg-6 col-md-6">
-                                                                                    <select class="form-control select2" name="vcliente">
-                                                                                        <?php foreach ($clientes as $c) { ?>
-                                                                                        <option value="<?php echo $c['cli_cod'];?>">
-                                                                                        <?php echo $c['cli_nombre']." ".$c['cli_apellido'];?></option>
+                                                                                    <select class="form-control select2" name="vproveedor">
+                                                                                        <?php foreach ($proveedores as $c) { ?>
+                                                                                        <option value="<?php echo $c['prv_cod'];?>">
+                                                                                        <?php echo $c['prv_ruc']." - ".$c['prv_razonsocial'];?></option>
                                                                                         <?php }?>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>                                                                
                                                                 <?php       break;
                                                                             case 3:
-                                                                                $articulos = consultas::get_datos("select * from v_articulo where art_cod in(select art_cod from detalle_compras)");
+                                                                                $articulos = consultas::get_datos("select * from v_articulo where art_cod in(select art_cod from detalle_compra)");
                                                                             ?>
                                                                             <div class="form-group">
                                                                                 <label class="control-label col-lg-2 col-md-2">Articulos:</label>
@@ -125,14 +125,14 @@
                                                                             </div>                                                                 
                                                                 <?php            break;
                                                                             case 5: 
-                                                                                $condiciones = consultas::get_datos("select distinct(tipo_compras) as tipo_compras from compras");
+                                                                                $condiciones = consultas::get_datos("select distinct(tipo_compra) as tipo_compra from compras");
                                                                                 ?>
                                                                             <div class="form-group">
                                                                                 <label class="control-label col-lg-2 col-md-2">Condición:</label>
                                                                                 <div class="col-lg-6 col-md-6">
                                                                                     <select class="form-control select2" name="vcondicion">
                                                                                         <?php foreach ($condiciones as $con) { ?>
-                                                                                        <option value="<?php echo $con['tcompra'];?>">
+                                                                                        <option value="<?php echo $con['tipo_compra'];?>">
                                                                                         <?php echo $con['tipo_compra'];?></option>
                                                                                         <?php }?>
                                                                                     </select>
@@ -168,5 +168,3 @@
         </script>
     </body>
 </html>
-
-

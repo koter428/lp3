@@ -45,11 +45,14 @@
                                             <div class="col-lg-6 col-md-6 col-xs-12">
                                                 <label>Proveedor:</label>
                                                     <div class="input-group">
-                                                        <?php $clientes = consultas::get_datos("select prv_cod,prv_ruc,prv_razonsocial as nombres"
-                                                                . " from proveedor order by prv_cod=".$compras[0]['prv_cod']." desc");?>
+                                                        <?php 
+                                                            $sql = "select prv_cod, prv_ruc, prv_razonsocial as nombres from proveedor order by prv_cod=".$compras[0]['prv_cod']." desc";
+                                                            // echo $sql; return;
+                                                            $proveedores = consultas::get_datos($sql);
+                                                        ?>
                                                         <select class="form-control select2" name="vprv_cod" required="">
                                                             <?php foreach ($proveedores as $proveedor) { ?>
-                                                              <option value="<?php echo $proveedor['prv_cod'];?>"><?php echo "(".$proveedor['prv_razonsocial'].") ".$proveedor['prv_razonsocial'];?></option>   
+                                                              <option value="<?php echo $proveedor['prv_cod'];?>"><?php echo "(" . $proveedor['prv_ruc'] . ") ".$proveedor['nombres'];?></option>   
                                                             <?php }?>
                                                         </select>  
                                                         <span class="input-group-btn btn-flat">
@@ -127,7 +130,7 @@
                                       <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
                                           <i class="fa fa-remove"></i> Cerrar</button>
                                           <button type="submit" class="btn btn-primary pull-right">
-                                          <i class="fa fa-floppy-o"></i> Registrar</button>                                          
+                                          <i class="fa fa-floppy-o"></i> Editar</button>                                          
                                   </div>
                               </form>
                           </div>

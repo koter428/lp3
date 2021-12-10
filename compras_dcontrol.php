@@ -3,6 +3,7 @@
     require 'clases/conexion.php';
 
     @session_start();
+    // print_r($_REQUEST); return;
 
     $sql = "select sp_detalle_compra(
     ".$_REQUEST['accion'].",

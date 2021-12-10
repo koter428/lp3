@@ -25,7 +25,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="fa fa-clipboard"></i>
-                                    <h3 class="box-title">Reporte de Paginas</h3>
+                                    <h3 class="box-title">Reporte de Modulos</h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
@@ -35,7 +35,7 @@
                                                   $opcion = $_GET['opcion'];
                                                 }
                                             ?>
-                                            <form action="paginas_print.php" method="get" accept-charset="utf-8" class="form-horizontal">
+                                            <form action="modulos_print.php" method="get" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="opcion" value="<?php echo $opcion;?>"/>
                                                 <div class="box-body">
                                                     <div class="col-lg-4">
@@ -45,8 +45,8 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="list-group">
-                                                                    <a href="paginas_rpt.php?opcion=1" class="list-group-item">Por Codigo</a>
-                                                                    <a href="paginas_rpt.php?opcion=2" class="list-group-item">Por Descripción</a>
+                                                                    <a href="modulos_rpt.php?opcion=1" class="list-group-item">Por Codigo</a>
+                                                                    <a href="modulos_rpt.php?opcion=2" class="list-group-item">Por Descripción</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -57,13 +57,13 @@
                                                                 <strong>FILTROS</strong>
                                                             </div>
                                                             <div class="panel-body">
-                                                            <?php $pagina = consultas::get_datos("select * from paginas order by pag_cod");?>
+                                                            <?php $modulo = consultas::get_datos("select * from modulos order by mod_cod");?>
                                                                 <div class="form-group">
                                                                     <label class="control-label col-lg-3">Desde:</label>
                                                                     <div class="col-lg-6 col-md-5 col-sm-5">                                                                    
                                                                             <select class="form-control select2" name="vdesde" required="">
-                                                                                <?php foreach ($pagina as $p) { ?>
-                                                                                  <option value="<?php echo ($opcion==1)?$p['pag_cod']:$p['pag_nombre'];?>"><?php echo ($opcion==1)?$p['pag_cod']:$p['pag_nombre'];?></option>   
+                                                                                <?php foreach ($modulo as $m) { ?>
+                                                                                  <option value="<?php echo ($opcion==1)?$m['mod_cod']:$m['mod_nombre'];?>"><?php echo ($opcion==1)?$m['mod_cod']:$m['mod_nombre'];?></option>   
                                                                                 <?php }?>
                                                                             </select>  
                                                                     </div>
@@ -72,8 +72,8 @@
                                                                     <label class="control-label col-lg-3">Hasta:</label>
                                                                     <div class="col-lg-6 col-md-5 col-sm-5">                                                                    
                                                                             <select class="form-control select2" name="vhasta" required="">
-                                                                                <?php foreach ($pagina as $p) { ?>
-                                                                                  <option value="<?php echo ($opcion==1)?$p['pag_cod']:$p['pag_nombre'];?>"><?php echo ($opcion==1)?$p['pag_cod']:$p['pag_nombre'];?></option>   
+                                                                                <?php foreach ($modulo as $m) { ?>
+                                                                                  <option value="<?php echo ($opcion==1)?$m['mod_nombre']:$m['mod_nombre'];?>"><?php echo ($opcion==1)?$m['mod_cod']:$m['mod_nombre'];?></option>   
                                                                                 <?php }?>
                                                                             </select>  
                                                                     </div>

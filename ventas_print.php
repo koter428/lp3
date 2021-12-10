@@ -73,7 +73,7 @@ if (!empty(isset($_REQUEST['opcion']))) {
         case 4: //empleado
             $cabeceras = consultas::get_datos("select * from v_ventas where emp_cod in(" . $_REQUEST['vempleado'] . ")");
             break;
-        case 5: //empleado
+        case 5: //condicion
             $cabeceras = consultas::get_datos("select * from v_ventas where tipo_venta ='" . $_REQUEST['vcondicion'] . "'");
             break;        
     }
@@ -136,7 +136,7 @@ if (!empty($cabeceras)) {
             $pdf->Ln();
             $pdf->SetFont('times', '', 11);
         } else {
-            $pdf->Cell(165, 2, "El pedido no posee detalles", 0, '', 'L', 1);
+            $pdf->Cell(165, 2, "La venta no posee detalles", 0, '', 'L', 1);
             $pdf->Ln();
             $pdf->Ln();
             $pdf->SetFont('times', '', 11);
@@ -151,5 +151,5 @@ if (!empty($cabeceras)) {
 }
 
 //SALIDA AL NAVEGADOR
-$pdf->Output('reporte_marca.pdf', 'I');
+$pdf->Output('reporte_venta.pdf', 'I');
 ?>

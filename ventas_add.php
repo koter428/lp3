@@ -186,7 +186,7 @@
                    url      : "/lp3/ventas_pedidos.php?vcli_cod="+$('#cliente').val(),
                    cache    : false,
                 beforeSend:function(){
-                   $("#det_pedidos").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
+                   $("#det_pedidos").html('<img src="img/loader.gif"/><strong>&nbsp;&nbsp;Cargando...</strong>')
                 },
                 success:function(data){
                     $("#det_pedidos").html(data)

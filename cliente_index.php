@@ -47,7 +47,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <form action="cliente_index.php" method="post" accept-charset="utf-8" class="form-horizontal">
-                                                <div class="box-body">
+                                            <div class="box-body">
                                                     <div class="form-group">
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                             <div class="input-group custom-search-form">
