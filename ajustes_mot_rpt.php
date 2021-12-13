@@ -25,7 +25,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="fa fa-clipboard"></i>
-                                    <h3 class="box-title">Reporte de Marcas</h3>
+                                    <h3 class="box-title">Reporte de motivo de ajustes</h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
@@ -35,7 +35,7 @@
                                                   $opcion = $_GET['opcion'];
                                                 }
                                             ?>
-                                            <form action="marca_print.php" method="get" accept-charset="utf-8" class="form-horizontal">
+                                            <form action="ajustes_mot_print.php" method="get" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="opcion" value="<?php echo $opcion;?>"/>
                                                 <div class="box-body">
                                                     <div class="col-lg-4">
@@ -45,8 +45,8 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="list-group">
-                                                                    <a href="marca_rpt.php?opcion=1" class="list-group-item">Por Codigo</a>
-                                                                    <a href="marca_rpt.php?opcion=2" class="list-group-item">Por Descripción</a>
+                                                                    <a href="ajustes_mot_rpt.php?opcion=1" class="list-group-item">Por Codigo</a>
+                                                                    <a href="ajustes_mot_rpt.php?opcion=2" class="list-group-item">Por Descripción</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -57,13 +57,13 @@
                                                                 <strong>FILTROS</strong>
                                                             </div>
                                                             <div class="panel-body">
-                                                            <?php $marcas = consultas::get_datos("select * from marca order by mar_cod");?>
+                                                            <?php $ajustes = consultas::get_datos("select * from ajustes_motivos order by mot_cod");?>
                                                                 <div class="form-group">
                                                                     <label class="control-label col-lg-3">Desde:</label>
                                                                     <div class="col-lg-6 col-md-5 col-sm-5">                                                                    
                                                                             <select class="form-control select2" name="vdesde" required="">
-                                                                                <?php foreach ($marcas as $marca) { ?>
-                                                                                  <option value="<?php echo ($opcion==1)?$marca['mar_cod']:$marca['mar_descri'];?>"><?php echo ($opcion==1)?$marca['mar_cod']:$marca['mar_descri'];?></option>   
+                                                                                <?php foreach ($ajustes as $ajus) { ?>
+                                                                                  <option value="<?php echo ($opcion==1)?$ajus['mot_cod']:$ajus['mot_descri'];?>"><?php echo ($opcion==1)?$ajus['mot_cod']:$ajus['mot_descri'];?></option>   
                                                                                 <?php }?>
                                                                             </select>  
                                                                     </div>
@@ -72,8 +72,8 @@
                                                                     <label class="control-label col-lg-3">Hasta:</label>
                                                                     <div class="col-lg-6 col-md-5 col-sm-5">                                                                    
                                                                             <select class="form-control select2" name="vhasta" required="">
-                                                                                <?php foreach ($marcas as $marca) { ?>
-                                                                                  <option value="<?php echo ($opcion==1)?$marca['mar_cod']:$marca['mar_descri'];?>"><?php echo ($opcion==1)?$marca['mar_cod']:$marca['mar_descri'];?></option>   
+                                                                                <?php foreach ($ajustes as $ajus) { ?>
+                                                                                  <option value="<?php echo ($opcion==1)?$ajus['mot_cod']:$ajus['mot_descri'];?>"><?php echo ($opcion==1)?$ajus['mot_cod']:$ajus['mot_descri'];?></option>   
                                                                                 <?php }?>
                                                                             </select>  
                                                                     </div>
@@ -100,3 +100,5 @@
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
     </body>
 </html>
+
+

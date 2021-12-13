@@ -1,0 +1,83 @@
+-- Table: public.ajustes_motivos
+
+-- DROP TABLE IF EXISTS public.ajustes_motivos;
+
+CREATE TABLE IF NOT EXISTS public.ajustes_motivos
+(
+    mot_cod integer NOT NULL,
+    mot_descri character varying(60) COLLATE pg_catalog."default",
+	mot_tipo char(1),
+    CONSTRAINT ajustes_motivos_pk PRIMARY KEY (mot_cod),
+    CONSTRAINT motivo_descrip UNIQUE (mot_descri)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.ajustes_motivos
+    OWNER to postgres;
+	
+-- ============================================================
+-- Table: public.ajustes
+-- DROP TABLE IF EXISTS public.ajustes;
+
+CREATE TABLE IF NOT EXISTS public.ajustes
+(
+    aju_cod integer NOT NULL,
+    emp_cod integer NOT NULL,
+    aju_fecha date NOT NULL,
+    aju_total integer NOT NULL,
+    aju_obser character varying(100) COLLATE pg_catalog."default" NULL,
+	id_sucursal integer NOT NULL,
+    CONSTRAINT ajustes_pk PRIMARY KEY (aju_cod),
+    CONSTRAINT empleado_ajustes_fk FOREIGN KEY (emp_cod)
+        REFERENCES public.empleado (emp_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT sucursal_ajustes_fk FOREIGN KEY (id_sucursal)
+        REFERENCES public.sucursal (id_sucursal) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.ajustes
+    OWNER to postgres;
+	
+-- Table: public.ajustes_detalle
+-- DROP TABLE IF EXISTS public.ajustes_detalle;
+
+CREATE TABLE IF NOT EXISTS public.ajustes_detalle
+(
+    dep_cod integer NOT NULL,
+    art_cod integer NOT NULL,
+    aju_cod integer NOT NULL,
+    aju_cant integer NOT NULL,
+    aju_precio integer NOT NULL,
+	mot_cod integer not null,
+	mot_tipo character(1) COLLATE pg_catalog."default",
+    CONSTRAINT detalle_ajustes_pk PRIMARY KEY (dep_cod, art_cod, aju_cod),
+    CONSTRAINT ajustes_detalle_fk FOREIGN KEY (aju_cod)
+        REFERENCES public.ajustes (aju_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT stock_ajustes_fk FOREIGN KEY (dep_cod, art_cod)
+        REFERENCES public.stock (dep_cod, art_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	 CONSTRAINT ajustes_motivo_fk FOREIGN KEY (mot_cod)
+        REFERENCES public.ajustes_motivos (mot_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.ajustes_detalle
+    OWNER to postgres;

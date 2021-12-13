@@ -42,7 +42,7 @@
                             <?php if ($_SESSION['DEPOSITOS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
-                                    <h3 class="box-title">Deposito</h3>
+                                    <h3 class="box-title">Depósitos</h3>
                                     <div class="box-tools">
                                         <a href="deposito_print.php" class="btn btn-default btn-sm" data-title="Imprimir" rel="tooltip" target="print">
                                             <i class="fa fa-print"></i></a>
@@ -76,6 +76,7 @@
                                             // $deposito = consultas::get_datos("select * from deposito where dep_cod != '0' order by dep_cod");
                                             $deposito = consultas::get_datos("select * from deposito where dep_descri  ilike '%".(isset($_REQUEST['buscar'])?$_REQUEST['buscar']:"")."%'order by dep_cod");
                                             //var_dump($deposito);
+                                            //print_r($_SESSION);return;
                                             if (!empty($deposito)) {
                                                 ?>
                                                 <div class="table-responsive">
@@ -92,7 +93,7 @@
                                                             <?php foreach ($deposito as $dep) { ?>
                                                                 <tr>
                                                                     <td data-title='descripcion'><?php echo $dep['dep_descri']; ?></td>
-                                                                    <td data-title='sucursal'><?php echo $dep['id_sucursal']; ?></td>
+                                                                    <td data-title='sucursal'><?php echo $_SESSION["sucursal"]; ?></td>
                                                                     <td data-title='sucursal'><?php echo $dep['dep_cod']; ?></td>
                                                                     <td data-title='Acciones' class="text-center">
                                                                     <?php if ($_SESSION['DEPOSITOS']['editar']=='t') { ?>

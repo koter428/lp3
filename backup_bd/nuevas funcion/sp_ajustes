@@ -1,0 +1,47 @@
+-- FUNCTION: public.sp_ajustes_motivos(integer, integer, integer, date DEFAULT, integer DEFAULT, character varying, integer, )
+
+-- DROP FUNCTION IF EXISTS public.sp_ajustes_motivos(integer, integer, integer, date DEFAULT, integer DEFAULT, character varying, integer, );
+
+CREATE OR REPLACE FUNCTION public.sp_ajustes(
+	ban integer,
+	vaju_cod integer DEFAULT 0,
+	vemp_cod integer DEFAULT 0,
+	vaju_total integer DEFAULT 0,
+	vaju_obser character varying DEFAULT ''::character varying,
+	vid_sucursal integer DEFAULT 0)
+RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+declare mensaje varchar default null;
+begin
+	--sentencias sql
+	if ban = 1 then --insertar
+		insert into ajustes(aju_cod,emp_cod,aju_fecha,aju_total,aju_obser,id_sucursal)
+        values(calcular_ultimo('ajustes','aju_cod'),vemp_cod,current_date,vaju_total,vaju_obser,vid_sucursal);
+		mensaje = 'Se guardó correctamente el ajuste*ajustes_index';
+	elsif ban = 2 then
+		update ajustes
+		set emp_cod = vemp_cod,
+		aju_obser = vaju_obser
+		where aju_cod = vaju_cod;
+		mensaje = 'Se actualizó correctamente el ajuste*ajustes_index';
+	elsif ban = 3 then
+		delete from ajustes
+		where aju_cod = vaju_cod;
+		mensaje = 'Se eliminó correctamente el ajuste*ajustes_index';
+	end if;	
+	return mensaje;
+end;
+$BODY$;
+
+ALTER FUNCTION public.sp_ajustes(integer, integer, integer, integer , character varying, integer)
+    OWNER TO postgres;
+	
+/*
+	select * from sp_ajustes(1,0,1,0,'Nada que decir',1);
+	select * from sp_ajustes(2,2,1,0,'Otra observacion',1);
+	select * from sp_ajustes(3,2);
+	select * from ajustes
+*/

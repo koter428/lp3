@@ -1,0 +1,51 @@
+-- FUNCTION: public.sp_ajustes_motivos(integer, integer, character varying, character)
+
+-- DROP FUNCTION IF EXISTS public.sp_ajustes_motivos(integer, integer, character varying, character);
+
+CREATE OR REPLACE FUNCTION public.sp_ajustes_motivos(
+	ban integer,
+	vmot_cod integer DEFAULT 0,
+	vmot_descri character varying DEFAULT ''::character varying,
+    vmot_tipo char DEFAULT ''::char)
+RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+declare mensaje varchar default null;
+begin
+	--sentencias sql
+	if ban = 1 then --insertar
+		 insert into ajustes_motivos(mot_cod,mot_descri,mot_tipo)
+        values(calcular_ultimo('ajustes_motivos','mot_cod'),
+	    trim(upper(vmot_descri)),
+	    vmot_tipo);
+		mensaje = 'Se guardó correctamente el ajuste*ajustes_mot_index';
+	elsif ban = 2 then
+		update ajustes_motivos
+		set mot_descri = upper(trim(vmot_descri)),
+		mot_tipo = vmot_tipo
+		where mot_cod = vmot_cod;
+		mensaje = 'Se actualizó correctamente el ajuste*ajustes_mot_index';
+	elsif ban = 3 then
+		delete from ajustes_motivos
+		where mot_cod = vmot_cod;
+		mensaje = 'Se eliminó correctamente el ajuste*ajustes_mot_index';
+	end if;	
+	return mensaje;
+end;
+$BODY$;
+
+ALTER FUNCTION public.sp_ajustes_motivos(integer, integer, character varying, character)
+    OWNER TO postgres;
+	
+/*
+	Prueba
+	
+	select * from sp_ajustes_motivos(1,0,'Ajuste por Salida','S');
+	select * from sp_ajustes_motivos(2,1,'Ajuste por Salida','S');
+	select * from sp_ajustes_motivos(3,1);
+	
+	select * from ajustes_motivos;
+	
+*/
