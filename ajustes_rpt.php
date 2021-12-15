@@ -26,7 +26,7 @@
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="fa fa-list"></i>
-                                    <h3 class="box-title">Informe de pedidos</h3>
+                                    <h3 class="box-title">Informe de ajustes</h3>
                                     <div class="box-tools">
                                     </div>
                                 </div>
@@ -46,10 +46,9 @@
                                                             <div class="panel-body">
                                                                 <div class="list-group">
                                                                     <a href="compras_rpt.php?opcion=1" class="list-group-item">Por Fecha</a>
-                                                                    <a href="compras_rpt.php?opcion=2" class="list-group-item">Por Proveedor</a>
+                                                                    <a href="compras_rpt.php?opcion=2" class="list-group-item">Por empleado</a>
                                                                     <a href="compras_rpt.php?opcion=3" class="list-group-item">Por Articulo</a>
                                                                     <a href="compras_rpt.php?opcion=4" class="list-group-item">Por Empleado</a>
-                                                                    <a href="compras_rpt.php?opcion=5" class="list-group-item">Por Condición</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -80,15 +79,15 @@
 
                                                                 <?php       break;
                                                                             case 2: 
-                                                                                $proveedores = consultas::get_datos("select * from proveedor where prv_cod in(select prv_cod from compras)");
+                                                                                $empleados = consultas::get_datos("select * from empleado where prv_cod in(select prv_cod from ajustes)");
                                                                             ?> 
                                                                             <div class="form-group">
-                                                                                <label class="control-label col-lg-2 col-md-2">Proveedor:</label>
+                                                                                <label class="control-label col-lg-2 col-md-2">empleado:</label>
                                                                                 <div class="col-lg-6 col-md-6">
                                                                                     <select class="form-control select2" name="vproveedor">
-                                                                                        <?php foreach ($proveedores as $c) { ?>
-                                                                                        <option value="<?php echo $c['prv_cod'];?>">
-                                                                                        <?php echo $c['prv_ruc']." - ".$c['prv_razonsocial'];?></option>
+                                                                                        <?php foreach ($empleados as $e) { ?>
+                                                                                        <option value="<?php echo $e['prv_cod'];?>">
+                                                                                        <?php echo $c['prv_ruc']." - ".$e['prv_razonsocial'];?></option>
                                                                                         <?php }?>
                                                                                     </select>
                                                                                 </div>
@@ -122,22 +121,7 @@
                                                                                         <?php }?>
                                                                                     </select>
                                                                                 </div>
-                                                                            </div>                                                                 
-                                                                <?php            break;
-                                                                            case 5: 
-                                                                                $condiciones = consultas::get_datos("select distinct(tipo_compra) as tipo_compra from compras");
-                                                                                ?>
-                                                                            <div class="form-group">
-                                                                                <label class="control-label col-lg-2 col-md-2">Condición:</label>
-                                                                                <div class="col-lg-6 col-md-6">
-                                                                                    <select class="form-control select2" name="vcondicion">
-                                                                                        <?php foreach ($condiciones as $con) { ?>
-                                                                                        <option value="<?php echo $con['tipo_compra'];?>">
-                                                                                        <?php echo $con['tipo_compra'];?></option>
-                                                                                        <?php }?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>                                                                 
+                                                                            </div>                                                                                                                       
                                                                 <?php        }
                                                                 ?>                                                                                                                                                                                              
                                                             </div>

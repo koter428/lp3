@@ -32,12 +32,12 @@
                             </div>
                             <?php } ?>
                          <div class="box box-primary">
-                         <?php if ($_SESSION['AJUSTES MOTIVOS']['leer']==='t') { ?>
+                         <?php if ($_SESSION['MOTIVOS DE AJUSTES']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="ion ion-clipboard"></i>
                                     <h3 class="box-title">Motivos De Ajustes</h3>
                                     <div class="box-tools">
-                                    <?php if ($_SESSION['AJUSTES MOTIVOS']['insertar']==='t') { ?>                                                                                    
+                                    <?php if ($_SESSION['MOTIVOS DE AJUSTES']['insertar']==='t') { ?>                                                                                    
                                         <a href="ajustes_mot_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
                                     <?php } ?>   
                                         <a href="ajustes_mot_print.php" class="btn btn-default btn-sm pull-right" data-title='Imprimir' rel='tooltip' data-placement='top' target="_blank"><i class="fa fa-print"></i></a>
@@ -84,12 +84,12 @@
                                                             <td data-title='tipo ajuste'><?php echo ($ajus['mot_tipo'] == "E" ? "ENTRADA" : "SALIDA");?></td>
                                                             <td data-title='Código'><?php echo $ajus['mot_cod'];?></td>
                                                             <td data-title='Acciones' class="text-center">
-                                                            <?php if ($_SESSION['AJUSTES MOTIVOS']['editar']=='t') { ?>
+                                                            <?php if ($_SESSION['MOTIVOS DE AJUSTES']['editar']=='t') { ?>
                                                                 <a href="ajustes_mot_edit.php?vmot_cod=<?php echo $ajus['mot_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span></a>
                                                                     <?php }?>   
-                                                                <?php if ($_SESSION['AJUSTES MOTIVOS']['borrar']=='t') { ?>
+                                                                <?php if ($_SESSION['MOTIVOS DE AJUSTES']['borrar']=='t') { ?>
                                                                     <a onclick="borrar(<?php echo "'".$ajus['mot_cod']."_".$ajus['mot_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
                                                                         data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
                                                                         <span class="glyphicon glyphicon-trash"></span></a>     

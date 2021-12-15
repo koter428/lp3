@@ -65,25 +65,22 @@
                                             <?php 
                                             //consulta a la tabla ajustes
                                             //print_r($_SESSION); return;
-                                            $sql = "select 	to_char(aju_fecha,'dd-mm-yyyy') as aju_fecha, 
-                                                            empleado.emp_nombre || ' ' || empleado.emp_apellido as empleado,
-                                                            deposito.dep_descri,
-                                                            articulo.art_descri,
-                                                            ajustes_detalle.aju_cant,
-                                                            (case ajustes_detalle.mot_tipo
-                                                            when 'E' then'ENTRADA'
-                                                            when 'S' then 'SALIDA'
-                                                            end) as mot_tipo,
-                                                            ajustes_motivos.mot_descri,
-                                                            ajustes.aju_cod
-                                                    from 	ajustes, ajustes_detalle, empleado, deposito, articulo,	ajustes_motivos
-                                                    where 	ajustes.aju_cod = ajustes_detalle.aju_cod
-                                                    and   	ajustes.emp_cod = empleado.emp_cod
-                                                    and   	ajustes_detalle.dep_cod = deposito.dep_cod
-                                                    and		ajustes_detalle.art_cod = articulo.art_cod
-                                                    and     ajustes_detalle.mot_cod = ajustes_motivos.mot_cod
-                                                    and     articulo.art_descri::varchar ilike '%". (isset($_REQUEST['buscar'])?$_REQUEST['buscar']:""). "%' order by aju_fecha, art_descri ";
-                                            // echo $sql; return;
+                                            $sql = "select to_char(aju_fecha,'dd-mm-yyyy') as aju_fecha, 
+                                                    empleado.emp_nombre || ' ' || empleado.emp_apellido as empleado, 
+                                                    deposito.dep_descri,
+                                                    articulo.art_descri,
+                                                    coalesce(ajustes_detalle.aju_cant,0) as aju_cant,
+                                                    (case ajustes_detalle.mot_tipo when 'E' then'ENTRADA' when 'S' then 'SALIDA' end) as mot_tipo, 
+                                                    ajustes_motivos.mot_descri, 
+                                                    ajustes.aju_cod 
+                                                    from ajustes full outer join ajustes_detalle on ajustes.aju_cod = ajustes_detalle.aju_cod
+                                                    full outer join deposito on ajustes_detalle.dep_cod = deposito.dep_cod
+                                                    full outer join articulo on ajustes_detalle.art_cod = articulo.art_cod
+                                                    full outer join ajustes_motivos on ajustes_detalle.mot_cod = ajustes_motivos.mot_cod,
+                                                    empleado
+                                                    where ajustes.emp_cod = empleado.emp_cod
+                                                    and ajustes.aju_fecha::varchar ilike '%". (isset($_REQUEST['buscar'])?$_REQUEST['buscar']:""). "%' order by aju_fecha, art_descri ";
+                                            //echo $sql; return;
                                             $ajustes = consultas::get_datos($sql);
                                             if (!empty($ajustes)) { ?>
                                             <div class="table-responsive">
@@ -197,7 +194,7 @@
         <script>
              function borrar(datos){
             var dat = datos.split("_");
-            $('#si').attr('href','articulo_control.php?vaju_cod='+dat[0]+'&vart_descri='+dat[1]+'&accion=3');
+            $('#si').attr('href','ajustes_control.php?vaju_cod='+dat[0]+'&vart_descri='+dat[1]+'&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
             Desea borrrar el ajuste <strong>'+dat[1]+'</strong>?');
             }

@@ -18,6 +18,7 @@
     else if (strcmp($accion,"3") == 0){
         $sql = "select sp_articulo(" . $accion . "," . $_REQUEST['vart_cod']. ",'',0,'',0,0,0) as resul";
     } 
+    //echo $sql; return;
     $mensaje = consultas::get_datos($sql);
 
     if (isset($mensaje)) {

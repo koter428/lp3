@@ -1,27 +1,31 @@
 <?php
-require 'ver_session.php'; /*VERIFICAR SESSION*/
+    require 'ver_session.php'; /*VERIFICAR SESSION*/
     require 'clases/conexion.php';
+    require 'funciones/lib_funciones.php';
+
     @session_start();
-    
-    // print_r($_REQUEST); return;
+    $accion = $_REQUEST['accion'];
 
-    $sql="select sp_compras(".$_REQUEST['accion'].",
-    ".$_REQUEST['vcom_cod'].", 
-    ".$_SESSION['emp_cod'].", 
-    ".(!empty($_REQUEST['vprv_cod'])?$_REQUEST['vprv_cod']:"0").", 
-    ".(!empty($_REQUEST['vtipo_compra'])? "'".$_REQUEST['vtipo_compra']."'":"null").", 
-    ".(!empty($_REQUEST['vcan_cuota'])?$_REQUEST['vcan_cuota']:"0").", 
-    ".(!empty($_REQUEST['vcom_plazo'])?$_REQUEST['vcom_plazo']:"0").", 
-    ".$_SESSION['id_sucursal'].",".(!empty($_REQUEST['vped_cod'])?$_REQUEST['vped_cod']:"0").") as resul";
-    
-    $resultado = consultas::get_datos($sql);
+    //print_r($_SESSION); return;
+        if(strcmp($accion,"1") == 0 || strcmp($accion,"2") == 0){
+            $sql = "select sp_ajustes(" . $accion . "," . (!empty($_REQUEST['vaju_cod']) ? $_REQUEST['vaju_cod'] : 0) . "," .
+            (!empty($_SESSION['vemp_cod']) ? strtoupper($_SESSION['vemp_cod']) : 1) . "," .
+            (!empty($_REQUEST['vaju_total']) ? $_REQUEST['vaju_total'] : 0) . ",'" .
+            (!empty($_REQUEST['vaju_obser']) ? strtoupper($_REQUEST['vaju_obser']) : "") . "'," .
+            (!empty($_SESSION['vid_sucursal']) ? $_SESSION['vid_sucursal'] : 1) . ") as resul";
+        }
+    else if (strcmp($accion,"3") == 0){
+        $sql = "select sp_ajustes(" . $accion . "," . $_REQUEST['vaju_cod']. ") as resul";
+    } 
+    //echo $sql; return;
+    $mensaje = consultas::get_datos($sql);
 
-    if ($resultado[0]['resul']!=null) {    
-        $valor = explode("*",$resultado[0]['resul']);
-        $_SESSION['mensaje'] = $valor[0];
-       // header("location:".$valor[1]); 
-          header("location:compras_index.php"); 
-    }else{
-        $_SESSION['mensaje'] = "Error:". pg_last_error();
-        header("location:compras_index.php"); 
+    if (isset($mensaje)) {
+        $mensaje = fn_separar_mensajebd($mensaje[0]["resul"]);
+        $_SESSION['mensaje'] = $mensaje[0];
+        header("location:" . $mensaje[1] . ".php");
+    } else {
+        $_SESSION['mensaje'] = "Error al procesar " . pg_last_error();
+        header("location:" . "ajustes_index.php");
     }
+    

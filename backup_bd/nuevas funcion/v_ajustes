@@ -1,0 +1,20 @@
+-- View: public.v_ajustes
+
+-- DROP VIEW public.v_ajustes;
+
+CREATE OR REPLACE VIEW public.v_ajustes
+ AS
+ SELECT a.aju_cod,
+    a.emp_cod,
+    (b.emp_nombre::text || ' '::text) || b.emp_apellido::text AS empleado,
+    a.aju_fecha,
+    a.aju_total,
+    a.aju_obser,
+    s.id_sucursal,
+	s.suc_descri
+   FROM ajustes a
+     JOIN empleado b ON a.emp_cod = b.emp_cod
+     JOIN sucursal s ON a.id_sucursal = s.id_sucursal;
+
+ALTER TABLE public.v_ajustes
+    OWNER TO postgres;

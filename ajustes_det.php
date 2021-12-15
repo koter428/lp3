@@ -32,17 +32,13 @@
                                 ?>
                             </div>
                             <?php } 
-                                $compras = consultas::get_datos("select * from v_compras where com_cod=".$_REQUEST['vcom_cod']);
+                                $ajustes = consultas::get_datos("select * from v_ajustes where aju_cod=".$_REQUEST['vaju_cod']);
                             ?>
                             <div class="box box-primary">
                                 <div class="box-header">
                                     <i class="ion ion-plus"></i><i class="fa fa-list"></i>
-                                    <h3 class="box-title">Agregar Detalle Compra</h3>
+                                    <h3 class="box-title">Agregar Detalle ajustes</h3>
                                     <div class="box-tools">
-                                        <a onclick="confirmar(<?php echo "'".$compras[0]['com_cod']."_".$compras[0]['proveedores']."_".$compras[0]['com_fecha']."'"?>)" class="btn btn-success btn-sm" role='button'
-                                        data-title='Confirmar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#confirmar">
-                                        <span class="glyphicon glyphicon-check"></span> CONFIRMAR
-                                        </a>
                                         <a href="ajustes_index.php" class="btn btn-primary btn-sm" data-title='Volver' rel='tooltip' data-placement='top'><i class="fa fa-arrow-left"></i> VOLVER</a>
                                     </div>
                                 </div>
@@ -51,28 +47,24 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                                          
                                             <?php 
                                             //consulta a la tabla ajustes
-                                            if (!empty($compras)) { ?>
+                                            if (!empty($ajustes)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>N° Compra</th>
+                                                            <th>N° Ajustes</th>
                                                             <th>Fecha</th>
-                                                            <th>Proveedor</th>
-                                                            <th>Condición</th>
-                                                            <th>Total</th>
-                                                            <th>Estado</th>
+                                                            <th>Empleado</th>
+                                                            <th>Monto Ajustado</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($compras as $com) { ?>
+                                                        <?php foreach ($ajustes as $aju) { ?>
                                                         <tr>
-                                                            <td data-title='N° Compra'><?php echo $com['com_cod'];?></td>
-                                                            <td data-title='Fecha'><?php echo $com['com_fecha'];?></td>
-                                                            <td data-title='Cliente'><?php echo $com['proveedores'];?></td>
-                                                            <td data-title='Condición'><?php echo $com['tipo_compra'];?></td>                                                            
-                                                            <td data-title='Total'><?php echo number_format($com['com_total'],0,",",".");?></td>
-                                                            <td data-title='Estado'><?php echo $com['com_estado'];?></td>
+                                                            <td data-title='N° ajuste'><?php echo $aju['aju_cod'];?></td>
+                                                            <td data-title='Fecha'><?php echo $aju['aju_fecha'];?></td>
+                                                            <td data-title='Empleado'><?php echo $aju['empleado'];?></td>
+                                                            <td data-title='Total'><?php echo number_format($aju['aju_total'],0,",",".");?></td>
                                                         </tr>
                                                         <?php } ?>
                                                     </tbody>
@@ -88,15 +80,15 @@
                                         </div>
                                     </div>
                                     <!-- FIN CABECERA-->
-                                    <!-- INCICIO ITEMS PEDIDOS-->
-                                   <?php $comprasdet = consultas::get_datos("select * from v_detalle_compras where com_cod=".$compras[0]['com_cod']
-                                    ." and art_cod not in (select art_cod from detalle_compra where com_cod=".$compras[0]['com_cod'].")");
-                                    if (!empty($comprasdet)) { ?>                                    
+                                    <!-- INCICIO DETALLE DE ITEMS-->                     
+                                   <?php $ajustesdet = consultas::get_datos("select * from v_detalle_ajustes where aju_cod=".$ajustes[0]['aju_cod']
+                                    ." and art_cod not in (select art_cod from ajustes_detalle where aju_cod=".$ajustes[0]['aju_cod'].")");
+                                    if (!empty($ajustesdet)) { ?>                                    
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="box-header">
                                                 <i class="fa fa-list"></i>
-                                                <h3 class="box-title">Detalle Items de la Compra° <?php echo $compras[0]['com_cod'];?></h3>
+                                                <h3 class="box-title">Detalle del ajuste de items° <?php echo $ajustes[0]['aju_cod'];?></h3>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
@@ -107,23 +99,23 @@
                                                             <th>Deposito</th>
                                                             <th>Cantidad</th>
                                                             <th>Precio</th>
-                                                            <th>Impuesto</th>
-                                                            <th>Subtotal</th>
+                                                            <th>Tipo</th>
+                                                            <th>Motivo</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                       <?php foreach ($comprasdet as $det) { ?>
+                                                       <?php foreach ($ajustesdet as $det) { ?>
                                                         <tr>
                                                             <td data-title="#"><?php echo $det['art_cod'];?></td>
-                                                            <td data-title="Descripción"><?php echo $det['art_descri']." ".$det['mar_descri'];?></td>
+                                                            <td data-title="Descripción"><?php echo $det['art_descri']?></td>
                                                             <td data-title="Deposito"><?php echo $det['dep_descri'];?></td>
-                                                            <td data-title="Cantidad"><?php echo $det['ped_cant'];?></td>
-                                                            <td data-title="Precio"><?php echo number_format($det['ped_precio'],0,",",".");?></td>
-                                                            <td data-title="Impuesto"><?php echo $det['tipo_descri'];?></td>
-                                                            <td data-title="Precio"><?php echo number_format($det['subtotal'],0,",",".");?></td>
+                                                            <td data-title="Cantidad"><?php echo $det['aju_cant'];?></td>
+                                                            <td data-title="Precio"><?php echo number_format($det['aju_precio'],0,",",".");?></td>
+                                                            <td data-title="Tipo"><?php echo $det['mod_tipo'];?></td>
+                                                            <td data-title="Motivo"><?php echo number_format($det['mot_cod'],0,",",".");?></td>
                                                             <td class="text-center">
-                                                                <a onclick="add(<?php echo $det['com_cod'];?>,<?php echo $compras[0]['vcom_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-success btn-sm" role='button'
+                                                                <a onclick="add(<?php echo $det['aju_cod'];?>,<?php echo $ajustes[0]['vaju_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-success btn-sm" role='button'
                                                                    data-title='Agregar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                     <span class="glyphicon glyphicon-plus"></span>
                                                                 </a>                                                                                                
@@ -139,8 +131,8 @@
                                     <!-- FIN ITEMS PEDIDOS-->                                    
                                     <!-- INCICIO DETALLES-->
                                     <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <?php $detalles = consultas::get_datos("select * from v_detalle_compras where com_cod=".$compras[0]['com_cod']);
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">    
+                                            <?php $detalles = consultas::get_datos("select * from v_detalle_ajustes where aju_cod=".$ajustes[0]['aju_cod']);
                                                  if (!empty($detalles)) { ?>
                                             <div class="box-header">
                                                 <i class="fa fa-list"></i>
@@ -155,8 +147,9 @@
                                                             <th>Deposito</th>
                                                             <th>Cantidad</th>
                                                             <th>Precio</th>
-                                                            <th>Impuesto</th>
                                                             <th>Subtotal</th>
+                                                            <th>Tipo</th>
+                                                            <th>Motivo</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -164,18 +157,19 @@
                                                        <?php foreach ($detalles as $det) { ?>
                                                         <tr>
                                                             <td data-title="#"><?php echo $det['art_cod'];?></td>
-                                                            <td data-title="Descripción"><?php echo $det['art_descri']." ".$det['mar_descri'];?></td>
+                                                            <td data-title="Descripción"><?php echo $det['art_descri'];?></td>
                                                             <td data-title="Deposito"><?php echo $det['dep_descri'];?></td>
-                                                            <td data-title="Cantidad"><?php echo $det['com_cant'];?></td>
-                                                            <td data-title="Precio"><?php echo number_format($det['com_precio'],0,",",".");?></td>
-                                                            <td data-title="Impuesto"><?php echo $det['tipo_descri'];?></td>
+                                                            <td data-title="Cantidad"><?php echo $det['aju_cant'];?></td>
+                                                            <td data-title="Precio"><?php echo number_format($det['aju_precio'],0,",",".");?></td>
                                                             <td data-title="Precio"><?php echo number_format($det['subtotal'],0,",",".");?></td>
+                                                            <td data-title="tipo"><?php echo ($det['mot_tipo'] == "E" ? "ENTRADA" : "SALIDA");?></td>
+                                                            <td data-title="motivo"><?php echo $det['mot_cod'];?></td>
                                                             <td class="text-center">
-                                                                <a onclick="editar(<?php echo $det['com_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-warning btn-sm" role='button'
+                                                                <a onclick="editar(<?php echo $det['aju_cod'];?>,<?php echo $det['art_cod'];?>,<?php echo $det['dep_cod'];?>)" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a>
-                                                                <a onclick="borrar(<?php echo "'".$det['com_cod']."_".$det['art_cod']."_".$det['dep_cod']."_".$det['art_descri']." ".$det['mar_descri']."'"?>)" class="btn btn-danger btn-sm" role='button'
+                                                                <a onclick="borrar(<?php echo "'".$det['aju_cod']."_".$det['art_cod']."_".$det['dep_cod']."_".$det['art_descri']." ".$det['dep_descri']."'"?>)" class="btn btn-danger btn-sm" role='button'
                                                                    data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
                                                                     <span class="glyphicon glyphicon-trash"></span>
                                                                 </a>                                                                  
@@ -187,7 +181,7 @@
                                             </div>
                                             <?php }else{ ?>
                                             <div class="alert alert-info flat">
-                                                <i class="fa fa-info-circle"></i> La compra aún no tiene detalles cargados...
+                                                <i class="fa fa-info-circle"></i> el ajuste aún no tiene detalles cargados...
                                             </div>       
                                             <?php } ?>
                                         </div>
@@ -196,9 +190,9 @@
                                     <!-- INICIO FORMULARIO AGREGAR-->
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                            <form action="compras_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                            <form action="ajustes_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="accion" value="1">
-                                                <input type="hidden" name="vcom_cod" value="<?php echo $compras[0]['com_cod'];?>">
+                                                <input type="hidden" name="vaju_cod" value="<?php echo $ajustes[0]['aju_cod'];?>">
                                                 <div class="box-body">
                                                     <!-- AGREGAR LISTA DESPLEGABLE DEPOSITO -->
                                                     <div class="form-group">
@@ -231,13 +225,25 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Cantidad:</label>
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="number" class="form-control" name="vcom_cant" min="1" value="1" required=""/>
+                                                            <input type="number" class="form-control" name="vaju_cant" min="1" value="1" required=""/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Precio:</label>
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="number" class="form-control" name="vcom_precio" min="1" required="" id="vprecio"/>
+                                                            <input type="number" class="form-control" name="vaju_precio" min="1" required="" id="vprecio"/>
+                                                        </div>
+                                                    </div>                                                    
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">Motvio:</label>
+                                                        <div class="col-lg-3 col-md-4 col-sm-4">
+                                                            <input type="text" class="form-control" name="vaju_precio" min="1" required="" id="vprecio" disabled=""/>
+                                                        </div>
+                                                    </div>                                                    
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-2">Tipo:</label> <!-- [Entrada / Salida] -->
+                                                        <div class="col-lg-3 col-md-4 col-sm-4">
+                                                            <input type="text" class="form-control" name="vaju_precio" min="1" required="" id="vprecio" disabled=""/>
                                                         </div>
                                                     </div>                                                    
                                                 </div>
@@ -289,27 +295,6 @@
                       </div>
                   </div>
                   <!-- FIN MODAL BORRAR -->
-                  <!-- MODAL CONFIRMAR -->
-                  <div class="modal fade" id="confirmar" role="dialog">
-                      <div class="modal-dialog">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
-                                  <h4 class="modal-title custom_align">Atenci&oacute;n!!!</h4>
-                              </div>
-                                  <div class="modal-body">
-                                      <div class="alert alert-success" id="confirmacionc"></div>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <a  id="sic" class="btn btn-primary">
-                                          <i class="fa fa-check"></i> Si</a>
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">
-                                      <i class="fa fa-remove"></i> No</button>                                          
-                                  </div>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- FIN MODAL CONFIRMAR --> 
             </div>                  
         <?php require 'menu/js_lte.ctp'; ?><!--ARCHIVOS JS-->
         <script>
@@ -326,7 +311,7 @@
         function editar(ven,art,dep){
             $.ajax({
                 type    : "GET",
-                url     : "/lp3/compras_dedit.php?vcom_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
+                url     : "/lp3/ajustes_dedit.php?vaju_cod="+ven+"&vart_cod="+art+"&vdep_cod="+dep,
                 cache   : false,
                 beforeSend:function(){
                    $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')
@@ -338,20 +323,14 @@
         };
         function borrar(datos){
             var dat = datos.split('_');
-            $('#si').attr('href','compras_dcontrol.php?vcom_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
+            $('#si').attr('href','ajustes_dcontrol.php?vaju_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea quitar el articulo \n\
     <strong>'+dat[3]+'</strong> ?');            
-        };
-            function confirmar(datos){
-                var dat = datos.split('_');
-                $('#sic').attr('href','compras_control.php?vcom_cod='+dat[0]+'&accion=2');
-                $('#confirmacionc').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea confirmar la \n\
-                compras N° <strong>'+dat[0]+'</strong> de fecha <strong>'+dat[2]+'</strong> del proveedor <strong>'+dat[1]+'</strong> ?');
             };
         function add(ped,ven,art,dep){
             $.ajax({
                 type    : "GET",
-                url     : "/lp3/compras_dadd.php?vcom_cod="+ped+"&vcom_cod="+compras+"&vart_cod="+art+"&vdep_cod="+dep,
+                url     : "/lp3/ajustes_dadd.php?vaju_cod="+ped+"&vaju_cod="+ajustes+"&vart_cod="+art+"&vdep_cod="+dep,
                 cache   : false,
                 beforeSend:function(){
                    $("#detalles").html('<img src="img/loader.gif"/><strong>Cargando...</strong>')

@@ -32,7 +32,7 @@
                                         </a>
                                     </div>
                                 </div> 
-                                <form action="compras_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                <form action="ajustes_control.php" method="post" accept-charset="utf-8" class="form-horizontal">
                                     <input type="hidden" name="accion" value="1">
                                     <input type="hidden" name="vaju_cod" value="0">
                                     <div class="box-body">
@@ -52,9 +52,9 @@
                                             <div class="col-lg-4">
                                                 <textarea class="form-control" name="vaju_obser" placeholder="Ingrese la Observacion correspondiente..."></textarea>
                                             </div>
-                                            <label class="control-label col-lg-2 col-md-2">Depósito:</label>
+                                            <label class="control-label col-lg-2 col-md-2">Sucursal:</label>
                                             <div class="col-lg-4 col-md-4 col-sm-5">
-                                                <input type="text" class="form-control" value="<?php echo $_SESSION['dep_descri'];?>" readonly=""/>
+                                                <input type="text" class="form-control" value="<?php echo $_SESSION['sucursal'];?>" readonly=""/>
                                             </div>                                            
                                         </div>                                           
                                     </div>
