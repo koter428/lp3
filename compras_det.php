@@ -202,7 +202,7 @@
                                                 <div class="box-body">
                                                     <!-- AGREGAR LISTA DESPLEGABLE DEPOSITO -->
                                                     <div class="form-group">
-                                                        <label class="control-label col-lg-2">Deposito:</label>
+                                                        <label class="control-label col-lg-2">Depósito:</label>
                                                         <div class="col-lg-5 col-md-5 col-sm-5">
                                                                 <?php $depositos = consultas::get_datos("select * from deposito where id_sucursal = ".$_SESSION['id_sucursal']." order by dep_descri");?>
                                                                 <select class="form-control select2" name="vdep_cod" required="">
@@ -216,7 +216,7 @@
                                                     <!-- FIN LISTA DESPLEGABLE DEPOSITO -->
                                                     <!-- AGREGAR LISTA DESPLEGABLE ARTICULO -->
                                                     <div class="form-group">
-                                                        <label class="control-label col-lg-2">Articulo:</label>
+                                                        <label class="control-label col-lg-2">Artículo:</label>
                                                         <div class="col-lg-5 col-md-5 col-sm-5">
                                                                 <?php $articulos = consultas::get_datos("select * from v_articulo order by art_descri");?>
                                                             <select class="form-control select2" name="vart_cod" required="" id="articulo" onchange="precio()">

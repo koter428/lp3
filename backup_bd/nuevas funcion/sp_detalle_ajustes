@@ -3,14 +3,14 @@
 -- DROP FUNCTION IF EXISTS public.sp_detalle_ajustes(integer, integer, integer, integer, integer, integer, integer,character);
 
 CREATE OR REPLACE FUNCTION public.sp_detalle_ajustes(
-	ban integer,
-	vaju_cod integer,
-	vdep_cod integer,
-	vart_cod integer,
-	vaju_cant integer,
-	vaju_precio integer,
-    vmot_cod integer,
-    vmot_tipo  character varying DEFAULT ''::character varying)
+	ban integer default 0,
+	vaju_cod integer default 0,
+	vdep_cod integer default 0,
+	vart_cod integer default 0,
+	vaju_cant integer default 0,
+	vaju_precio integer default 0,
+    vmot_cod integer default 0,
+    vmot_tipo character varying DEFAULT ''::character varying)
 RETURNS character varying
     LANGUAGE 'plpgsql'
     COST 100
@@ -19,34 +19,51 @@ AS $BODY$
 declare mensaje varchar;
 declare tipoi integer;
 begin
-	if ban = 1 then --insertar 
+	if ban = 1 then
 		select tipo_cod into tipoi from articulo where art_cod = vart_cod; 
-		perform * from detalle_ajustes
-		where aju_cod = vaju_cod
-		and dep_cod = vdep_cod
-		and art_cod = vart_cod;
+		perform * from ajustes_detalle where aju_cod = vaju_cod and dep_cod = vdep_cod and art_cod = vart_cod;
 		if not found then
-			INSERT INTO detalle_compra(aju_cod, dep_cod, art_cod, aju_cant, aju_precio,mot_cod,mot_tipo)
-			VALUES vaju_cod, vdep_cod, vart_cod, vaju_cant, vaju_precio,vmot_cod,vmot_tipo 
+			INSERT INTO ajustes_detalle(aju_cod, dep_cod, art_cod, aju_cant, aju_precio, mot_cod, mot_tipo)
+			VALUES(vaju_cod, vdep_cod, vart_cod, vaju_cant, vaju_precio, vmot_cod, vmot_tipo);	 
 			mensaje = 'Se agregó correctamente el artículo al ajustes detalle*ajustes_det';	
+		else
+			update ajustes_detalle
+			set aju_cant = vaju_cant,
+			aju_precio=vaju_precio,
+			mot_cod = vmot_cod,
+			mot_tipo = vmot_tipo
+			where aju_cod = vaju_cod
+			and dep_cod = vdep_cod
+			and art_cod = vart_cod;
+		end if;
 	elsif ban = 2 then --editar
-		update detalle_ajustes
-		set aju_cant = vaju_cant,
-		aju_precio=vaju_precio,
-		where aju_cod = vaju_cod
-		and dep_cod = vdep_cod
-		and art_cod = vart_cod;
+		update ajustes_detalle
+			set aju_cant = vaju_cant,
+			aju_precio=vaju_precio,
+			mot_cod = vmot_cod,
+			mot_tipo = vmot_tipo
+			where aju_cod = vaju_cod
+			and dep_cod = vdep_cod
+			and art_cod = vart_cod;
 		mensaje = 'Se actualizó correctamente el artículo al ajustes detalle*ajustes_det';		
-	if ban = 3 then --borrar
-		delete from detalle_compra
+	elsif ban = 3 then --borrar
+		delete from ajustes_detalle
 		where aju_cod = vaju_cod
-		and dep_cod = vdep_cod
-		and art_cod = vart_cod;
-		mensaje = 'Se eliminó correctamente el artículo de al ajustes detalle*ajustes_det';		
-	end if;		
+		and  dep_cod = vdep_cod
+		and  art_cod = vart_cod;
+		mensaje = 'Se eliminó correctamente el artículo de al ajustes detalle*ajustes_det';
+	end if;	
 	return mensaje;
 end;
 $BODY$;
 
-ALTER FUNCTION public.sp_detalle_compra(integer, integer, integer, integer, integer, integer, integer,character)
+ALTER FUNCTION public.sp_detalle_ajustes(integer,integer,integer,integer,integer,integer,integer,character varying)
     OWNER TO postgres;
+	
+/*
+	select public.sp_detalle_ajustes(1,2,2,1,1,145000,5,'E') as resul
+	select public.sp_detalle_ajustes(2,2,2,1,2,100000,5,'S') as resul
+	select public.sp_detalle_ajustes(3,2) as resul
+	
+	select * from ajustes_detalle;
+*/

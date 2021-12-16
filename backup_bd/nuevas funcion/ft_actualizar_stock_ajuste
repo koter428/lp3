@@ -1,0 +1,92 @@
+-- FUNCTION: public.ft_actualizar_stock_ajuste()
+
+DROP FUNCTION IF EXISTS public.ft_actualizar_stock_ajuste();
+
+CREATE OR REPLACE FUNCTION public.ft_actualizar_stock_ajuste()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+DECLARE vart_descri character varying(100);
+begin
+	if TG_OP = 'INSERT' then
+		if new.mot_tipo = 'E' then
+			--actualizar stock +
+			update stock set stoc_cant = stoc_cant + new.aju_cant
+			where art_cod = new.art_cod and dep_cod = new.dep_cod;
+		elsif new.mot_tipo = 'S' then
+			-- verifica que haya suficiente existencia
+			if (select stoc_cant from stock where dep_cod = new.dep_cod and art_cod = new.art_cod) - new.aju_cant < 0 then
+				select art_descri into vart_descri from articulo where art_cod = new.art_cod;
+				RAISE EXCEPTION 'No existe suficiente cantidad para el articulo %', vart_descri;
+			end if;
+			
+			--actualizar stock
+			update stock set stoc_cant = stoc_cant - new.aju_cant
+			where art_cod = new.art_cod and dep_cod = new.dep_cod;
+		end if;
+		--actualizar total venta
+		update ajustes set aju_total = coalesce((select sum(aju_cant * aju_precio)
+		from ajustes_detalle where aju_cod = new.aju_cod),0)
+		where aju_cod = new.aju_cod;
+		
+		return new;
+	end if;
+	if TG_OP = 'UPDATE' then
+		-- verifica que haya suficiente existencia
+		if (select stoc_cant from stock where dep_cod = new.dep_cod and art_cod = new.art_cod) - new.aju_cant < 0 then
+			select art_descri into vart_descri from articulo where art_cod = new.art_cod;
+			RAISE EXCEPTION 'No existe suficiente cantidad para el articulo %', vart_descri;
+		end if;
+		
+		if new.mot_tipo = 'E' then
+			--actualizar stock
+			update stock set stoc_cant = stoc_cant - old.aju_cant
+			where art_cod = old.art_cod and dep_cod = old.dep_cod;
+		
+			update stock set stoc_cant = stoc_cant + new.aju_cant
+			where art_cod = new.art_cod and dep_cod = new.dep_cod;
+		elseif new.mot_tipo = 'S' then
+			--actualizar stock
+			update stock set stoc_cant = stoc_cant + old.aju_cant
+			where art_cod = old.art_cod and dep_cod = old.dep_cod;
+		
+			update stock set stoc_cant = stoc_cant - new.aju_cant
+			where art_cod = new.art_cod and dep_cod = new.dep_cod;
+		end if;
+		
+		--actualizar total venta
+		update ajustes set aju_total = coalesce((select sum(aju_cant * aju_precio)
+		from ajustes_detalle where aju_cod = new.aju_cod),0)
+		where aju_cod = new.aju_cod;
+		return new;
+	end if;
+	if TG_OP = 'DELETE' then
+		if old.mot_tipo = 'E' then
+			-- verifica que haya suficiente existencia
+			if (select stoc_cant from stock where dep_cod = old.dep_cod and art_cod = old.art_cod) - old.aju_cant < 0 then
+				select art_descri into vart_descri from articulo where art_cod = old.art_cod;
+				RAISE EXCEPTION 'No existe suficiente cantidad para el articulo %', vart_descri;
+			end if;
+			
+			--actualizar stock
+			update stock set stoc_cant = stoc_cant - old.aju_cant
+			where art_cod = old.art_cod and dep_cod = old.dep_cod;
+		elsif old.mot_tipo = 'S' then
+			--actualizar stock
+			update stock set stoc_cant = stoc_cant + old.aju_cant
+			where art_cod = old.art_cod and dep_cod = old.dep_cod;
+		end if;
+		
+		--actualizar total venta
+		update ajustes set aju_total = coalesce((select sum(aju_cant * aju_precio)
+		from ajustes_detalle where aju_cod = old.aju_cod),0)
+		where aju_cod = old.aju_cod;
+		return old;
+	end if;
+end;
+$BODY$;
+
+ALTER FUNCTION public.ft_actualizar_stock_ajuste()
+    OWNER TO postgres;

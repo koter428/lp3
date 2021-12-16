@@ -79,7 +79,7 @@
                                                     full outer join ajustes_motivos on ajustes_detalle.mot_cod = ajustes_motivos.mot_cod,
                                                     empleado
                                                     where ajustes.emp_cod = empleado.emp_cod
-                                                    and ajustes.aju_fecha::varchar ilike '%". (isset($_REQUEST['buscar'])?$_REQUEST['buscar']:""). "%' order by aju_fecha, art_descri ";
+                                                    and articulo.art_descri::varchar ilike '%". (isset($_REQUEST['buscar'])?$_REQUEST['buscar']:""). "%' order by aju_fecha, art_descri ";
                                             //echo $sql; return;
                                             $ajustes = consultas::get_datos($sql);
                                             if (!empty($ajustes)) { ?>
@@ -126,7 +126,7 @@
                                                                     </a>     
                                                                     <?php }?>                                                                   
                                                                     <a href="ajustes_print.php?vaju_cod=<?php echo $aju['aju_cod'];?>" class="btn btn-default btn-sm" role='button'
-                                                                   data-title='Imprimir' rel='tooltip' data-placement='top' target="print">
+                                                                    data-title='Imprimir' rel='tooltip' data-placement='top' target="print">
                                                                     <span class="glyphicon glyphicon-print"></span>
                                                                 </a>                                                                   
                                                             </td>

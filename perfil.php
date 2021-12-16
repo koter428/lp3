@@ -51,7 +51,7 @@
                                               <div class="input-group">
                                                     <input type="password" name="vclave" class="form-control" value="<?php echo $usu[0]['usu_clave']; ?>"required="" disabled=""/>
                                                     <span class="input-group-btn btn-flat">
-                                                    <a href="clave_index.php" class="btn btn-warning btn-sm" 
+                                                    <a href="clave_index.php" class="btn btn-warning" 
                                                         data-title='¿desea cambiar la clave?' rel='tooltip' data-placement='top'><i class="glyphicon glyphicon-edit"></i></a>
                                                     </a>
                                                 </span>

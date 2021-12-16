@@ -1,0 +1,57 @@
+/*
+delete from ajustes_detalle;
+delete from ajustes;
+select * from stock
+
+
+DROP TRIGGER IF EXISTS tbi_ajustes_detalle ON public.ajustes_detalle;
+DROP TRIGGER IF EXISTS tai_ajustes_detalle ON public.ajustes_detalle;
+DROP TRIGGER IF EXISTS tbu_ajustes_detalle ON public.ajustes_detalle;
+DROP TRIGGER IF EXISTS tau_ajustes_detalle ON public.ajustes_detalle;
+DROP TRIGGER IF EXISTS tbd_ajustes_detalle ON public.ajustes_detalle;
+*/
+
+-- Trigger: tbi_ajustes_detalle
+DROP TRIGGER IF EXISTS tbi_ajustes_detalle ON public.ajustes_detalle;
+
+CREATE TRIGGER tbi_ajustes_detalle
+    BEFORE INSERT
+    ON public.ajustes_detalle
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.ft_insertar_stock();
+	
+-- Trigger: tai_ajustes_detalle
+DROP TRIGGER IF EXISTS tai_ajustes_detalle ON public.ajustes_detalle;
+
+CREATE TRIGGER tai_ajustes_detalle
+    AFTER INSERT
+    ON public.ajustes_detalle
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.ft_actualizar_stock_ajuste();
+	
+-- Trigger: tbu_ajustes_detalle
+DROP TRIGGER IF EXISTS tbu_ajustes_detalle ON public.ajustes_detalle;
+
+CREATE TRIGGER tbu_ajustes_detalle
+    BEFORE UPDATE
+    ON public.ajustes_detalle
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.ft_insertar_stock();
+
+-- Trigger: tau_ajustes_detalle
+DROP TRIGGER IF EXISTS tau_ajustes_detalle ON public.ajustes_detalle;
+
+CREATE TRIGGER tau_ajustes_detalle
+    AFTER UPDATE
+    ON public.ajustes_detalle
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.ft_actualizar_stock_ajuste();
+
+-- Trigger: tbd_ajustes_detalle
+DROP TRIGGER IF EXISTS tbd_ajustes_detalle ON public.ajustes_detalle;
+
+CREATE TRIGGER tbd_ajustes_detalle
+    BEFORE DELETE
+    ON public.ajustes_detalle
+    FOR EACH ROW
+    EXECUTE PROCEDURE public.ft_actualizar_stock_ajuste();

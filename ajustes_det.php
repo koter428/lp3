@@ -212,20 +212,20 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Articulo:</label>
                                                         <div class="col-lg-5 col-md-5 col-sm-5">
-                                                                <?php $articulos = consultas::get_datos("select * from v_articulo order by art_descri");?>
+                                                            <?php $articulos = consultas::get_datos("select * from v_articulo order by art_descri");?>
                                                             <select class="form-control select2" name="vart_cod" required="" id="articulo" onchange="precio()">
-                                                                    <option value="">Seleccione un articulo</option>
-                                                                    <?php foreach ($articulos as $articulo) { ?>
-                                                                      <option value="<?php echo $articulo['art_cod']."_".$articulo['art_preciov'];?>"><?php echo $articulo['art_descri']." ".$articulo['mar_descri'];?></option>   
-                                                                    <?php }?>
-                                                                </select>  
+                                                                <option value="">Seleccione un articulo</option>
+                                                                <?php foreach ($articulos as $articulo) { ?>
+                                                                    <option value="<?php echo $articulo['art_cod']."_".$articulo['art_preciov'];?>"><?php echo $articulo['art_descri']." ".$articulo['mar_descri'];?></option>   
+                                                                <?php }?>
+                                                            </select>  
                                                         </div>
                                                     </div>
-                                                    <!-- FIN LISTA DESPLEGABLE MARCA --> 
+                                                    <!-- FIN LISTA DESPLEGABLE ARTICULO --> 
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-2">Cantidad:</label>
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="number" class="form-control" name="vaju_cant" min="1" value="1" required=""/>
+                                                            <input type="number" class="form-control" name="vaju_cant" min="1" value="1" required="" id="vaju_cant"/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -233,19 +233,35 @@
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
                                                             <input type="number" class="form-control" name="vaju_precio" min="1" required="" id="vprecio"/>
                                                         </div>
-                                                    </div>                                                    
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2">Motvio:</label>
+                                                    </div>     
+                                                     <!-- AGREGAR LISTA DESPLEGABLE MOTIVO -->
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">Motivo:</label>
+                                        <div class="col-lg-5">
+                                              <div class="input-group">
+                                              <?php $motivos = consultas::get_datos("select * from ajustes_motivos order by mot_descri");?>
+                                                            <select class="form-control select2" name="vmot_cod" required="" id="motivo" onchange="tipo()">
+                                                                    <option value="">Seleccione un motivo</option>
+                                                                    <?php foreach ($motivos as $motivo) { ?>
+                                                                      <option value="<?php echo $motivo['mot_cod']."_".$motivo['mot_tipo'];?>"><?php echo $motivo['mot_descri'];?></option>   
+                                                                    <?php }?>
+                                                            </select>  
+                                                    <span class="input-group-btn btn-flat">
+                                                        <a class="btn btn-primary" data-title ="Agregar Motvio " rel="tooltip" data-placement="top"
+                                                           data-toggle="modal" data-target="#registrar">
+                                                            <i class="fa fa-plus"></i>
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <!-- FIN LISTA DESPLEGABLE MOTIVO -->
+                                                     <div class="form-group">
+                                                        <label class="control-label col-lg-2">Tipo:</label>
                                                         <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="text" class="form-control" name="vaju_precio" min="1" required="" id="vprecio" disabled=""/>
+                                                            <input type="text" class="form-control" name="vmot_tipo" required="" id="vmot_tipo" disabled=""/>
                                                         </div>
-                                                    </div>                                                    
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2">Tipo:</label> <!-- [Entrada / Salida] -->
-                                                        <div class="col-lg-3 col-md-4 col-sm-4">
-                                                            <input type="text" class="form-control" name="vaju_precio" min="1" required="" id="vprecio" disabled=""/>
-                                                        </div>
-                                                    </div>                                                    
+                                                    </div>      
                                                 </div>
                                                 <div class="box-footer">
                                                     <button type="submit" class="btn btn-primary pull-right">
@@ -274,6 +290,36 @@
                       </div>
                   </div>
                   <!-- FIN MODAL EDITAR DETALLE-->
+                  <!-- MODAL REGISTRAR MOTIVO -->
+                  <div class="modal fade" id="registrar" role="dialog">
+                      <div class="modal-dialog">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" arial-label="Close">x</button>
+                                  <h4 class="modal-title"><i class="fa fa-plus"></i> <strong>Registrar Motivo</strong></h4>
+                              </div>
+                              <form action="ajustes_dcontrol.php" method="post" accept-charset="utf-8" class="form-horizontal">
+                                  <input type="hidden" name="accion" value="5">
+                                  <input type="hidden" name="vmot_cod" value="0">
+                                  <div class="modal-body">
+                                      <div class="form-group">
+                                          <label class="control-label col-sm-3">Agregar un Motivo:</label>
+                                          <div class="col-sm-9">
+                                              <input type="text" name="vmot_descri" class="form-control" required="" autofocus=""/>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="reset" data-dismiss="modal" class="btn btn-default pull-left">
+                                          <i class="fa fa-remove"></i> Cerrar</button>
+                                          <button type="submit" class="btn btn-primary pull-right">
+                                          <i class="fa fa-floppy-o"></i> Registrar</button>                                          
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- FIN MODAL REGISTRAR MOTIVO -->
                   <!-- MODAL BORRAR -->
                   <div class="modal fade" id="borrar" role="dialog">
                       <div class="modal-dialog">
@@ -303,11 +349,25 @@
             });
         </script>
         <script>
+        
         function precio(){
-            //alert($('#articulo').val())
+            // alert($('#articulo').val())
             var valor = $('#articulo').val().split('_');
             $('#vprecio').val(valor[1]);
         };
+        
+        function tipo(){
+            // alert($('#motivo').val())
+            var valor = $('#motivo').val().split('_');
+            valor = valor[1];
+            if(valor=="E")
+                valor = "ENTRADA";
+            else
+                valor = "SALIDA";
+            // alert(valor);
+            $('#vmot_tipo').val(valor);
+        };
+
         function editar(ven,art,dep){
             $.ajax({
                 type    : "GET",
@@ -325,8 +385,9 @@
             var dat = datos.split('_');
             $('#si').attr('href','ajustes_dcontrol.php?vaju_cod='+dat[0]+'&vart_cod='+dat[1]+'&vdep_cod='+dat[2]+'&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> Desea quitar el articulo \n\
-    <strong>'+dat[3]+'</strong> ?');            
-            };
+            <strong>'+dat[3]+'</strong> ?');            
+        };
+
         function add(ped,ven,art,dep){
             $.ajax({
                 type    : "GET",

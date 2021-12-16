@@ -1,0 +1,68 @@
+-- Table: public.ajustes
+
+DROP TABLE IF EXISTS public.transferencias;
+
+CREATE TABLE IF NOT EXISTS public.transferencias
+(
+    tra_cod integer NOT NULL,
+    emp_cod integer NOT NULL,
+    tra_fecha date NOT NULL,
+    tra_total integer NOT NULL,
+    tra_obser character varying(100) COLLATE pg_catalog."default",
+    id_sucursal integer NOT NULL,
+    CONSTRAINT transferencias_pk PRIMARY KEY (tra_cod),
+    CONSTRAINT empleado_transferencias_fk FOREIGN KEY (emp_cod)
+        REFERENCES public.empleado (emp_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT sucursal_transferencias_fk FOREIGN KEY (id_sucursal)
+        REFERENCES public.sucursal (id_sucursal) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transferencias
+    OWNER to postgres;
+
+
+-- Table: public.transferencias_detalle
+
+DROP TABLE IF EXISTS public.transferencias_detalle;
+
+CREATE TABLE IF NOT EXISTS public.transferencias_detalle
+(
+    dep_ori integer NOT NULL,
+	dep_des integer NOT NULL,
+    art_cod integer NOT NULL,
+    tra_cod integer NOT NULL,
+    tra_cant integer NOT NULL,
+    tra_precio integer NOT NULL,
+    CONSTRAINT transferencia_ajustes_pk PRIMARY KEY (dep_ori, art_cod, tra_cod),
+    CONSTRAINT transferencia_detalle_fk FOREIGN KEY (tra_cod)
+        REFERENCES public.transferencias (tra_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT transferencia_origen FOREIGN KEY (dep_ori)
+        REFERENCES public.deposito (dep_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT transferencia_destino FOREIGN KEY (dep_des)
+        REFERENCES public.deposito (dep_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT transferencia_articulo FOREIGN KEY (art_cod)
+        REFERENCES public.articulo (art_cod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transferencias_detalle
+    OWNER to postgres;

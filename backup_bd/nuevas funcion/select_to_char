@@ -1,0 +1,32 @@
+/*select 		to_char(ajustes.aju_fecha,'dd-mm-yyyy') as aju_fecha, 
+			empleado.emp_nombre || ' ' || empleado.emp_apellido as empleado, 
+			deposito.dep_descri, 
+			articulo.art_descri, 
+			ajustes_detalle.aju_cant, 
+			(case ajustes_detalle.mot_tipo when 'E' then'ENTRADA' when 'S' then 'SALIDA' end) as mot_tipo, 
+			ajustes_motivos.mot_descri, 
+			ajustes.aju_cod 
+from 		ajustes full outer join ajustes_detalle on ajustes.aju_cod = ajustes_detalle.aju_cod
+			full outer join empleado on ajustes.emp_cod = empleado.emp_cod
+			full outer join deposito on ajustes_detalle.dep_cod = deposito.dep_cod 
+			full outer join articulo on ajustes_detalle.art_cod = articulo.art_cod
+			full outer join ajustes_motivos on ajustes_detalle.mot_cod = ajustes_motivos.mot_cod
+where 		articulo.art_descri::varchar ilike '%%' order by aju_fecha, art_descri*/
+
+select		to_char(aju_fecha,'dd-mm-yyyy') as aju_fecha, 
+			empleado.emp_nombre || ' ' || empleado.emp_apellido as empleado, 
+			deposito.dep_descri,
+			articulo.art_descri,
+			coalesce(ajustes_detalle.aju_cant,0) as aju_cant,
+			(case ajustes_detalle.mot_tipo when 'E' then'ENTRADA' when 'S' then 'SALIDA' end) as mot_tipo, 
+			ajustes_motivos.mot_descri, 
+			ajustes.aju_cod 
+from		ajustes full outer join ajustes_detalle on ajustes.aju_cod = ajustes_detalle.aju_cod
+			full outer join deposito on ajustes_detalle.dep_cod = deposito.dep_cod
+			full outer join articulo on ajustes_detalle.art_cod = articulo.art_cod
+			full outer join ajustes_motivos on ajustes_detalle.mot_cod = ajustes_motivos.mot_cod,
+			empleado
+where		ajustes.emp_cod = empleado.emp_cod
+
+
+	
