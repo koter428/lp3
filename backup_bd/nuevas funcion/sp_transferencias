@@ -1,0 +1,58 @@
+-- FUNCTION: public.sp_transferencias(integer, integer, integer, integer, character varying, integer)
+
+-- DROP FUNCTION IF EXISTS public.sp_transferencias(integer, integer, integer, integer, character varying, integer);
+
+CREATE OR REPLACE FUNCTION public.sp_transfer(
+	ban integer,
+	vtra_cod integer DEFAULT 0,
+	vemp_cod integer DEFAULT 0,
+	vtra_total integer DEFAULT 0,
+	vtra_obser character varying DEFAULT ''::character varying,
+	vid_sucursal integer DEFAULT 0)
+RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+declare mensaje varchar default null;
+begin
+	--sentencias sql
+	if ban = 1 then --insertar
+		insert into transferencias(tra_cod,emp_cod,tra_fecha,tra_total,tra_obser,id_sucursal)
+        values(calcular_ultimo('transferencias','tra_cod'),vemp_cod,current_date,vtra_total,vtra_obser,vid_sucursal);
+		mensaje = 'Se guardó correctamente la transferencia*transfer_index';
+	elsif ban = 2 then
+		update 	transferencias
+		set 	emp_cod = vemp_cod,
+				tra_obser = vtra_obser
+		where 	tra_cod = vtra_cod;
+		mensaje = 'Se actualizó correctamente la transferencia*transfer_index';
+	elsif ban = 3 then
+		delete from transferencias_detalle where tra_cod = vtra_cod;
+		
+		delete from transferencias
+		where 	tra_cod = vtra_cod;
+		mensaje = 'Se eliminó correctamente la transferencia*transfer_index';
+	end if;	
+	return mensaje;
+end;
+$BODY$;
+
+/*
+	delete from transferencias
+	select * from transferencias
+*/
+ALTER FUNCTION public.sp_transfer(integer, integer, integer, integer, character varying, integer)
+    OWNER TO postgres;
+
+
+/*
+	Prueba
+	
+	select * from sp_transfer(1,1,1,1973-01-01,'movimiento',1);
+	select * from sp_transfer(2,2,1,1686-01-01,'nada que decir',1);
+	select * from sp_transfer(3,3,1);
+	
+	select * from transferencias;
+	
+*/

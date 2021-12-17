@@ -1,0 +1,62 @@
+-- FUNCTION: public.sp_detalle_transfer(integer, integer, integer, integer, integer, integer, integer)
+
+-- DROP FUNCTION IF EXISTS public.sp_detalle_transfer(integer, integer, integer, integer, integer, integer, integer);
+
+CREATE OR REPLACE FUNCTION public.sp_detalle_transfer(
+	ban integer DEFAULT 0,
+	vtra_cod integer DEFAULT 0,
+	vdep_ori integer DEFAULT 0,
+	vdep_des integer DEFAULT 0,
+	vart_cod integer DEFAULT 0,
+	vtra_cant integer DEFAULT 0,
+	vtra_precio integer DEFAULT 0)
+RETURNS character varying
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE 
+AS $BODY$
+declare mensaje varchar;
+declare tipoi integer;
+begin
+	if ban = 1 then
+		perform * from transferencias_detalle where tra_cod = vtra_cod and dep_ori = vdep_ori and dep_des = vdep_des and art_cod = vart_cod;
+		if not found then
+			INSERT INTO transferencias_detalle(tra_cod, dep_ori, dep_des, art_cod, tra_cant, tra_precio)
+			VALUES(vtra_cod, vdep_ori,vdep_des, vart_cod, vtra_cant, vtra_precio);	 
+			mensaje = 'Se agregó correctamente el artículo a la transferencia de detalle*transfer_det';	
+		else
+			update transferencias_detalle	
+			set tra_cant = vtra_cant,
+			tra_precio=vtra_precio,
+			dep_ori = vdep_ori,
+			dep_des = vdep_de
+			where tra_cod = vtra_cod
+			and  dep_ori = vdep_ori
+			and  dep_des = vdep_des
+			and   art_cod = vart_cod;
+		end if;
+	elsif ban = 2 then --editar
+		update transferencias_detalle	
+			set tra_cant = vtra_cant,
+			tra_precio=vtra_precio,
+			dep_ori = vdep_ori,
+			dep_des = vdep_des
+			where tra_cod = vtra_cod
+			and  dep_ori = vdep_ori
+			and  dep_des = vdep_des
+			and   art_cod = vart_cod;
+		mensaje = 'Se actualizó correctamente el artículo a la transferencia de detalle*transfer_det';		
+	elsif ban = 3 then --borrar
+		delete from transferencias_detalle
+		where tra_cod = vtra_cod
+		and  dep_ori = vdep_ori
+	    and  dep_des = vdep_des
+		and  art_cod = vart_cod;
+		mensaje = 'Se eliminó correctamente el artículo de a la transferencia de detalle*transfer_det';
+	end if;	
+	return mensaje;
+end;
+$BODY$;
+
+ALTER FUNCTION public.sp_detalle_transfer(integer, integer, integer, integer, integer, integer, integer)
+    OWNER TO postgres;

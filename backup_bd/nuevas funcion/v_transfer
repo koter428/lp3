@@ -1,0 +1,20 @@
+-- View: public.v_transfer
+
+-- DROP VIEW public.v_transfer;
+
+CREATE OR REPLACE VIEW public.v_transfer
+ AS
+ SELECT a.tra_cod,
+    a.emp_cod,
+    (b.emp_nombre::text || ' '::text) || b.emp_apellido::text AS empleado,
+    a.tra_fecha,
+    a.tra_total,
+    a.tra_obser,
+    s.id_sucursal,
+    s.suc_descri
+   FROM transferencias a
+     JOIN empleado b ON a.emp_cod = b.emp_cod
+     JOIN sucursal s ON a.id_sucursal = s.id_sucursal;
+
+ALTER TABLE public.v_transfer
+    OWNER TO postgres;

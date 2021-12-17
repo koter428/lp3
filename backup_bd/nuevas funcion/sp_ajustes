@@ -28,6 +28,7 @@ begin
 		where aju_cod = vaju_cod;
 		mensaje = 'Se actualizó correctamente el ajuste*ajustes_index';
 	elsif ban = 3 then
+		delete from ajustes_detalles where aju_cod = vaju_cod;
 		delete from ajustes
 		where aju_cod = vaju_cod;
 		mensaje = 'Se eliminó correctamente el ajuste*ajustes_index';

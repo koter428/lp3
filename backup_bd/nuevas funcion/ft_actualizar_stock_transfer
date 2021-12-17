@@ -1,0 +1,95 @@
+-- FUNCTION: public.ft_actualizar_stock_transfer()
+
+-- DROP FUNCTION IF EXISTS public.ft_actualizar_stock_transfer();
+
+CREATE OR REPLACE FUNCTION public.ft_actualizar_stock_transfer()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+DECLARE vart_descri character varying(100);
+begin
+	if TG_OP = 'INSERT' then
+		if new.dep_ori = new.dep_des then
+			RAISE EXCEPTION 'El origen no puede ser igual al destino';
+		end if;
+
+		-- verifica que haya suficiente existencia en el origen
+		if (select stoc_cant from stock where dep_cod = new.dep_ori and art_cod = new.art_cod) - new.tra_cant < 0 then
+			select art_descri into vart_descri from articulo where art_cod = new.art_cod;
+			RAISE EXCEPTION 'No existe suficiente cantidad a transferir para el articulo %', vart_descri;
+		end if;
+	
+		--actualizar stock - origen
+		update stock set stoc_cant = stoc_cant - new.tra_cant
+		where art_cod = new.art_cod and dep_cod = new.dep_ori;
+		--actualizar stock + destino
+		update stock set stoc_cant = stoc_cant + new.tra_cant
+		where art_cod = new.art_cod and dep_cod = new.dep_des;
+		
+		--actualizar total transferencia
+		update transferencias set tra_total = coalesce((select sum(tra_cant * tra_precio)
+		from transferencias_detalle where tra_cod = new.tra_cod),0)
+		where tra_cod = new.tra_cod;
+		
+		return new;
+	end if;
+	if TG_OP = 'UPDATE' then
+		if new.dep_ori = new.dep_des then
+			RAISE EXCEPTION 'El origen no puede ser igual al destino';
+		end if;
+
+		-- verifica que haya suficiente existencia
+		if (select stoc_cant from stock where dep_cod = new.dep_ori and art_cod = new.art_cod) - new.tra_cant < 0 then
+			select art_descri into vart_descri from articulo where art_cod = new.art_cod;
+			RAISE EXCEPTION 'No existe suficiente cantidad a transferir para el articulo %', vart_descri;
+		end if;
+		
+		if (select stoc_cant from stock where dep_cod = old.dep_des and art_cod = old.art_cod) - old.tra_cant < 0 then
+			select art_descri into vart_descri from articulo where art_cod = old.art_cod;
+			RAISE EXCEPTION 'No existe suficiente cantidad a transferir para el articulo %', vart_descri;
+		end if;
+		
+		--actualizar stock origen
+		update stock set stoc_cant = stoc_cant + old.tra_cant
+		where art_cod = old.art_cod and dep_cod = old.dep_ori;
+		
+		update stock set stoc_cant = stoc_cant - new.tra_cant
+		where art_cod = new.art_cod and dep_cod = new.dep_ori;
+		
+		--actualizar stock destino
+		update stock set stoc_cant = stoc_cant - old.tra_cant
+		where art_cod = old.art_cod and dep_cod = old.dep_des;
+		
+		update stock set stoc_cant = stoc_cant + new.tra_cant
+		where art_cod = new.art_cod and dep_cod = new.dep_des;
+		
+		--actualizar total transferencia
+		update transferencias set tra_total = coalesce((select sum(tra_cant * tra_precio)
+		from transferencias_detalle where tra_cod = new.tra_cod),0)
+		where tra_cod = new.tra_cod;
+		
+		return new;
+	end if;
+	if TG_OP = 'DELETE' then
+		--actualizar stock - origen
+		update stock set stoc_cant = stoc_cant + old.tra_cant
+		where art_cod = old.art_cod and dep_cod = old.dep_ori;
+		
+		--actualizar stock + destino
+		update stock set stoc_cant = stoc_cant - old.tra_cant
+		where art_cod = old.art_cod and dep_cod = old.dep_des;
+		
+		--actualizar total transferencia
+		update transferencias set tra_total = coalesce((select sum(tra_cant * tra_precio)
+		from transferencias_detalle where tra_cod = old.tra_cod),0)
+		where tra_cod = old.tra_cod;
+		
+		return old;
+	end if;
+end;
+$BODY$;
+
+ALTER FUNCTION public.ft_actualizar_stock_transfer()
+    OWNER TO postgres;

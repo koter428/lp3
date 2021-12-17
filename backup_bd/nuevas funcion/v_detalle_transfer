@@ -1,0 +1,21 @@
+-- View: public.v_detalle_ajustes
+
+-- DROP VIEW public.v_detalle_ajustes;
+
+CREATE OR REPLACE VIEW public.v_detalle_transfer
+ AS
+ SELECT a.tra_cod,
+--  a.dep_cod,
+    a.dep_des,
+	a.dep_ori,
+    a.art_cod,
+    c.art_descri,
+    a.tra_cant,
+    a.tra_cant * a.tra_precio AS subtotal,
+    a.tra_precio
+   FROM transferencias_detalle a
+     JOIN articulo c ON a.art_cod = c.art_cod;
+--   JOIN deposito b ON a.dep_cod = b.dep_cod
+ALTER TABLE public.v_detalle_transfer
+    OWNER TO postgres;
+

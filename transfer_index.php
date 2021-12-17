@@ -33,13 +33,13 @@
                             </div>
                             <?php } ?>
                             <div class="box box-primary">
-                            <?php if ($_SESSION['AJUSTES']['leer']==='t') { ?>
+                            <?php if ($_SESSION['TRANSFERENCIAS']['leer']==='t') { ?>
                                 <div class="box-header">
                                     <i class="fa fa-newspaper-o"></i>
-                                    <h3 class="box-title">AJUSTES</h3>
+                                    <h3 class="box-title">TRANSFERENCIA</h3>
                                     <div class="box-tools">
-                                    <?php if ($_SESSION['AJUSTES']['insertar']==='t') { ?> 
-                                        <a href="ajustes_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
+                                    <?php if ($_SESSION['TRANSFERENCIAS']['insertar']==='t') { ?> 
+                                        <a href="transfer_add.php" class="btn btn-primary btn-sm pull-right" data-title='Agregar' rel='tooltip' data-placement='top'><i class="fa fa-plus"></i></a>
                                         <?php } ?> 
                                     </div>
                                 </div>
@@ -61,71 +61,68 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>                                            
+                                            </form>                           
                                             <?php 
-                                            //consulta a la tabla ajustes
+                                            //consulta a la tabla transfer
                                             //print_r($_SESSION); return;
-                                            $sql = "select to_char(aju_fecha,'dd-mm-yyyy') as aju_fecha, 
+                                            $sql = "select to_char(tra_fecha,'dd-mm-yyyy') as tra_fecha, 
                                                     empleado.emp_nombre || ' ' || empleado.emp_apellido as empleado, 
-                                                    deposito.dep_descri,
+                                                    origen.dep_descri as dep_ori,
+                                                    destino.dep_descri as dep_des,
                                                     articulo.art_descri,
-                                                    coalesce(ajustes_detalle.aju_cant,0) as aju_cant,
-                                                    (case ajustes_detalle.mot_tipo when 'E' then'ENTRADA' when 'S' then 'SALIDA' end) as mot_tipo, 
-                                                    ajustes_motivos.mot_descri, 
-                                                    ajustes.aju_cod 
-                                                    from ajustes full outer join ajustes_detalle on ajustes.aju_cod = ajustes_detalle.aju_cod
-                                                    full outer join deposito on ajustes_detalle.dep_cod = deposito.dep_cod
-                                                    full outer join articulo on ajustes_detalle.art_cod = articulo.art_cod
-                                                    full outer join ajustes_motivos on ajustes_detalle.mot_cod = ajustes_motivos.mot_cod,
+                                                    coalesce(transferencias_detalle.tra_cant,0) as tra_cant,
+                                                    transferencias.tra_cod 
+                                                    from transferencias full outer join transferencias_detalle on transferencias.tra_cod = transferencias_detalle.tra_cod
+                                                    full outer join deposito as origen on transferencias_detalle.dep_ori = origen.dep_cod
+                                                    full outer join deposito as destino on transferencias_detalle.dep_des = destino.dep_cod
+                                                    full outer join articulo on transferencias_detalle.art_cod = articulo.art_cod,
                                                     empleado
-                                                    where ajustes.emp_cod = empleado.emp_cod
-                                                    and coalesce(articulo.art_descri::varchar,'') ilike '%". (isset($_REQUEST['buscar'])?$_REQUEST['buscar']:""). "%' order by aju_fecha, art_descri ";
-                                            //echo $sql; return;
-                                            $ajustes = consultas::get_datos($sql);
-                                            if (!empty($ajustes)) { ?>
+                                                    where transferencias.emp_cod = empleado.emp_cod
+                                                    and coalesce(articulo.art_descri::varchar,'') ilike '%". (isset($_REQUEST['buscar'])?$_REQUEST['buscar']:""). "%' order by tra_fecha, art_descri ";
+                                            // echo $sql; return;
+                                            $transfer = consultas::get_datos($sql);
+                                            if (!empty($transfer)) { ?>
                                             <div class="table-responsive">
                                                 <table class="table table-condensed table-striped table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>Fecha Ajuste</th>
+                                                            <th>Fecha Transfer.</th>
                                                             <th>Empleado</th>
-                                                            <th>Depósito</th>
+                                                            <th>Origen</th>
+                                                            <th>Destino</th>
                                                             <th>Artículo</th>
                                                             <th>Cantidad</th>
-                                                            <th>Tipo</th>
-                                                            <th>Motivo</th>
                                                             <th>Código</th>
                                                             <th class="text-center">Acciones</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($ajustes as $aju) { ?>
+                                                        <?php foreach ($transfer as $tra) { ?>
                                                         <tr>
-                                                            <td data-title='Fecha Ajuste'><?php echo $aju['aju_fecha'];?></td>
-                                                            <td data-title='Empleado'><?php echo $aju['empleado'];?></td>
-                                                            <td data-title='Depósito'><?php echo $aju['dep_descri'];?></td>
-                                                            <td data-title='Artículo'><?php echo $aju['art_descri'];?></td>
-                                                            <td data-title='Cantidad'><?php echo number_format($aju['aju_cant'],2,",",".");?></td>
-                                                            <td data-title='Tipo'><?php echo $aju['mot_tipo'];?></td>
-                                                            <td data-title='Motivo'><?php echo $aju['mot_descri'];?></td>
-                                                            <td data-title='Código'><?php echo $aju['aju_cod'];?></td>
+                                                            <td data-title='Fecha transfer'><?php echo $tra['tra_fecha'];?></td>
+                                                            <td data-title='Empleado'><?php echo $tra['empleado'];?></td>
+                                                            <td data-title='Origen'><?php echo $tra['dep_ori'];?></td>
+                                                            <td data-title='Destino'><?php echo $tra['dep_des'];?></td>
+                                                            <td data-title='Artículo'><?php echo $tra['art_descri'];?></td>
+                                                            <td data-title='Cantidad'><?php echo number_format($tra['tra_cant'],2,",",".");?></td>
+                                                            <td data-title='Código'><?php echo $tra['tra_cod'];?></td>
                                                             <td data-title='Acciones' class="text-center">
-                                                                <a href="ajustes_det.php?vaju_cod=<?php echo $aju['aju_cod'];?>" class="btn btn-success btn-sm" role='button'
+                                                                <a href="transfer_det.php?vtra_cod=<?php echo $tra['tra_cod'];?>" class="btn btn-success btn-sm" role='button'
                                                                    data-title='Detalles' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-list"></span>
                                                                 </a>
-                                                                <?php if ($_SESSION['AJUSTES']['editar']=='t') { ?>                                                               
-                                                                <a href="ajustes_edit.php?vaju_cod=<?php echo $aju['aju_cod'];?>" class="btn btn-warning btn-sm" role='button'
+                                                                <?php if ($_SESSION['TRANSFERENCIAS']['editar']=='t') { ?>                                                               
+                                                                <a href="transfer_edit.php?vtra_cod=<?php echo $tra['tra_cod'];?>" class="btn btn-warning btn-sm" role='button'
                                                                    data-title='Editar' rel='tooltip' data-placement='top'>
                                                                     <span class="glyphicon glyphicon-edit"></span>
                                                                 </a> <?php }?>
-                                                                <?php if ($_SESSION['AJUSTES']['borrar']=='t') { ?>
-                                                                    <a onclick="borrar(<?php echo "'".$aju['aju_cod']."_".$aju['art_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
+                                                                <?php if ($_SESSION['TRANSFERENCIAS']['borrar']=='t') { ?>
+                                                                    <a onclick="borrar(<?php echo "'".$tra['tra_cod']."_".$tra['art_descri']."'";?>)" class="btn btn-danger btn-sm" role='button'
                                                                     data-title='Borrar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#borrar">
                                                                     <span class="glyphicon glyphicon-trash"></span>
                                                                     </a>     
                                                                     <?php }?>                                                                   
-                                                                    <a href="ajustes_print.php?vaju_cod=<?php echo $aju['aju_cod'];?>" class="btn btn-default btn-sm" role='button'
+                                                                    <a href="transfer_print.php?vtra_cod=<?php echo $tra['tra_cod'];?>" class="btn btn-default btn-sm" role='button'
                                                                     data-title='Imprimir' rel='tooltip' data-placement='top' target="print">
                                                                     <span class="glyphicon glyphicon-print"></span>
                                                                 </a>                                                                   
@@ -138,7 +135,7 @@
                                             <?php }else { ?>
                                             <div class="alert alert-info flat">
                                                 <span class="glyphicon glyphicon-info-sign"></span> 
-                                                No se han registrado ajustes...
+                                                No se han registrado transferencias...
                                             </div>
                                             <?php }
                                             ?>
@@ -194,9 +191,9 @@
         <script>
              function borrar(datos){
             var dat = datos.split("_");
-            $('#si').attr('href','ajustes_control.php?vaju_cod='+dat[0]+'&vart_descri='+dat[1]+'&accion=3');
+            $('#si').attr('href','transfer_control.php?vtra_cod='+dat[0]+'&vart_descri='+dat[1]+'&accion=3');
             $('#confirmacion').html('<span class="glyphicon glyphicon-warning-sign"></span> \n\
-            Desea borrrar el ajuste <strong>'+dat[1]+'</strong>?');
+            Desea borrrar la transferencia <strong>'+dat[1]+'</strong>?');
             }
         </script>        
     </body>
