@@ -57,22 +57,21 @@ $pdf->AddPage('P', 'LEGAL');
 $pdf->Cell(0, 0, "REPORTE DE AJUSTES", 0, 1, 'C');
 //SALTO DE LINEA
 $pdf->Ln();
+
 if (!empty(isset($_REQUEST['opcion']))) {
     switch ($_REQUEST['opcion']) {
         case 1://fecha            
             $cabeceras = consultas::get_datos("select * from v_ajustes "
                             . "where aju_fecha::date between '" . $_REQUEST['vdesde'] . "' and '" . $_REQUEST['vhasta'] . "'");
             break;
-        case 2: //deposito
-            $cabeceras = consultas::get_datos("select * from v_ajustes where dep_cod in(" . $_REQUEST['vdep_cod'] . ")");
-            break;
+        case 2: //empleado
+                $cabeceras = consultas::get_datos("select * from v_ajustes where emp_cod in(" . $_REQUEST['vempleado'] . ")");
+                break; 
         case 3: //articulo
             $cabeceras = consultas::get_datos("select * from v_ajustes "
-                            . "where aju_cod in(select aju_cod from ajustes_detalle where art_cod in(" . $_REQUEST['vart_cod'] . "))");
+                            . "where aju_cod in(select aju_cod from ajustes_detalle where art_cod in(" . $_REQUEST['varticulo'] . "))");
             break;
-        case 4: //empleado
-            $cabeceras = consultas::get_datos("select * from v_ajustes where emp_cod in(" . $_REQUEST['vempleado'] . ")");
-            break;        
+         
     }
 } else {
     $cabeceras = consultas::get_datos("select * from v_ajustes where aju_cod =" . $_REQUEST['vaju_cod']);

@@ -1,16 +1,16 @@
--- FUNCTION: public.sp_detalle_ajustes(integer, integer, integer, integer, integer, integer, integer,character);
+-- FUNCTION: public.sp_detalle_ajustes(integer, integer, integer, integer, integer, integer, integer, character varying)
 
--- DROP FUNCTION IF EXISTS public.sp_detalle_ajustes(integer, integer, integer, integer, integer, integer, integer,character);
+-- DROP FUNCTION IF EXISTS public.sp_detalle_ajustes(integer, integer, integer, integer, integer, integer, integer, character varying);
 
 CREATE OR REPLACE FUNCTION public.sp_detalle_ajustes(
-	ban integer default 0,
-	vaju_cod integer default 0,
-	vdep_cod integer default 0,
-	vart_cod integer default 0,
-	vaju_cant integer default 0,
-	vaju_precio integer default 0,
-    vmot_cod integer default 0,
-    vmot_tipo character varying DEFAULT ''::character varying)
+	ban integer DEFAULT 0,
+	vaju_cod integer DEFAULT 0,
+	vdep_cod integer DEFAULT 0,
+	vart_cod integer DEFAULT 0,
+	vaju_cant integer DEFAULT 0,
+	vaju_precio integer DEFAULT 0,
+	vmot_cod integer DEFAULT 0,
+	vmot_tipo character varying DEFAULT ''::character varying)
 RETURNS character varying
     LANGUAGE 'plpgsql'
     COST 100
@@ -28,8 +28,10 @@ begin
 			mensaje = 'Se agregó correctamente el artículo al ajustes detalle*ajustes_det';	
 		else
 			update ajustes_detalle
-			set aju_cant = vaju_cant,
-			aju_precio=vaju_precio,
+			set dep_cod = vdep_cod,
+			art_cod = vart_cod,
+			aju_cant = vaju_cant,
+			aju_precio = vaju_precio,
 			mot_cod = vmot_cod,
 			mot_tipo = vmot_tipo
 			where aju_cod = vaju_cod
@@ -37,15 +39,17 @@ begin
 			and art_cod = vart_cod;
 		end if;
 	elsif ban = 2 then --editar
-		update ajustes_detalle
-			set aju_cant = vaju_cant,
-			aju_precio=vaju_precio,
+			update ajustes_detalle
+			set dep_cod = vdep_cod,
+			art_cod = vart_cod,
+			aju_cant = vaju_cant,
+			aju_precio = vaju_precio,
 			mot_cod = vmot_cod,
 			mot_tipo = vmot_tipo
 			where aju_cod = vaju_cod
 			and dep_cod = vdep_cod
 			and art_cod = vart_cod;
-		mensaje = 'Se actualizó correctamente el artículo al ajustes detalle*ajustes_det';		
+			mensaje = 'Se actualizó correctamente el artículo al ajustes detalle*ajustes_det';		
 	elsif ban = 3 then --borrar
 		delete from ajustes_detalle
 		where aju_cod = vaju_cod
@@ -57,13 +61,5 @@ begin
 end;
 $BODY$;
 
-ALTER FUNCTION public.sp_detalle_ajustes(integer,integer,integer,integer,integer,integer,integer,character varying)
+ALTER FUNCTION public.sp_detalle_ajustes(integer, integer, integer, integer, integer, integer, integer, character varying)
     OWNER TO postgres;
-	
-/*
-	select public.sp_detalle_ajustes(1,2,2,1,1,145000,5,'E') as resul
-	select public.sp_detalle_ajustes(2,2,2,1,2,100000,5,'S') as resul
-	select public.sp_detalle_ajustes(3,2) as resul
-	
-	select * from ajustes_detalle;
-*/

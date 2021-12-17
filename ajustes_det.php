@@ -167,7 +167,7 @@
                                                                 <td data-title="Precio"><?php echo number_format($det['aju_precio'], 0, ",", "."); ?></td>
                                                                 <td data-title="Subtotal"><?php echo number_format($det['subtotal'], 0, ",", "."); ?></td>
                                                                 <td data-title="tipo"><?php echo ($det['mot_tipo'] == "E" ? "ENTRADA" : "SALIDA"); ?></td>
-                                                                <td data-title="motivo"><?php echo $det['mot_cod']; ?></td>
+                                                                <td data-title="motivo"><?php echo $det['mot_descri']; ?></td>
                                                                 <td class="text-center">
                                                                     <a onclick="editar(<?php echo $det['aju_cod']; ?>,<?php echo $det['art_cod']; ?>,<?php echo $det['dep_cod']; ?>)" class="btn btn-warning btn-sm" role='button' data-title='Editar' rel='tooltip' data-placement='top' data-toggle="modal" data-target="#editar">
                                                                         <span class="glyphicon glyphicon-edit"></span>

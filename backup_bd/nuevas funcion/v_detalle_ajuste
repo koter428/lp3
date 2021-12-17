@@ -1,5 +1,9 @@
+-- View: public.v_detalle_ajustes
 
-CREATE OR REPLACE VIEW public.v_detalle_ajustes AS
+-- DROP VIEW public.v_detalle_ajustes;
+
+CREATE OR REPLACE VIEW public.v_detalle_ajustes
+ AS
  SELECT a.aju_cod,
     a.dep_cod,
     b.dep_descri,
@@ -7,13 +11,16 @@ CREATE OR REPLACE VIEW public.v_detalle_ajustes AS
     c.art_descri,
     c.tipo_cod,
     a.aju_cant,
-    a.aju_cant * a.aju_precio  AS subtotal,
+    a.aju_cant * a.aju_precio AS subtotal,
     a.aju_precio,
-	a.mot_cod,
-	a.mot_tipo
+    a.mot_cod,
+    a.mot_tipo,
+	m.mot_descri
    FROM ajustes_detalle a
      JOIN deposito b ON a.dep_cod = b.dep_cod
+	 JOIN ajustes_motivos m on a.mot_cod = m.mot_cod 
      JOIN articulo c ON a.art_cod = c.art_cod;
 
 ALTER TABLE public.v_detalle_ajustes
     OWNER TO postgres;
+

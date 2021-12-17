@@ -13,12 +13,11 @@
         @session_start(); /* Reanudar sesion */
         require 'menu/css_lte.ctp';
         ?><!--ARCHIVOS CSS-->
-
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
-            <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
-<?php require 'menu/toolbar_lte.ctp'; ?><!--MENU PRINCIPAL-->
+        <?php require 'menu/header_lte.ctp'; ?><!--CABECERA PRINCIPAL-->
+        <?php require 'menu/toolbar_lte.ctp'; ?><!--MENU PRINCIPAL-->
             <div class="content-wrapper">
                 <div class="content">
                     <div class="row">
@@ -33,9 +32,12 @@
                                 <!-- AQUI VA EL CONTENIDO DE LA TABLA-->
                                 <div class="box-body">
                                     <div class="row">
-                                        <?php $opcion = (isset($_REQUEST['opcion'])?$_REQUEST['opcion']:"2");?>
+                                        <?php
+                                            // print_r($_REQUEST); return; 
+                                            $opcion = (isset($_REQUEST['opcion'])?$_REQUEST['opcion']:"2");
+                                        ?>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <form action="compras_print.php" method="GET" accept-charset="utf-8" class="form-horizontal">
+                                            <form action="ajustes_print.php" method="GET" accept-charset="utf-8" class="form-horizontal">
                                                 <input type="hidden" name="opcion" value="<?php echo $opcion;?>"/>
                                                 <div class="box-body" >
                                                     <div class="col-sm-4 col-lg-4">
@@ -45,10 +47,9 @@
                                                             </div>
                                                             <div class="panel-body">
                                                                 <div class="list-group">
-                                                                    <a href="compras_rpt.php?opcion=1" class="list-group-item">Por Fecha</a>
-                                                                    <a href="compras_rpt.php?opcion=2" class="list-group-item">Por empleado</a>
-                                                                    <a href="compras_rpt.php?opcion=3" class="list-group-item">Por Articulo</a>
-                                                                    <a href="compras_rpt.php?opcion=4" class="list-group-item">Por Empleado</a>
+                                                                    <a href="ajustes_rpt.php?opcion=1" class="list-group-item">Por Fecha</a>
+                                                                    <a href="ajustes_rpt.php?opcion=2" class="list-group-item">Por Empleado</a>
+                                                                    <a href="ajustes_rpt.php?opcion=3" class="list-group-item">Por Articulo</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -79,22 +80,22 @@
 
                                                                 <?php       break;
                                                                             case 2: 
-                                                                                $empleados = consultas::get_datos("select * from empleado where prv_cod in(select prv_cod from ajustes)");
+                                                                                $empleados = consultas::get_datos("select * from empleado where emp_cod in(select emp_cod from ajustes)");
                                                                             ?> 
                                                                             <div class="form-group">
-                                                                                <label class="control-label col-lg-2 col-md-2">empleado:</label>
+                                                                                <label class="control-label col-lg-2 col-md-2">Empleado:</label>
                                                                                 <div class="col-lg-6 col-md-6">
-                                                                                    <select class="form-control select2" name="vproveedor">
+                                                                                    <select class="form-control select2" name="vempleado">
                                                                                         <?php foreach ($empleados as $e) { ?>
-                                                                                        <option value="<?php echo $e['prv_cod'];?>">
-                                                                                        <?php echo $c['prv_ruc']." - ".$e['prv_razonsocial'];?></option>
+                                                                                        <option value="<?php echo $e['emp_cod'];?>">
+                                                                                        <?php echo $e['emp_nombre']." - ".$e['emp_apellido'];?></option>
                                                                                         <?php }?>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>                                                                
                                                                 <?php       break;
                                                                             case 3:
-                                                                                $articulos = consultas::get_datos("select * from v_articulo where art_cod in(select art_cod from detalle_compra)");
+                                                                                $articulos = consultas::get_datos("select * from v_articulo where art_cod in(select art_cod from ajustes_detalle)");
                                                                             ?>
                                                                             <div class="form-group">
                                                                                 <label class="control-label col-lg-2 col-md-2">Articulos:</label>
@@ -108,20 +109,8 @@
                                                                                 </div>
                                                                             </div>                                                                  
                                                                 <?php       break;
-                                                                            case 4:
-                                                                                $empleados = consultas::get_datos("select * from empleado where emp_cod in(select emp_cod from compras)");
                                                                             ?>
-                                                                            <div class="form-group">
-                                                                                <label class="control-label col-lg-2 col-md-2">Empleados:</label>
-                                                                                <div class="col-lg-6 col-md-6">
-                                                                                    <select class="form-control select2" name="vempleado">
-                                                                                        <?php foreach ($empleados as $e) { ?>
-                                                                                        <option value="<?php echo $e['emp_cod'];?>">
-                                                                                        <?php echo $e['emp_nombre']." ".$e['emp_apellido'];?></option>
-                                                                                        <?php }?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>                                                                                                                       
+                                                                                                                         
                                                                 <?php        }
                                                                 ?>                                                                                                                                                                                              
                                                             </div>

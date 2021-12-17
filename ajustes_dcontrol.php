@@ -15,12 +15,12 @@
         $vmot_cod = explode("_",$_REQUEST["vmot_cod"]); $vmot_cod = $vmot_cod[0];
         $vajus_tipo = explode("_",$_REQUEST["vmot_cod"]); $vajus_tipo = $vajus_tipo[1];
     }
-    else{
+    elseif(strcmp($accion,"3") == 0){
         $vart_cod = explode("_",$_REQUEST["vart_cod"]); $vart_cod = $vart_cod[0];
         $vmot_cod = "0";
         $vajus_tipo = "0";
     }
-
+    
     $sql = "select sp_detalle_ajustes(" .
     $_REQUEST['accion']."," .
     $_REQUEST['vaju_cod']."," .
