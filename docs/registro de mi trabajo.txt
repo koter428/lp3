@@ -1,0 +1,111 @@
+el1- Los procesos referenciales deben ser con procesos almacenados
+clave_index.php
+paginas_index.php(echo)
+
+2- falta mejorar el diseño de los reportes.
+3- En los referenciales compuestos el campo referencial debe ser con una lista desplegable o una opcion para seleccionar.(A ESTO SE REFERIA EL PROFESOR:debo agregar un modal en arti 
+4- Al agregar un detalle de pedido de venta envia a la pagina de agregar la cabecera.( no se si ya lo habre solucionado pero ahora no me sale ningun  
+5- La pagina de detalle de ventas lanza errores de codificacion
+6- No se desarrollo la pagina de pedido de compras.
+7- La pagina de compras no permite registrar compras a credito seleccionando los parametros de cuota e intervalo
+8- Los procedimientos automaticos para cuotas y actualizacion de stock no se realizaron en compras.
+9- No se desarrollaron los reportes por filtros para los movimientos.(un punto menos) 
+
+0-tareas que debo terminar
+   1.debo terminar el progreso semanal
+   AVANCE DE PROYECTO (ACCESO, MENÚ Y REFERENCIALES)
+
+   - Acceso (Mostrar validaciones y encriptacion del campo de contraseña dentro de la base de datos).
+
+   - Menú (Mostrar el menú del sistema y realizo el proceso de permisos por grupo de usuario mostrar según el perfil de usuario).
+
+   - Referenciales (Mostrar el ABM de algunos referenciales con modal y sin modal en caso de ser WEB y los reportes dentro de la página).
+
+   - Reportes Referenciales párametrizados por filtro (Mostrar formularios/páginas de reportes por filtros de al menos dos tablas).
+
+
+    AVANCE PROCESOS DE MODULO 1°
+
+    1° Módulo:
+
+   - Mostrar los procesos desarrollados dentro del primer modulo seleccionado (Ej: Modulo Compras: Pedido, Orden, Compras y Transferencias)
+
+    (Mostrar validaciones, cabecera detalles por funciones, triggers si posee).
+
+   - Reportes Movimientos párametrizados por filtro (Mostrar formularios/páginas de reportes por filtros de al menos dos tablas).
+
+
+
+
+    bueno al intentar agregarlo en pedventas no me funciona (y pedcompras todavia no esta terminado
+
+   5.los que me faltan por hacer mantenimiento de vistas editar por que no se visualizan  son:
+     compras
+     grupos
+     usuarios 
+     paginas(editar paginas me trae modal modulos)
+   6. debo agregar un modal en articulos agregar para sucursal
+   7.al agregar una venta con un cliente(CAMILA DUARTE ZARATE) que tenga ya un dedido a credito sale un error y manda a ventas_index
+   12. las vistas y los trigger que me faltan son:
+   trigger:
+     ft_cuotas_compras
+   las vistas: 
+     v_deposito
+     v_empleado
+     v_paginas
+
+   13.estuve haciendo grupos y me salio bien pero al editar no me traiga el nombre 
+   (revisar tambien el control del grupo por si estaban bien lo que manda)y no se si me funciona
+
+   14estuve haciendo ahora en controles y no me funciona (modulos ya funciona)modulos,grupo,(sucursal ya funciona)sucursal,(paginas ya funciona)paginas,usuarios
+
+   15.ahora los que me funcionan con procesos almacenados son articulos,cargos,clientes,empleados,marca,modulos,proveedor,sucursal
+   16.debo terminar esta noche o mañana ajustes_mod_rpt
+
+1- Lista de todos los abms crud que no funcionan bien
+   17.los abm que no traen informacion editar son: compras,Editar Detalle Venta,usuarios,(y pedido compras que esta en progreso)
+
+12- Lista de los abms que faltan
+
+    5.reporte/informe de todos los archivos tanto como referenciales y ventas y compras,no estoy  seguro si seguridad deberia tenerlo tambien(dentro ahi      GRUPOS,MODULOS,PAGINAS,USUARIOS)
+    6.todavia me falta completar pedido compras    
+
+3-todos los que tienen y no tienen imprimir
+1proveedor,2sucursal,3tipo de impuesto,3grupos,4deposito,5empleados6paginas(los que ya a echo imprimiir)
+    todos ya tienen imprimir solo que me falta que se vea mejor y arreglar algunos dellates: 
+    9.paginas(en vez de agregarlo en paginas me agrega a modulos)
+
+
+5-buscador(todos deben tener un buscador)
+    (por el momento todos tienen)
+
+6-reportes/informes:
+los que tengan # es por que no esta echo todavia o solo esta visualmente
+los que tengan una XF es que ya estan terminados 
+REFEREMCIALES:
+XarticulosXF
+XdepositoXF
+#empleados#
+#paginas#
+#usuarios#
+XcargosXF
+XclienteXF
+#grupos#
+XmarcasXF
+#modulo#
+XproveedorXF
+XsucursalXF
+Xtipo de impuestoXF
+
+ventas: 
+FXventasXF   
+FXpedido ventasXF
+compras:
+FXcomprasXF
+FXpedido comprasXF
+ 
+
+8-ayuda: debo agregar un archivo pdf que explique y muestre el funcionamiento de mi sistema web
+
+AJUSTES
+TERMINADO (SOLO ME FALTA EDITAR DETALLE Y MODAL MOTIVO EN DETALLE Y EL INFORME, pero el informe tal vez no haga mas, y editar tambien falta)

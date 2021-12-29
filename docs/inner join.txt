@@ -1,0 +1,33 @@
+bien, ahí vamos
+para que la informática funcione, no es solo copiar y adaptar, es utilizar
+las herramientas y para hacerlo bien hay que aprender las herramientas.
+
+- tenemos una tabla de ajustes y una de detalle de ajustes
+porqué te muestra los primeros y los que insertás no????
+
+- no muestra porque tenemos cabecera y no tenemos detalle, entendes
+
+si, la cabecera es el ajuste, y nos falta el detalle
+
+si, es porque justo el index que tenemos con cabecera y detalle
+
+entonces cual es la solucion?
+
+entonces, la tabla principal es ajustes y la dependiente es detalles
+
+	ajustes		detalle
+	lado izquierdo	lado derecho
+
+probemos
+
+ahora porque no funciona
+ahi esta
+
+2 2 2 2 2
+este no encuentro
+
+no encuentras los 5 2_?
+no
+ 
+
+
